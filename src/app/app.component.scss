@@ -1,0 +1,37 @@
+.spacer {
+  flex: 1 1 auto;
+}
+.avatar {
+  background-size: cover;
+  border-radius: 50%;
+}
+.avatar-size {
+  width: 90%;
+}
+.user-info {
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  .name {
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+  img {
+    max-width: 40%;
+  }
+}
+.signout {
+  text-align: center;
+}
+.spinner {
+  mat-spinner {
+    margin: 40vh auto 0;
+  }
+}
+
+.login-button {
+  text-align: center;
+  button {
+    margin-top: 40vh;
+  }
+}

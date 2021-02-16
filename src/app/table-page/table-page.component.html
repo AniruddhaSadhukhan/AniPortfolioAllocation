@@ -1,0 +1,121 @@
+<mat-button-toggle-group
+  name="fontStyle"
+  aria-label="Font Style"
+  [(ngModel)]="selectedOption"
+>
+  <mat-button-toggle *ngFor="let item of options" [value]="item">{{
+    item
+  }}</mat-button-toggle>
+</mat-button-toggle-group>
+
+<div>
+  <span>{{ selectedOption }}</span>
+  <button
+    type="button"
+    class="btn btn-outline-primary btn-sm"
+    (click)="openPopup(editDialog, -1)"
+  >
+    Add Entry
+  </button>
+</div>
+<table
+  *ngIf="data"
+  mat-table
+  [dataSource]="data[selectedOption]"
+  class="mat-elevation-z8"
+>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef>Amount (in K)</th>
+    <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let element; let i = index">
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="openPopup(editDialog, i)"
+      >
+        Edit
+      </button>
+      <button
+        mat-stroked-button
+        color="warn"
+        (click)="deletePopup(deleteDialog, i)"
+      >
+        Delete
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<!-- Dialog template -->
+<ng-template #editDialog let-data>
+  <h2 matDialogTitle>
+    {{ data.name ? "Edit" : "Add" }} {{ data.type }} entry:
+  </h2>
+  <mat-dialog-content>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="data.name" required />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Amount (in K)</mat-label>
+        <input type="tel" matInput [(ngModel)]="data.value" required />
+      </mat-form-field>
+    </p>
+  </mat-dialog-content>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button
+      mat-button
+      [mat-dialog-close]="data"
+      [disabled]="!data.name || !data.value"
+      cdkFocusInitial
+    >
+      Ok
+    </button>
+  </div>
+</ng-template>
+
+<!-- Dialog template -->
+<ng-template #deleteDialog let-data>
+  <h2 matDialogTitle>Delete {{ data.type }} entry?</h2>
+  <mat-dialog-content>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="data.name" disabled required />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Amount (in K)</mat-label>
+        <input matInput [(ngModel)]="data.value" disabled required />
+      </mat-form-field>
+    </p>
+  </mat-dialog-content>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button
+      mat-button
+      [mat-dialog-close]="data"
+      [disabled]="!data.name || !data.value"
+      cdkFocusInitial
+    >
+      Delete
+    </button>
+  </div>
+</ng-template>
