@@ -1,4 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/theming";
+@include mat-core();
+
+$ip-primary: mat-palette($mat-indigo);
+$ip-accent: mat-palette($mat-pink, A200, A100, A400);
+$ip-theme-dark: mat-dark-theme($ip-primary, $ip-accent);
+
+@include angular-material-theme($ip-theme-dark);
+
 .anychart-credits {
   display: none;
 }
@@ -10,6 +19,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #202124;
 }
 
 .mt-1 {
@@ -17,4 +27,8 @@ body {
 }
 .mb-1 {
   margin-bottom: 8px;
+}
+
+.button-border {
+  border-color: #3f51b5 !important ;
 }

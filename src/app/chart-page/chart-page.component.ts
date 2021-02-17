@@ -60,6 +60,7 @@ export class ChartPageComponent implements OnInit {
     // set the position of labels
     chart.labels().position("circular");
     chart.padding(0);
+    chart.background().enabled(false);
     // set the container id
     document.getElementById("container") &&
       (document.getElementById("container").innerHTML = "");
