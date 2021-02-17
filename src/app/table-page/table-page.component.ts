@@ -50,6 +50,8 @@ export class TablePageComponent implements OnInit {
   };
 
   openPopup(templateRef: TemplateRef<any>, i: number) {
+    console.log("index is ", i);
+
     let dialogData = {};
     if (i > -1) {
       dialogData = {
@@ -64,7 +66,7 @@ export class TablePageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log("The dialog was closed", result);
       if (result && result.name && result.value) {
-        if (result.index) {
+        if (result.index > -1) {
           this.data[result.type][result.index] = {
             name: result.name,
             value: result.value,
@@ -94,7 +96,7 @@ export class TablePageComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log("The dialog was closed", result);
-      if (result && result.name && result.value && result.index) {
+      if (result && result.name && result.value && result.index > -1) {
         this.data[result.type].splice(result.index, 1);
 
         console.log(this.data);
