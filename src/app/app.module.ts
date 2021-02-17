@@ -19,18 +19,13 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { MatMenuModule } from "@angular/material/menu";
 import {
   MatButtonToggleModule,
-  MatDatepickerModule,
-  MatDialog,
   MatDialogModule,
   MatFormFieldModule,
   MatInputModule,
-  MatNativeDateModule,
+  MatMenuModule,
   MatProgressSpinnerModule,
-  MatSelectModule,
 } from "@angular/material";
 
 const config = {
@@ -49,16 +44,12 @@ const AngularMaterial = [
   MatFormFieldModule,
   MatProgressSpinnerModule,
   MatTableModule,
-  MatMenuModule,
   MatTooltipModule,
   MatIconModule,
   MatButtonModule,
-  MatCardModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
-  MatSelectModule,
   MatButtonToggleModule,
   MatDialogModule,
+  MatMenuModule,
 ];
 
 @NgModule({

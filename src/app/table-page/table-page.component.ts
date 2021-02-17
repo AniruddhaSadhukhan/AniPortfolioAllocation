@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from "@angular/core";
 import { PortfolioService } from "../services/portfolio.service";
 import { MatDialog } from "@angular/material";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-table-page",
@@ -13,10 +14,13 @@ export class TablePageComponent implements OnInit {
   selectedOption = "Equity";
   displayedColumns: string[] = ["name", "amount", "action"];
 
-  constructor(private service: PortfolioService, private dialog: MatDialog) {}
+  constructor(
+    private service: PortfolioService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    // this.refresh();
     this.service.getPortfolio().subscribe(
       (res) => {
         console.log(res);
@@ -35,27 +39,6 @@ export class TablePageComponent implements OnInit {
       }
     );
   }
-  // refresh(): void {
-  //   let json = {
-  //     Debt: [
-  //       { name: "Axis Bank", value: 200 },
-  //       { name: "IOB", value: 50 },
-  //       { name: "ICICI Ultra Short", value: 30 },
-  //     ],
-  //     Equity: [
-  //       { name: "Axis Bluechip", value: 12 },
-  //       { name: "Axis ELSS", value: 49 },
-  //     ],
-  //     Others: [],
-  //   };
-  //   this.service
-  //     .setPortfolio(json)
-  //     .then(() => {
-  //       console.log("Portfolio updated successfully");
-  //       this.data = json;
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
 
   updatePortfolio = (data) => {
     this.service
@@ -119,4 +102,8 @@ export class TablePageComponent implements OnInit {
       }
     });
   }
+
+  dashboard = () => {
+    this.router.navigate(["/view"]);
+  };
 }

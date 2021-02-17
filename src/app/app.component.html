@@ -1,17 +1,9 @@
 <mat-toolbar color="primary">
   <button mat-icon-button>
-    <mat-icon>account_balance</mat-icon>
+    <mat-icon>account_balance_wallet</mat-icon>
   </button>
-  <span>AniBank</span>
+  <span>AniPortfolioAllocation</span>
   <span class="spacer"></span>
-  <button
-    mat-icon-button
-    *ngIf="user"
-    matTooltip="Add an entry"
-    (click)="addEntry()"
-  >
-    <mat-icon>control_point</mat-icon>
-  </button>
   <button mat-icon-button *ngIf="user">
     <img
       class="avatar avatar-size"

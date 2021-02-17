@@ -26,8 +26,4 @@ export class AppComponent implements OnInit {
       if (res) this.router.navigate(["view"]);
     });
   }
-
-  addEntry = () => {
-    this.router.navigate(["edit"]);
-  };
 }

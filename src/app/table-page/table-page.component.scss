@@ -1,3 +1,20 @@
 table {
   width: 100%;
 }
+.center-div {
+  display: flex;
+  justify-content: center;
+}
+.add-fab {
+  position: relative;
+  top: 20px;
+  float: right;
+  right: 10px;
+}
+.toggle-div {
+  margin-bottom: -25px;
+}
+
+.footer-div {
+  margin-top: 20px;
+}

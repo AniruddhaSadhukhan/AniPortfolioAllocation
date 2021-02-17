@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthService } from "../services/auth.service";
+import { PortfolioService } from "../services/portfolio.service";
 
 @Component({
   selector: "app-chart-page",
@@ -6,40 +9,43 @@ import { Component, Input, OnInit } from "@angular/core";
   styleUrls: ["./chart-page.component.scss"],
 })
 export class ChartPageComponent implements OnInit {
-  @Input() data;
-  constructor() {}
+  data;
+  constructor(
+    private service: PortfolioService,
+    private router: Router,
+    public auth: AuthService
+  ) {}
 
   ngOnInit() {
-    this.refresh();
+    this.service.getPortfolio().subscribe(
+      (res) => {
+        console.log(res);
+        if (res) {
+          this.data = res;
+          this.auth.user$.subscribe((res) => {
+            this.refresh(res.displayName);
+          });
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
-  refresh(): void {
+  refresh(user: string): void {
     // create data
-    var data = [
+    var chartData = [
       {
-        name: "Ani",
-        children: [
-          {
-            name: "Debt",
-            children: [
-              { name: "Axis Bank", value: 200 },
-              { name: "IOB", value: 50 },
-              { name: "ICICI Ultra Short", value: 30 },
-            ],
-          },
-          {
-            name: "Equity",
-            children: [
-              { name: "Axis Bluechip", value: 12 },
-              { name: "Axis ELSS", value: 49 },
-            ],
-          },
-          { name: "Others", children: [] },
-        ],
+        name: user.split(" ")[0] || "Total",
+        children: ["Debt", "Equity", "Others"].map((a) => ({
+          name: a,
+          children: this.data[a],
+        })),
       },
     ];
 
     // create a chart and set the data
-    var chart = anychart.sunburst(data, "as-tree");
+    var chart = anychart.sunburst(chartData, "as-tree");
 
     // set the calculation mode
     chart.calculationMode("parent-independent");
@@ -53,10 +59,17 @@ export class ChartPageComponent implements OnInit {
     chart.leaves().labels().format("<span>{%name}</span><br>{%value}k");
     // set the position of labels
     chart.labels().position("circular");
+    chart.padding(0);
     // set the container id
+    document.getElementById("container") &&
+      (document.getElementById("container").innerHTML = "");
     chart.container("container");
 
     // initiate drawing the chart
     chart.draw();
   }
+
+  manage = () => {
+    this.router.navigate(["/edit"]);
+  };
 }

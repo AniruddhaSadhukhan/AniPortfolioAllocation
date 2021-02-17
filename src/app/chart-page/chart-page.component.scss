@@ -3,8 +3,17 @@
   //   height: 100%;
   //   margin: 0;
   //   padding: 0;
-  width: min(100vw, 90vh);
-  height: min(100vw, 90vh);
+  width: min(100vw, 85vh);
+  height: min(100vw, 85vh);
   margin-top: 5px;
   margin: auto;
+}
+
+#chart-container {
+  height: 85vh;
+  display: flex;
+}
+.center-div {
+  display: flex;
+  justify-content: center;
 }
