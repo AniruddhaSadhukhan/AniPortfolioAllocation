@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
 })
 export class TablePageComponent implements OnInit {
   data = null;
-  options = ["Equity", "Debt", "Others"];
+  options = ["Debt", "Equity", "Others"];
   selectedOption = "Equity";
   displayedColumns: string[] = ["name", "amount", "action"];
 
