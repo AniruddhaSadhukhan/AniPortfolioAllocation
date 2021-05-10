@@ -14,7 +14,7 @@ import { AngularFireStorageModule } from "@angular/fire/storage";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatTooltipModule } from "@angular/material/tooltip";
-
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
@@ -46,6 +46,7 @@ const AngularMaterial = [
   MatTableModule,
   MatTooltipModule,
   MatIconModule,
+  MatSlideToggleModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatDialogModule,

@@ -1,3 +1,11 @@
+<div id="slider">
+  <mat-slide-toggle
+    [(ngModel)]="omitOthers"
+    [color]="color"
+    (change)="changed()"
+    >Hide Others</mat-slide-toggle
+  >
+</div>
 <div id="chart-container">
   <div id="container"></div>
 </div>
