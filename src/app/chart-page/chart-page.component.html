@@ -9,13 +9,29 @@
 <div id="chart-container">
   <div id="container"></div>
 </div>
-<div class="center-div">
+<div class="nav-buttons">
+  <!-- /*
+ Pages:             Nav Buttons
+  1. Dashboard   : Manage Allocation
+  2. Manage      : Dashboard Allocation
+  3. Category    : Dashboard Allocation Expectations
+  4. Allocation  : Dashboard Expectations Category
+  5. Expectation : Dashboard Allocation Category
+*/ -->
   <button
     mat-stroked-button
     color="primary"
     class="button-border"
-    (click)="manage()"
+    (click)="navigate('edit')"
   >
     Manage
+  </button>
+  <button
+    mat-stroked-button
+    color="primary"
+    class="button-border"
+    (click)="navigate('allocation')"
+  >
+    Allocation
   </button>
 </div>

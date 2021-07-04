@@ -119,7 +119,7 @@ export class ChartPageComponent implements OnInit {
     chart.draw();
   }
 
-  manage = () => {
-    this.router.navigate(["/edit"]);
+  navigate = (route) => {
+    this.router.navigate([route]);
   };
 }

@@ -27,6 +27,10 @@ import {
   MatMenuModule,
   MatProgressSpinnerModule,
 } from "@angular/material";
+import { MatSelectModule } from "@angular/material/select";
+import { CategoryComponent } from "./category/category.component";
+import { ExpectationsComponent } from "./expectations/expectations.component";
+import { AllocationComponent } from "./allocation/allocation.component";
 
 const config = {
   apiKey: "AIzaSyAGW6SyDNAjGg16LSoqVqyYhvxWawCjtss",
@@ -51,10 +55,18 @@ const AngularMaterial = [
   MatButtonToggleModule,
   MatDialogModule,
   MatMenuModule,
+  MatSelectModule,
 ];
 
 @NgModule({
-  declarations: [AppComponent, ChartPageComponent, TablePageComponent],
+  declarations: [
+    AppComponent,
+    ChartPageComponent,
+    TablePageComponent,
+    CategoryComponent,
+    ExpectationsComponent,
+    AllocationComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -32,3 +32,18 @@ body {
 .button-border {
   border-color: #3f51b5 !important ;
 }
+
+.center-div {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-buttons {
+  @extend .center-div;
+  button {
+    margin: auto 5px;
+  }
+}
+.footer-nav {
+  margin-top: 20px;
+}

@@ -13,6 +13,7 @@ export class TablePageComponent implements OnInit {
   options = ["Debt", "Equity", "Others"];
   selectedOption = "Equity";
   displayedColumns: string[] = ["name", "amount", "action"];
+  categories = [""];
 
   constructor(
     private service: PortfolioService,
@@ -26,12 +27,32 @@ export class TablePageComponent implements OnInit {
         console.log(res);
         if (res) {
           this.data = res;
+          this.populateCategory();
         } else {
           this.updatePortfolio({
             Debt: [],
             Equity: [],
             Others: [],
           });
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  populateCategory() {
+    this.service.getCategory().subscribe(
+      (res) => {
+        console.log(res);
+        if (res) {
+          //Populate Category
+          try {
+            this.categories = res.categories.map((elem) => elem.category);
+          } catch (e) {
+            console.log(e);
+          }
         }
       },
       (err) => {
@@ -70,11 +91,13 @@ export class TablePageComponent implements OnInit {
           this.data[result.type][result.index] = {
             name: result.name,
             value: result.value,
+            category: result.category || "",
           };
         } else {
           this.data[result.type].push({
             name: result.name,
             value: result.value,
+            category: result.category || "",
           });
         }
 
@@ -105,7 +128,7 @@ export class TablePageComponent implements OnInit {
     });
   }
 
-  dashboard = () => {
-    this.router.navigate(["/view"]);
+  navigate = (route) => {
+    this.router.navigate([route]);
   };
 }

@@ -29,36 +29,23 @@ export class PortfolioService {
       .collection("portfolio")
       .doc("allocation")
       .valueChanges();
-    // .then((doc) => {
-    //   if (doc.exists) {
-    //     console.log("Document data:", doc.data());
-    //   } else {
-    //     // doc.data() will be undefined in this case
-    //     console.log("No such document!");
-    //   }
-    // })
-    // .catch((error) => {
-    //   console.log("Error getting document:", error);
-    // });
-    // return this.firestore
-    //   .collection("users")
-    //   .doc(this.auth.uid)
-    //   .se.valueChanges({ idField: "id" });
   }
-  // updateBank(id, data) {
-  //   return this.firestore
-  //     .collection("users")
-  //     .doc(this.auth.uid)
-  //     .collection("banks")
-  //     .doc(id)
-  //     .set(data);
-  // }
-  // deleteBank(id) {
-  //   return this.firestore
-  //     .collection("users")
-  //     .doc(this.auth.uid)
-  //     .collection("banks")
-  //     .doc(id)
-  //     .delete();
-  // }
+
+  setCategory(data) {
+    return this.firestore
+      .collection("users")
+      .doc(this.auth.uid)
+      .collection("portfolio")
+      .doc("category")
+      .set(data);
+  }
+
+  getCategory() {
+    return this.firestore
+      .collection("users")
+      .doc(this.auth.uid)
+      .collection("portfolio")
+      .doc("category")
+      .valueChanges();
+  }
 }
