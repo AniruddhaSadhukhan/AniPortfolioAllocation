@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { Router } from "@angular/router";
 import { PortfolioService } from "../services/portfolio.service";
+import { isNumber } from "lodash";
 
 @Component({
   selector: "app-category",
@@ -38,11 +39,12 @@ export class CategoryComponent implements OnInit {
 
   populateCategoryList = (data) => {
     this.categories = data.categories.map((elem) => elem.category);
+    console.log(this.categories);
   };
 
   isAvailable = (category, index) => {
-    let otherCategories = this.categories;
-    if (index && index > -1) otherCategories.splice(index);
+    let otherCategories = [...this.categories];
+    if (isNumber(index) && index > -1) otherCategories.splice(index, 1);
     return !otherCategories.includes(category);
   };
 

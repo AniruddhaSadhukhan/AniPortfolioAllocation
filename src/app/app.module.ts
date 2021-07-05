@@ -27,6 +27,7 @@ import {
   MatMenuModule,
   MatProgressSpinnerModule,
 } from "@angular/material";
+import { MatChipsModule } from "@angular/material/chips";
 import { MatSelectModule } from "@angular/material/select";
 import { CategoryComponent } from "./category/category.component";
 import { ExpectationsComponent } from "./expectations/expectations.component";
@@ -56,6 +57,7 @@ const AngularMaterial = [
   MatDialogModule,
   MatMenuModule,
   MatSelectModule,
+  MatChipsModule,
 ];
 
 @NgModule({

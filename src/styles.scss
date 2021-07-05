@@ -46,4 +46,31 @@ body {
 }
 .footer-nav {
   margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+.mat-table-sticky {
+  border-top: 1px solid #e0e0e0;
+}
+
+.category-chip-list {
+  display: inline-block;
+  .category-chip {
+    min-height: auto;
+    font-size: 0.5em;
+    padding: 7px;
+  }
+}
+.expectations-table {
+  th.mat-header-cell,
+  td.mat-cell,
+  td.mat-footer-cell {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    width: 20vw;
+  }
 }

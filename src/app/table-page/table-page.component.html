@@ -27,12 +27,19 @@
 >
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    <td mat-cell *matCellDef="let element">
+      {{ element.name }}
+      <mat-chip-list class="category-chip-list" *ngIf="element.category"
+        ><mat-chip color="accent" class="category-chip" selected>{{
+          element.category
+        }}</mat-chip></mat-chip-list
+      >
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="amount">
-    <th mat-header-cell *matHeaderCellDef>Amount (in K)</th>
-    <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+    <th mat-header-cell *matHeaderCellDef>Amount</th>
+    <td mat-cell *matCellDef="let element">{{ element.value }} K</td>
   </ng-container>
 
   <ng-container matColumnDef="action">
