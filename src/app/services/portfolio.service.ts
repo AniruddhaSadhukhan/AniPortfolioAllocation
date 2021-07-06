@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { AuthService } from "./auth.service";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { flatten, groupBy, reduce } from "lodash";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -48,4 +50,61 @@ export class PortfolioService {
       .doc("category")
       .valueChanges();
   }
+
+  getExpectations() {
+    return new Observable<{ categories: any[]; total: any }>((observer) => {
+      this.getCategory().subscribe(
+        (res) => {
+          if (res && res.categories.length) {
+            let categories = res.categories;
+            this.getPortfolio().subscribe(
+              (res) => {
+                if (res) {
+                  let portfolio = flatten(Object.values(res));
+                  if (portfolio.length)
+                    observer.next(
+                      this.calculateExpectations(categories, portfolio)
+                    );
+                  else observer.error("No portfolio recieved");
+                } else observer.error("No investments recieved");
+              },
+              (err) => {
+                observer.error(err);
+              }
+            );
+          } else observer.error("No categories recieved");
+        },
+        (err) => {
+          observer.error(err);
+        }
+      );
+    });
+  }
+
+  calculateExpectations = (categories, portfolio) => {
+    let portfolioGroupedByCategory = groupBy(portfolio, "category");
+    let total: any = {};
+    categories.forEach((elem, index) => {
+      categories[index]["investments"] =
+        portfolioGroupedByCategory[elem.category] || [];
+      categories[index]["value"] = reduce(
+        portfolioGroupedByCategory[elem.category] || [],
+        (sum, n) => sum + n.value,
+        0
+      );
+    });
+
+    total.value = reduce(categories, (sum, n) => sum + n.value, 0);
+    total.weightage = 100;
+
+    categories.forEach((elem, index) => {
+      categories[index]["weightage"] = (elem.value / total.value) * 100;
+
+      categories[index]["wt_exp_ret"] =
+        (categories[index]["weightage"] * categories[index]["exp_returns"]) /
+        100;
+    });
+    total.wt_exp_ret = reduce(categories, (sum, n) => sum + n.wt_exp_ret, 0);
+    return { categories, total };
+  };
 }

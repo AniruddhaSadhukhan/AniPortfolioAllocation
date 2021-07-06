@@ -12,7 +12,7 @@ export class ChartPageComponent implements OnInit {
   userName;
   omitOthers = true;
   color = "primary";
-
+  chart: anychart.charts.Sunburst;
   changed() {
     this.refresh();
   }
@@ -83,40 +83,43 @@ export class ChartPageComponent implements OnInit {
     ];
 
     // create a chart and set the data
-    var chart = anychart.sunburst(chartData, "as-tree");
+    this.chart = anychart.sunburst(chartData, "as-tree");
 
     // set the calculation mode
-    chart.calculationMode("parent-independent");
+    this.chart.calculationMode("parent-independent");
 
     // enable HTML for labels
-    chart.labels().useHtml(true);
+    this.chart.labels().useHtml(true);
     // configure labels
-    chart
+    this.chart
       .labels()
       .format(
         "<span><b>{%name}</b></span><br>{%value}k<br><i>({%percent}%)</i>"
       );
 
-    chart.level(0).labels().format("<span><b>{%name}</b></span><br>{%value}k");
+    this.chart
+      .level(0)
+      .labels()
+      .format("<span><b>{%name}</b></span><br>{%value}k");
 
     // configure labels of leaves
-    chart
+    this.chart
       .leaves()
       .labels()
       .format(
         "<span><b>{%name}</b></span><br>{%value}k<br><i>({%percent}%)</i>"
       );
     // set the position of labels
-    chart.labels().position("circular");
-    chart.padding(0);
-    chart.background().enabled(false);
+    this.chart.labels().position("circular");
+    this.chart.padding(0);
+    this.chart.background().enabled(false);
     // set the container id
     document.getElementById("container") &&
       (document.getElementById("container").innerHTML = "");
-    chart.container("container");
+    this.chart.container("container");
 
     // initiate drawing the chart
-    chart.draw();
+    this.chart = this.chart.draw();
   }
 
   navigate = (route) => {

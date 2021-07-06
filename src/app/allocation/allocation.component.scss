@@ -1,0 +1,12 @@
+#allocation-container {
+  width: min(100vw, 80vh);
+  height: min(100vw, 80vh);
+  margin-top: 5px;
+  margin: auto;
+}
+
+#chart-container {
+  height: 80vh;
+  display: flex;
+  margin-top: -30px;
+}
