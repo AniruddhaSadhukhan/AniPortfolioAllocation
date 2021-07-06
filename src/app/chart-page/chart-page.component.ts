@@ -53,7 +53,7 @@ export class ChartPageComponent implements OnInit {
       data[category].forEach((a) => (total[category] += a.value));
       total["all"] += total[category];
     });
-    console.log(total);
+    // console.log(total);
     categories.forEach((category) => {
       data[category].forEach((a) => {
         a["percent"] = Math.round((a.value / total[category]) * 100);
@@ -69,7 +69,7 @@ export class ChartPageComponent implements OnInit {
     if (!this.omitOthers) categories.push("Others");
 
     this.calculatePercentage(this.data, categories);
-    console.log(this.data);
+    // console.log(this.data);
     // create data
     var chartData = [
       {
@@ -99,6 +99,12 @@ export class ChartPageComponent implements OnInit {
       .format(
         "<span><b>{%name}</b></span><br>{%value}k<br><i>({%percent}%)</i>"
       );
+
+    //Tooltip
+    this.chart
+      .tooltip()
+      .useHtml(true)
+      .format("<span><b>{%name}</b></span><br>({%value}K)");
 
     this.chart
       .level(0)

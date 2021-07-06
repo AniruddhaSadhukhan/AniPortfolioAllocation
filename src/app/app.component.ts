@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   constructor(public auth: AuthService, private router: Router) {}
   ngOnInit(): void {
     this.auth.user$.subscribe((res) => {
-      console.log(res);
+      // console.log(res);
       this.user = res;
       this.loading = false;
       if (res) this.router.navigate(["view"]);

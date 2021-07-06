@@ -24,7 +24,7 @@ export class TablePageComponent implements OnInit {
   ngOnInit() {
     this.service.getPortfolio().subscribe(
       (res) => {
-        console.log(res);
+        // console.log(res);
         if (res) {
           this.data = res;
           this.populateCategory();
@@ -45,7 +45,7 @@ export class TablePageComponent implements OnInit {
   populateCategory() {
     this.service.getCategory().subscribe(
       (res) => {
-        console.log(res);
+        // console.log(res);
         if (res) {
           //Populate Category
           try {
@@ -65,13 +65,13 @@ export class TablePageComponent implements OnInit {
     this.service
       .setPortfolio(data)
       .then(() => {
-        console.log("Portfolio updated successfully");
+        // console.log("Portfolio updated successfully");
       })
       .catch((err) => console.log(err));
   };
 
   openPopup(templateRef: TemplateRef<any>, i: number) {
-    console.log("index is ", i);
+    // console.log("index is ", i);
 
     let dialogData = {};
     if (i > -1) {
@@ -85,7 +85,7 @@ export class TablePageComponent implements OnInit {
       data: dialogData,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed", result);
+      // console.log("The dialog was closed", result);
       if (result && result.name && result.value) {
         if (result.index > -1) {
           this.data[result.type][result.index] = {
@@ -101,7 +101,7 @@ export class TablePageComponent implements OnInit {
           });
         }
 
-        console.log(this.data);
+        // console.log(this.data);
         this.updatePortfolio(this.data);
       }
     });
@@ -118,11 +118,11 @@ export class TablePageComponent implements OnInit {
       data: dialogData,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed", result);
+      // console.log("The dialog was closed", result);
       if (result && result.name && result.value && result.index > -1) {
         this.data[result.type].splice(result.index, 1);
 
-        console.log(this.data);
+        // console.log(this.data);
         this.updatePortfolio(this.data);
       }
     });

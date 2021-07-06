@@ -44,7 +44,7 @@ export class AllocationComponent implements OnInit {
       },
     ];
 
-    console.log(chartData);
+    // console.log(chartData);
 
     anychart.graphics.useAbsoluteReferences(false);
     // create a chart and set the data
@@ -64,6 +64,12 @@ export class AllocationComponent implements OnInit {
       .format(
         "<span><b>{%name}</b></span><br>({%value}K - {%percent}%)<br><i>@{%return}%</i>"
       );
+
+    //Tooltip
+    this.chart
+      .tooltip()
+      .useHtml(true)
+      .format("<span><b>{%name}</b></span><br>({%value}K)");
 
     // configure labels of center
     this.chart
@@ -89,7 +95,7 @@ export class AllocationComponent implements OnInit {
         : this.sourceColor;
     });
 
-    this.chart.level(2).thickness("20%");
+    this.chart.level(2).thickness("30%");
     this.chart.level(0).thickness("30%");
     // set the position of labels
     this.chart.labels().position("circular");

@@ -23,7 +23,7 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {
     this.service.getCategory().subscribe(
       (res) => {
-        console.log(res);
+        // console.log(res);
         if (res) {
           this.data = res;
           this.populateCategoryList(res);
@@ -39,7 +39,7 @@ export class CategoryComponent implements OnInit {
 
   populateCategoryList = (data) => {
     this.categories = data.categories.map((elem) => elem.category);
-    console.log(this.categories);
+    // console.log(this.categories);
   };
 
   isAvailable = (category, index) => {
@@ -52,14 +52,14 @@ export class CategoryComponent implements OnInit {
     this.service
       .setCategory(data)
       .then(() => {
-        console.log("Category updated successfully");
+        // console.log("Category updated successfully");
         this.populateCategoryList(data);
       })
       .catch((err) => console.log(err));
   };
 
   openPopup(templateRef: TemplateRef<any>, i: number) {
-    console.log("index is ", i);
+    // console.log("index is ", i);
 
     let dialogData = {};
     if (i > -1) {
@@ -73,7 +73,7 @@ export class CategoryComponent implements OnInit {
       data: dialogData,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed", result);
+      // console.log("The dialog was closed", result);
       if (result && result.category && result.exp_returns) {
         if (result.index > -1) {
           this.data[result.type][result.index] = {
@@ -87,7 +87,7 @@ export class CategoryComponent implements OnInit {
           });
         }
 
-        console.log(this.data);
+        // console.log(this.data);
         this.updateCategory(this.data);
       }
     });
@@ -104,7 +104,7 @@ export class CategoryComponent implements OnInit {
       data: dialogData,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed", result);
+      // console.log("The dialog was closed", result);
       if (
         result &&
         result.category &&
@@ -113,7 +113,7 @@ export class CategoryComponent implements OnInit {
       ) {
         this.data[result.type].splice(result.index, 1);
 
-        console.log(this.data);
+        // console.log(this.data);
         this.updateCategory(this.data);
       }
     });
