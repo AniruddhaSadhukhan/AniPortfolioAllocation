@@ -30,6 +30,8 @@ import { MatSelectModule } from "@angular/material/select";
 import { CategoryComponent } from "./category/category.component";
 import { ExpectationsComponent } from "./expectations/expectations.component";
 import { AllocationComponent } from "./allocation/allocation.component";
+import { ChartModule, HIGHCHARTS_MODULES } from "angular-highcharts";
+import * as sunburst from "highcharts/modules/sunburst.src";
 
 const config = {
   apiKey: "AIzaSyAGW6SyDNAjGg16LSoqVqyYhvxWawCjtss",
@@ -77,9 +79,15 @@ const AngularMaterial = [
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    ChartModule,
     ...AngularMaterial,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HIGHCHARTS_MODULES,
+      useFactory: () => [sunburst],
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

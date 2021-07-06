@@ -107,4 +107,28 @@ export class PortfolioService {
     total.wt_exp_ret = reduce(categories, (sum, n) => sum + n.wt_exp_ret, 0);
     return { categories, total };
   };
+
+  addChildren = (children, parentID) => {
+    let x = [];
+    children.forEach((child, index) => {
+      let id = child.name;
+      if (parentID) {
+        id = parentID + child.name;
+        children[index].parent = parentID;
+      }
+      children[index].id = id;
+      let newChild = { ...children[index] };
+      delete newChild["children"];
+      x.push(newChild);
+      if (child.children && child.children.length)
+        x.push(...this.addChildren(child.children, id));
+    });
+    return x;
+  };
+
+  prepareSunBurstData = (data) => {
+    let res = [];
+    res.push(...this.addChildren(data, ""));
+    return res;
+  };
 }
