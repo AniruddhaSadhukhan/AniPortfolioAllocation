@@ -82,8 +82,11 @@ export class ChartPageComponent implements OnInit {
       },
     ];
 
+    anychart.graphics.useAbsoluteReferences(false);
     // create a chart and set the data
     this.chart = anychart.sunburst(chartData, "as-tree");
+
+    this.chart.title("Portfolio");
 
     // set the calculation mode
     this.chart.calculationMode("parent-independent");
@@ -109,6 +112,17 @@ export class ChartPageComponent implements OnInit {
       .format(
         "<span><b>{%name}</b></span><br>{%value}k<br><i>({%percent}%)</i>"
       );
+
+    // configure the chart stroke
+    this.chart.normal().stroke("#fff", 0.8);
+
+    // darken the leaf color
+    this.chart.fill(function () {
+      return this.isLeaf
+        ? anychart.color.darken(this.sourceColor, 0.05) + " 0.7"
+        : this.sourceColor;
+    });
+
     // set the position of labels
     this.chart.labels().position("circular");
     this.chart.padding(0);

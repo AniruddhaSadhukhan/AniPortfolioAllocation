@@ -45,30 +45,52 @@ export class AllocationComponent implements OnInit {
     ];
 
     console.log(chartData);
+
+    anychart.graphics.useAbsoluteReferences(false);
     // create a chart and set the data
     this.chart = anychart.sunburst(chartData, "as-tree");
+
+    this.chart.title("Categories & Expected Weighted Returns");
 
     // set the calculation mode
     this.chart.calculationMode("parent-independent");
 
-    // chart.level(2).thickness(0);
-
     // enable HTML for labels
     this.chart.labels().useHtml(true);
-    // configure labels
-    this.chart.labels().format("<span><b>{%name}</b></span>");
-    // <br>{%value}k<br><i>({%percent}%)</i>
+
+    // configure labels of categories
+    this.chart
+      .labels()
+      .format(
+        "<span><b>{%name}</b></span><br>({%value}K - {%percent}%)<br><i>@{%return}%</i>"
+      );
+
+    // configure labels of center
     this.chart
       .level(0)
       .labels()
-      .format("<span><b>{%name}</b></span><br>{%value}k<br>{%return}%");
+      .format(
+        "<span><b>{%name}</b></span><br>({%value}K)<br><b><i>@{%return}%</i></b>"
+      );
 
     // // configure labels of leaves
     this.chart
       .leaves()
       .labels()
-      .format("<span><b>{%name}</b></span><br>{%value}k");
-    // chart.leaves().labels().enabled(true);
+      .format("<span><b>{%name}</b></span><br>({%value}K)");
+
+    // configure the chart stroke
+    this.chart.normal().stroke("#fff", 0.8);
+
+    // darken the leaf color
+    this.chart.fill(function () {
+      return this.isLeaf
+        ? anychart.color.darken(this.sourceColor, 0.05) + " 0.7"
+        : this.sourceColor;
+    });
+
+    this.chart.level(2).thickness("20%");
+    this.chart.level(0).thickness("30%");
     // set the position of labels
     this.chart.labels().position("circular");
     this.chart.padding(0);
