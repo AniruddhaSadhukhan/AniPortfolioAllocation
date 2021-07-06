@@ -19,14 +19,12 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTableModule } from "@angular/material/table";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import {
-  MatButtonToggleModule,
-  MatDialogModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatMenuModule,
-  MatProgressSpinnerModule,
-} from "@angular/material";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatSelectModule } from "@angular/material/select";
 import { CategoryComponent } from "./category/category.component";
