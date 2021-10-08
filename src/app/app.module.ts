@@ -32,7 +32,7 @@ import { ExpectationsComponent } from "./expectations/expectations.component";
 import { AllocationComponent } from "./allocation/allocation.component";
 
 const config = {
-  apiKey: "AIzaSyAGW6SyDNAjGg16LSoqVqyYhvxWawCjtss",
+  apiKey: "<API_Key>",
   authDomain: "aniportfolioallocation.firebaseapp.com",
   projectId: "aniportfolioallocation",
   storageBucket: "aniportfolioallocation.appspot.com",
