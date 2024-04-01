@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import { AngularFirestore } from "@angular/fire/firestore";
-import { AuthService } from "./auth.service";
-import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { flatten, groupBy, reduce } from "lodash";
 import { Observable } from "rxjs";
+import { AuthService } from "./auth.service";
 
 @Injectable({
   providedIn: "root",

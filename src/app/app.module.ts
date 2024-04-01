@@ -8,10 +8,10 @@ import { AppComponent } from "./app.component";
 import { ChartPageComponent } from "./chart-page/chart-page.component";
 import { TablePageComponent } from "./table-page/table-page.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AngularFireModule } from "@angular/fire";
-import { AngularFirestoreModule } from "@angular/fire/firestore";
-import { AngularFireStorageModule } from "@angular/fire/storage";
-import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
+import { AngularFireStorageModule } from "@angular/fire/compat/storage";
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
@@ -32,7 +32,7 @@ import { ExpectationsComponent } from "./expectations/expectations.component";
 import { AllocationComponent } from "./allocation/allocation.component";
 
 const config = {
-  apiKey: "<API_Key>",
+  apiKey: "AIzaSyAGW6SyDNAjGg16LSoqVqyYhvxWawCjtss",
   authDomain: "aniportfolioallocation.firebaseapp.com",
   projectId: "aniportfolioallocation",
   storageBucket: "aniportfolioallocation.appspot.com",
