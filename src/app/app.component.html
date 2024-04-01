@@ -1,12 +1,12 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button>
-    <img id="logo" src="assets/logo.png" />
+  <button class="nav-icon-buttons" mat-icon-button>
+    <img class="logo" src="assets/logo.png" />
   </button>
   <span id="appName">AniPortfolioAllocation</span>
   <span class="spacer"></span>
-  <button mat-icon-button *ngIf="user">
+  <button class="nav-icon-buttons" mat-icon-button *ngIf="user">
     <img
-      class="avatar avatar-size"
+      class="avatar logo"
       [src]="user.photoURL"
       [matTooltip]="user.displayName"
       [matMenuTriggerFor]="menu"

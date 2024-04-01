@@ -5,9 +5,7 @@
   background-size: cover;
   border-radius: 50%;
 }
-.avatar-size {
-  width: 90%;
-}
+
 .user-info {
   color: lightcyan;
   text-align: center;
@@ -48,9 +46,15 @@
   }
 }
 
-#logo {
+.logo {
   height: 36px;
+  vertical-align: middle;
+  width: 36px;
 }
 #appName {
   padding-left: 10px;
+}
+
+.nav-icon-buttons{
+  padding: 2px !important;
 }
