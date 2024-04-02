@@ -4,13 +4,14 @@
   </button>
   <span id="appName">AniPortfolioAllocation</span>
   <span class="spacer"></span>
-  <button class="nav-icon-buttons" mat-icon-button *ngIf="user">
-    <img
-      class="avatar logo"
-      [src]="user.photoURL"
-      [matTooltip]="user.displayName"
-      [matMenuTriggerFor]="menu"
-    />
+  <button
+    class="nav-icon-buttons"
+    mat-icon-button
+    *ngIf="user"
+    [matTooltip]="user.displayName"
+    [matMenuTriggerFor]="menu"
+  >
+    <img class="avatar logo" [src]="user.photoURL" />
   </button>
   <mat-menu #menu="matMenu">
     <div class="user-info" *ngIf="user">
