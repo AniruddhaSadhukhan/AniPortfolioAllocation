@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
+
+@include mat.all-component-typographies();
 @include mat.core();
 
 $ip-primary: mat.define-palette(mat.$indigo-palette);
@@ -49,28 +51,35 @@ body {
   padding-bottom: 20px;
 }
 
-tr.mat-footer-row {
+tr.mat-mdc-footer-row {
   font-weight: bold;
 }
 
-.mat-table-sticky {
+.mat-mdc-table-sticky {
   border-top: 1px solid #e0e0e0;
 }
 
 .category-chip-list {
-  display: inline-block;
+  display: inline-block !important;
+  margin-left: 8px;;
   .category-chip {
+    height: auto;
     min-height: auto;
-    font-size: 0.5em;
-    padding: 7px;
+    span{
+      font-size: 0.9em;
+    }
   }
 }
 .expectations-table {
-  th.mat-header-cell,
-  td.mat-cell,
-  td.mat-footer-cell {
+  th.mat-mdc-header-cell,
+  td.mat-mdc-cell,
+  td.mat-mdc-footer-cell {
     padding-left: 8px !important;
     padding-right: 8px !important;
     width: 20vw;
   }
+}
+
+mat-dialog-content{
+  padding-top: 24px !important;
 }

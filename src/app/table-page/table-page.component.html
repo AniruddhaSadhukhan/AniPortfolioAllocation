@@ -29,10 +29,10 @@
     <th mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell *matCellDef="let element">
       {{ element.name }}
-      <mat-chip-list class="category-chip-list" *ngIf="element.category"
-        ><mat-chip color="accent" class="category-chip" selected>{{
+      <mat-chip-listbox class="category-chip-list" *ngIf="element.category"
+        ><mat-chip class="category-chip">{{
           element.category
-        }}</mat-chip></mat-chip-list
+        }}</mat-chip></mat-chip-listbox
       >
     </td>
   </ng-container>
@@ -70,7 +70,7 @@
 
 <!-- Dialog template -->
 <ng-template #editDialog let-data>
-  <h2 matDialogTitle>
+  <h2 mat-dialog-title>
     {{ data.name ? "Edit" : "Add" }} {{ data.type }} entry:
   </h2>
   <mat-dialog-content>
@@ -98,7 +98,7 @@
       </mat-form-field>
     </p>
   </mat-dialog-content>
-  <div mat-dialog-actions>
+  <div mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>
     <button
       mat-button
