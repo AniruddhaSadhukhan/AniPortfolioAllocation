@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
+@import "primeicons/primeicons.css";
 
 @include mat.all-component-typographies();
 @include mat.core();
@@ -61,11 +62,11 @@ tr.mat-mdc-footer-row {
 
 .category-chip-list {
   display: inline-block !important;
-  margin-left: 8px;;
+  margin-left: 8px;
   .category-chip {
     height: auto;
     min-height: auto;
-    span{
+    span {
       font-size: 0.9em;
     }
   }
@@ -80,6 +81,30 @@ tr.mat-mdc-footer-row {
   }
 }
 
-mat-dialog-content{
+mat-dialog-content {
   padding-top: 24px !important;
+}
+
+body {
+  --glow-image: url(https://www.primefaces.org/cdn/primeng/images/layout/pattern.png), radial-gradient(50% 50% at center -25px, var(--primary-color) 0%, #000000 100%);
+  --glow-blend: hard-light, color-dodge;
+  background-image: var(--glow-image);
+  background-blend-mode: var(--glow-blend);
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: auto 20rem;
+}
+
+.toolbar{  
+  position: sticky;
+  border-bottom: 1px solid var(--surface-border);
+  background-color: rgba(0,0,0,.3);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.sidebar{
+  background-color: rgba(0,0,0,.3);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
 }

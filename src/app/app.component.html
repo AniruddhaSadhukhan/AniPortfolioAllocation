@@ -1,33 +1,60 @@
-<mat-toolbar color="primary">
-  <button class="nav-icon-buttons" mat-icon-button>
-    <img class="logo" src="assets/logo.png" />
-  </button>
-  <span id="appName">AniPortfolioAllocation</span>
-  <span class="spacer"></span>
-  <button
-    class="nav-icon-buttons"
-    mat-icon-button
-    *ngIf="user"
-    [matTooltip]="user.displayName"
-    [matMenuTriggerFor]="menu"
-  >
-    <img class="avatar logo" [src]="user.photoURL" />
-  </button>
-  <mat-menu #menu="matMenu">
-    <div class="user-info" *ngIf="user">
-      <img class="avatar" [src]="user.photoURL" />
-      <div class="name">{{ user.displayName }}</div>
-      <div class="email">{{ user.email }}</div>
-    </div>
-    <div mat-menu-item class="signout">
-      <button mat-stroked-button (click)="auth.signOut()" class="button-border">
-        <mat-icon>power_settings_new</mat-icon>
-        Sign Out
-      </button>
-    </div>
-  </mat-menu>
-</mat-toolbar>
+<p-toolbar styleClass="toolbar py-2">
+  <div class="p-toolbar-group-start">
+    <p-avatar
+      image="assets/logo.png"
+      styleClass="mr-2"
+      size="large"
+      shape="circle"
+    ></p-avatar>
+    <span id="appName" class="font-bold text-lg">
+      <span class="font-italic">Ani</span>
+      <span class="uppercase">Portfolio</span>
+    </span>
+  </div>
+  <div class="p-toolbar-group-end">
+    <ng-container *ngIf="user">
+      <p-avatar
+        [image]="user.photoURL"
+        styleClass="mr-2"
+        size="large"
+        shape="circle"
+        [pTooltip]="user.displayName"
+        (click)="sidebarVisible = true"
+      ></p-avatar>
+    </ng-container>
+  </div>
+</p-toolbar>
+<p-sidebar styleClass="sidebar" [(visible)]="sidebarVisible" (click)="sidebarVisible = false">
+  <div class="text-center" *ngIf="user">
+    <p-avatar [image]="user.photoURL" size="xlarge" shape="circle"></p-avatar>
+    <div class="font-bold text-2xl">{{ user.displayName }}</div>
+    <div class="font-italic">{{ user.email }}</div>
+    <p-button
+      label="Logout"
+      icon="pi pi-sign-out"
+      severity="danger"
+      styleClass="my-3"
+      [outlined]="true"
+      [rounded]="true"
+      size="small"
+      (click)="auth.signOut()"
+    ></p-button>
+  </div>
+  <nav>
+    <ul class="">
+      <li *ngFor="let item of items" class="text-xl font-medium">
+        <a [routerLink]="item.routerLink" routerLinkActive="nav-active">
+          <div>
+            <i [class]="'pi ' + item.icon"></i> 
+          </div>
+          {{ item.label }}</a
+        >
+      </li>
+    </ul>
+  </nav>
+</p-sidebar>
 
+<!-- TODO : Change spinner and login button -->
 <div class="spinner" *ngIf="loading"><mat-spinner></mat-spinner></div>
 
 <div class="login-button" *ngIf="!loading && !user">

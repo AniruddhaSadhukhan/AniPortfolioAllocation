@@ -23,6 +23,9 @@
     "@types/lodash": "^4.14.170",
     "anychart": "^8.10.0",
     "lodash": "^4.17.21",
+    "primeflex": "^3.3.1",
+    "primeicons": "^7.0.0",
+    "primeng": "^17.12.0",
     "rxjs": "^7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.4"

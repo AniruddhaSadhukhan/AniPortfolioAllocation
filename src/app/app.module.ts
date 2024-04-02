@@ -30,6 +30,13 @@ import { MatSelectModule } from "@angular/material/select";
 import { CategoryComponent } from "./category/category.component";
 import { ExpectationsComponent } from "./expectations/expectations.component";
 import { AllocationComponent } from "./allocation/allocation.component";
+import { ToolbarModule } from 'primeng/toolbar';
+import { AvatarModule } from 'primeng/avatar';
+import { SharedModule } from 'primeng/api';
+import { SidebarModule } from 'primeng/sidebar';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+import { MenuModule } from 'primeng/menu';
 
 const config = {
   apiKey: "AIzaSyAGW6SyDNAjGg16LSoqVqyYhvxWawCjtss",
@@ -40,6 +47,16 @@ const config = {
   appId: "1:1061219064104:web:036de84a7693c3a5fa581d",
   measurementId: "G-ZZMLL59W4M",
 };
+
+const PrimeModules = [
+  SharedModule,
+  ToolbarModule,
+  AvatarModule,
+  SidebarModule,
+  TooltipModule,
+  ButtonModule,
+  MenuModule
+]
 
 const AngularMaterial = [
   MatToolbarModule,
@@ -78,6 +95,7 @@ const AngularMaterial = [
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ...AngularMaterial,
+    ...PrimeModules,
   ],
   providers: [],
   bootstrap: [AppComponent],
