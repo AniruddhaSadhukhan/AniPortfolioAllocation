@@ -15,20 +15,20 @@ export class AppComponent implements OnInit {
   chartView = false;
   title = "AniPortfolioAllocation";
   sidebarVisible = false;
-  items = [
-    { label: "Dashboard", icon: "pi pi-slack", routerLink: ["/view"] },
-    { label: "Manage", icon: "pi pi-book", routerLink: ["/edit"] },
+  navItems = [
+    { label: "Dashboard", icon: "pi-slack", routerLink: ["/view"] },
+    { label: "Manage", icon: "pi-book", routerLink: ["/edit"] },
     {
       label: "Allocation",
-      icon: "pi pi-chart-pie",
+      icon: "pi-chart-pie",
       routerLink: ["/allocation"],
     },
     {
       label: "Expectation",
-      icon: "pi pi-sliders-v",
+      icon: "pi-sliders-v",
       routerLink: ["/expectations"],
     },
-    { label: "Category", icon: "pi pi-tags", routerLink: ["/category"] },
+    { label: "Category", icon: "pi-tags", routerLink: ["/category"] },
   ];
 
   user: any = null;

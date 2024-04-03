@@ -1,13 +1,14 @@
 .spinner {
-  mat-spinner {
+  display: flex;
+  p-progressSpinner {
     margin: 40vh auto 0;
   }
 }
 
 .login-button {
-  text-align: center;
-  button {
-    margin-top: 40vh;
+  display: flex;
+  p-button {
+    margin: 40vh auto 0;
   }
 }
 

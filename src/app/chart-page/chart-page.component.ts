@@ -11,7 +11,24 @@ export class ChartPageComponent implements OnInit {
   data;
   userName;
   omitOthers = true;
-  color = "primary";
+
+  // TODO : export the whole list and import it here and filter
+  navItems = [
+    // { label: "Dashboard", icon: "pi-slack", routerLink: ["/view"] },
+    { label: "Manage", icon: "pi-book", routerLink: ["/edit"] },
+    {
+      label: "Allocation",
+      icon: "pi-chart-pie",
+      routerLink: ["/allocation"],
+    },
+    // {
+    //   label: "Expectation",
+    //   icon: "pi-sliders-v",
+    //   routerLink: ["/expectations"],
+    // },
+    // { label: "Category", icon: "pi-tags", routerLink: ["/category"] },
+  ];
+
   chart: anychart.charts.Sunburst;
   changed() {
     this.refresh();

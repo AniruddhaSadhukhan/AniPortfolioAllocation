@@ -37,7 +37,8 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenuModule } from 'primeng/menu';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputSwitchModule } from 'primeng/inputswitch';
 const config = {
   apiKey: "AIzaSyAGW6SyDNAjGg16LSoqVqyYhvxWawCjtss",
   authDomain: "aniportfolioallocation.firebaseapp.com",
@@ -55,7 +56,9 @@ const PrimeModules = [
   SidebarModule,
   TooltipModule,
   ButtonModule,
-  MenuModule
+  MenuModule,
+  ProgressSpinnerModule,
+  InputSwitchModule
 ]
 
 const AngularMaterial = [
