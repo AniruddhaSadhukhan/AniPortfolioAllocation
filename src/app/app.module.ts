@@ -35,10 +35,17 @@ import { AvatarModule } from 'primeng/avatar';
 import { SharedModule } from 'primeng/api';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
+import { ButtonGroupModule } from 'primeng/buttongroup';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenuModule } from 'primeng/menu';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { TableModule } from 'primeng/table';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { TagModule } from 'primeng/tag';
+import { DialogModule } from 'primeng/dialog';
+
 const config = {
   apiKey: "AIzaSyAGW6SyDNAjGg16LSoqVqyYhvxWawCjtss",
   authDomain: "aniportfolioallocation.firebaseapp.com",
@@ -58,7 +65,13 @@ const PrimeModules = [
   ButtonModule,
   MenuModule,
   ProgressSpinnerModule,
-  InputSwitchModule
+  InputSwitchModule,
+  SelectButtonModule,
+  TableModule,
+  MultiSelectModule,
+  TagModule,
+  ButtonGroupModule,
+  DialogModule
 ]
 
 const AngularMaterial = [

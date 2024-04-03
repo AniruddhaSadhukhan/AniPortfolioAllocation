@@ -3,17 +3,13 @@ table {
 }
 
 .add-fab {
-  position: relative;
-  top: 20px;
+  position: absolute;
+  top: 107px;
   float: right;
   right: 10px;
+  z-index: 1;
 }
 .toggle-div {
   margin-bottom: -25px;
 }
 
-// Last td in a tr
-td:last-child {
-  padding: 0;
-  width: 26%;
-}

@@ -1,15 +1,11 @@
-<div class="center-div mt-1 toggle-div">
-  <mat-button-toggle-group
-    name="fontStyle"
-    aria-label="Font Style"
+<div class="card flex mt-1 pb-2 justify-content-center">
+  <p-selectButton
+    [options]="options"
     [(ngModel)]="selectedOption"
-  >
-    <mat-button-toggle *ngFor="let item of options" [value]="item">{{
-      item
-    }}</mat-button-toggle>
-  </mat-button-toggle-group>
+    optionLabel="label"
+    optionValue="value"
+  ></p-selectButton>
 </div>
-
 <button
   mat-mini-fab
   color="accent"
@@ -19,6 +15,83 @@
 >
   <mat-icon>add</mat-icon>
 </button>
+<p-table
+  *ngIf="data"
+  [value]="data[selectedOption]"
+  sortField="value"
+  sortOrder="-1"
+  styleClass="p-datatable-sm p-datatable-striped text-sm"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="pr-0" pSortableColumn="name">
+        Name 
+        <p-sortIcon field="category"></p-sortIcon>
+        <p-columnFilter
+          field="category"
+          matchMode="in"
+          display="menu"
+          [showMatchModes]="false"
+          [showOperator]="false"
+          [showAddButton]="false"
+        >
+          <ng-template pTemplate="header">
+            <div class="px-3 pt-3 pb-0">
+              <span class="font-bold">Category Picker</span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <p-multiSelect
+              [ngModel]="value"
+              [options]="categories"
+              placeholder="Any"
+              (onChange)="filter($event.value)"
+            >
+              <ng-template let-option pTemplate="item">
+                <div class="inline-block vertical-align-middle">
+                  <p-tag [value]="option" [rounded]="true"></p-tag>
+                </div>
+              </ng-template>
+            </p-multiSelect>
+          </ng-template>
+        </p-columnFilter>
+      </th>
+      <th pSortableColumn="value">
+        Amount <p-sortIcon field="value"></p-sortIcon>
+      </th>
+      <th class="pr-0">Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-product>
+    <tr>
+      <td class="pr-0 w-6">{{ product.name }}
+        <p-tag [value]="product.category" [rounded]="false"></p-tag>
+      </td>
+      <td>{{ product.value }}k</td>
+      <td class="px-0">
+        <p-buttonGroup>
+          <p-button
+            icon="pi pi-file-edit"
+            [rounded]="true"
+            [text]="true"
+            size="small"
+            styleClass="pr-0 pl-0"
+            
+          ></p-button>
+          <p-button
+            icon="pi pi-trash"
+            [rounded]="true"
+            severity="danger"
+            [text]="true"
+            styleClass="pl-0 pr-0"
+            size="small"
+          ></p-button>
+        </p-buttonGroup>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
 <table
   *ngIf="data"
   mat-table

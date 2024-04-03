@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
       // console.log(res);
       this.user = res;
       this.loading = false;
-      if (res) this.router.navigate(["view"]);
+      if (res) this.router.navigate([window.location.pathname]);
     });
   }
 }

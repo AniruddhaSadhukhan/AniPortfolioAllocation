@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
 })
 export class TablePageComponent implements OnInit {
   data = null;
-  options = ["Debt", "Equity", "Others"];
+  options = [{ label: "Debt", value: "Debt" },{ label: "Equity", value: "Equity" },{ label: "Others", value: "Others" }];
   selectedOption = "Equity";
   displayedColumns: string[] = ["name", "amount", "action"];
   categories = [""];
@@ -24,8 +24,17 @@ export class TablePageComponent implements OnInit {
   ngOnInit() {
     this.service.getPortfolio().subscribe(
       (res) => {
-        // console.log(res);
         if (res) {
+          // res = {
+          //   "Others": [{ "name": "EPF", "value": 617, "category": "EPF" }]
+          // }
+          // add an uuid unique id to each element
+          // Object.keys(res).forEach((key) => {
+          //   res[key].forEach((elem, index) => {
+          //     elem["id"] = crypto.randomUUID();
+          //   });
+          // })
+          console.log(JSON.stringify(res));
           this.data = res;
           this.populateCategory();
         } else {
