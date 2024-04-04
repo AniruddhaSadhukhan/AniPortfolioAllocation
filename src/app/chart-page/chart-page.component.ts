@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../services/auth.service";
 import { PortfolioService } from "../services/portfolio.service";
 @Component({
@@ -34,11 +33,7 @@ export class ChartPageComponent implements OnInit {
     this.refresh();
   }
 
-  constructor(
-    private service: PortfolioService,
-    private router: Router,
-    public auth: AuthService
-  ) {}
+  constructor(private service: PortfolioService, public auth: AuthService) {}
 
   ngOnInit() {
     this.service.getPortfolio().subscribe(
@@ -158,8 +153,4 @@ export class ChartPageComponent implements OnInit {
     // initiate drawing the chart
     this.chart = this.chart.draw();
   }
-
-  navigate = (route) => {
-    this.router.navigate([route]);
-  };
 }

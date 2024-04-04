@@ -14,6 +14,23 @@ export class AllocationComponent implements OnInit {
   chart: anychart.charts.Sunburst;
   constructor(private service: PortfolioService, private router: Router) {}
 
+  // TODO : export the whole list and import it here and filter
+  navItems = [
+    { label: "Dashboard", icon: "pi-slack", routerLink: ["/view"] },
+    // { label: "Manage", icon: "pi-book", routerLink: ["/edit"] },
+    // {
+    //   label: "Allocation",
+    //   icon: "pi-chart-pie",
+    //   routerLink: ["/allocation"],
+    // },
+    {
+      label: "Expectation",
+      icon: "pi-sliders-v",
+      routerLink: ["/expectations"],
+    },
+    { label: "Category", icon: "pi-tags", routerLink: ["/category"] },
+  ];
+
   ngOnInit() {
     this.service.getExpectations().subscribe(
       (res) => {

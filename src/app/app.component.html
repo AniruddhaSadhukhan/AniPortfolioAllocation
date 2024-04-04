@@ -64,12 +64,14 @@
 
 <div class="login-button" *ngIf="!loading && !user">
   <p-button
-      label="Login"
-      icon="pi pi-google"
-      [outlined]="true"
-      [rounded]="true"
-      (click)="auth.googleSignin()"
-    ></p-button>
+    label="Login"
+    icon="pi pi-google"
+    [outlined]="true"
+    [rounded]="true"
+    (click)="auth.googleSignin()"
+  ></p-button>
 </div>
+
+<p-toast [breakpoints]="{ '920px': { width: '75%' } }"></p-toast>
 
 <router-outlet></router-outlet>

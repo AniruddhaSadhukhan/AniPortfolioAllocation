@@ -21,6 +21,8 @@ const routes: Routes = [
     component: AllocationComponent,
     canActivate: [AuthGuard],
   },
+  // default fallback route
+  { path: "**", redirectTo: "/view" },
 ];
 
 /*

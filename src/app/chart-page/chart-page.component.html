@@ -8,20 +8,12 @@
   <div id="container"></div>
 </div>
 <div class="nav-buttons">
-  <!-- /*
- Pages:             Nav Buttons
-  1. Dashboard   : Manage Allocation
-  2. Manage      : Dashboard Allocation
-  3. Category    : Dashboard Allocation Expectations
-  4. Allocation  : Dashboard Expectations Category
-  5. Expectation : Dashboard Allocation Category
-*/ -->
   <p-button
-  *ngFor="let item of navItems"
+    *ngFor="let item of navItems"
+    [routerLink]="item.routerLink"
     [label]="item.label"
     [icon]="'pi ' + item.icon"
     [outlined]="true"
     size="small"
-    (click)="navigate('edit')"
   ></p-button>
 </div>

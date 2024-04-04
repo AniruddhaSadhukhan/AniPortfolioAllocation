@@ -32,7 +32,7 @@ import { ExpectationsComponent } from "./expectations/expectations.component";
 import { AllocationComponent } from "./allocation/allocation.component";
 import { ToolbarModule } from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
-import { SharedModule } from 'primeng/api';
+import { ConfirmationService, MessageService, SharedModule } from 'primeng/api';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { ButtonGroupModule } from 'primeng/buttongroup';
@@ -45,6 +45,13 @@ import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TagModule } from 'primeng/tag';
 import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from "primeng/inputnumber";
+import { FloatLabelModule } from 'primeng/floatlabel'
+import { MessagesModule } from 'primeng/messages';
+import { ToastModule } from 'primeng/toast';
 
 const config = {
   apiKey: "AIzaSyAGW6SyDNAjGg16LSoqVqyYhvxWawCjtss",
@@ -71,7 +78,14 @@ const PrimeModules = [
   MultiSelectModule,
   TagModule,
   ButtonGroupModule,
-  DialogModule
+  DialogModule,
+  DropdownModule,
+  ConfirmDialogModule,
+  InputTextModule,
+  InputNumberModule,
+  FloatLabelModule,
+  MessagesModule,
+  ToastModule
 ]
 
 const AngularMaterial = [
@@ -113,7 +127,7 @@ const AngularMaterial = [
     ...AngularMaterial,
     ...PrimeModules,
   ],
-  providers: [],
+  providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,37 +1,14 @@
 <div id="chart-container">
   <div id="allocation-container" #allocationContainer></div>
 </div>
-<div class="nav-buttons footer-nav">
-  <!-- /*
-   Pages:             Nav Buttons
-    1. Dashboard   : Manage Allocation
-    2. Manage      : Dashboard Allocation
-    3. Category    : Dashboard Allocation Expectations
-    4. Allocation* : Dashboard Expectations Category
-    5. Expectation : Dashboard Allocation Category
-  */ -->
-  <button
-    mat-stroked-button
-    color="primary"
-    class="button-border"
-    (click)="navigate('view')"
-  >
-    Dashboard
-  </button>
-  <button
-    mat-stroked-button
-    color="primary"
-    class="button-border"
-    (click)="navigate('expectations')"
-  >
-    Expectations
-  </button>
-  <button
-    mat-stroked-button
-    color="primary"
-    class="button-border"
-    (click)="navigate('category')"
-  >
-    Category
-  </button>
+<div class="nav-buttons">
+  <p-button
+    *ngFor="let item of navItems"
+    [routerLink]="item.routerLink"
+    [label]="item.label"
+    [icon]="'pi ' + item.icon"
+    [outlined]="true"
+    styleClass="p-button-xs"
+    size="small"
+  ></p-button>
 </div>

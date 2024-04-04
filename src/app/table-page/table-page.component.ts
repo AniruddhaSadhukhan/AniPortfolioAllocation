@@ -1,7 +1,8 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
-import { PortfolioService } from "../services/portfolio.service";
+import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import { ConfirmationService, MessageService } from "primeng/api";
+import { PortfolioService } from "../services/portfolio.service";
 
 @Component({
   selector: "app-table-page",
@@ -10,31 +11,100 @@ import { Router } from "@angular/router";
 })
 export class TablePageComponent implements OnInit {
   data = null;
-  options = [{ label: "Debt", value: "Debt" },{ label: "Equity", value: "Equity" },{ label: "Others", value: "Others" }];
+  options = ["Debt", "Equity", "Others"];
   selectedOption = "Equity";
-  displayedColumns: string[] = ["name", "amount", "action"];
+
   categories = [""];
+
+  currentItem: any = {};
+  itemDialog: boolean = false;
+  submitted: boolean = false;
+
+  // TODO : export the whole list and import it here and filter
+  navItems = [
+    { label: "Dashboard", icon: "pi-slack", routerLink: ["/view"] },
+    // { label: "Manage", icon: "pi-book", routerLink: ["/edit"] },
+    {
+      label: "Allocation",
+      icon: "pi-chart-pie",
+      routerLink: ["/allocation"],
+    },
+    // {
+    //   label: "Expectation",
+    //   icon: "pi-sliders-v",
+    //   routerLink: ["/expectations"],
+    // },
+    // { label: "Category", icon: "pi-tags", routerLink: ["/category"] },
+  ];
+
+  openNew() {
+    this.currentItem = {};
+    this.submitted = false;
+    this.itemDialog = true;
+  }
+
+  editItem(item) {
+    this.currentItem = { ...item };
+    this.itemDialog = true;
+  }
+
+  deleteItem(selectedItem) {
+    this.confirmationService.confirm({
+      message: "Are you sure you want to delete " + selectedItem.name + "?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
+      acceptButtonStyleClass: "p-button-danger",
+      accept: () => {
+        this.data[this.selectedOption] = this.data[this.selectedOption].filter(
+          (item) => item.id !== selectedItem.id
+        );
+        this.updatePortfolio(this.data);
+      },
+    });
+  }
+
+  hideDialog() {
+    this.itemDialog = false;
+    this.submitted = false;
+  }
+
+  saveItem() {
+    this.submitted = true;
+
+    if (this.currentItem.name?.trim()) {
+      // Set undefined category to empty string
+      if (!this.currentItem.category) this.currentItem.category = "";
+
+      if (this.currentItem.id) {
+        // Edit existing item
+        this.data[this.selectedOption] = this.data[this.selectedOption].map(
+          (item) => (item.id === this.currentItem.id ? this.currentItem : item)
+        );
+      } else {
+        // Add new item
+        this.currentItem.id = crypto.randomUUID();
+        this.data[this.selectedOption].push(this.currentItem);
+      }
+
+      this.updatePortfolio(this.data);
+
+      this.itemDialog = false;
+      this.currentItem = {};
+    }
+  }
 
   constructor(
     private service: PortfolioService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
     this.service.getPortfolio().subscribe(
       (res) => {
         if (res) {
-          // res = {
-          //   "Others": [{ "name": "EPF", "value": 617, "category": "EPF" }]
-          // }
-          // add an uuid unique id to each element
-          // Object.keys(res).forEach((key) => {
-          //   res[key].forEach((elem, index) => {
-          //     elem["id"] = crypto.randomUUID();
-          //   });
-          // })
-          console.log(JSON.stringify(res));
           this.data = res;
           this.populateCategory();
         } else {
@@ -74,70 +144,13 @@ export class TablePageComponent implements OnInit {
     this.service
       .setPortfolio(data)
       .then(() => {
-        // console.log("Portfolio updated successfully");
+        this.messageService.add({
+          severity: "success",
+          summary: "Successful",
+          detail: "Portfolio updated",
+          life: 3000,
+        });
       })
       .catch((err) => console.log(err));
-  };
-
-  openPopup(templateRef: TemplateRef<any>, i: number) {
-    // console.log("index is ", i);
-
-    let dialogData = {};
-    if (i > -1) {
-      dialogData = {
-        ...this.data[this.selectedOption][i],
-        index: i,
-      };
-    }
-    dialogData["type"] = this.selectedOption;
-    const dialogRef = this.dialog.open(templateRef, {
-      data: dialogData,
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      // console.log("The dialog was closed", result);
-      if (result && result.name && result.value) {
-        if (result.index > -1) {
-          this.data[result.type][result.index] = {
-            name: result.name,
-            value: result.value,
-            category: result.category || "",
-          };
-        } else {
-          this.data[result.type].push({
-            name: result.name,
-            value: result.value,
-            category: result.category || "",
-          });
-        }
-
-        // console.log(this.data);
-        this.updatePortfolio(this.data);
-      }
-    });
-  }
-
-  deletePopup(templateRef: TemplateRef<any>, i: number) {
-    let dialogData = {
-      ...this.data[this.selectedOption][i],
-      index: i,
-    };
-
-    dialogData["type"] = this.selectedOption;
-    const dialogRef = this.dialog.open(templateRef, {
-      data: dialogData,
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      // console.log("The dialog was closed", result);
-      if (result && result.name && result.value && result.index > -1) {
-        this.data[result.type].splice(result.index, 1);
-
-        // console.log(this.data);
-        this.updatePortfolio(this.data);
-      }
-    });
-  }
-
-  navigate = (route) => {
-    this.router.navigate([route]);
   };
 }
