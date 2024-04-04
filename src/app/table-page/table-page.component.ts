@@ -95,8 +95,6 @@ export class TablePageComponent implements OnInit {
 
   constructor(
     private service: PortfolioService,
-    private dialog: MatDialog,
-    private router: Router,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}

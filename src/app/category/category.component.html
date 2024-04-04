@@ -1,157 +1,137 @@
-<div class="center-div mt-1 toggle-div">
-  <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-    <mat-button-toggle>Categories</mat-button-toggle>
-  </mat-button-toggle-group>
+<div class="card flex mt-1 pb-2 justify-content-center">
+  <p-selectButton
+    [options]="['Categories']"
+    ngModel="Categories"
+  ></p-selectButton>
 </div>
-
-<button
-  mat-mini-fab
-  color="accent"
+<p-button
+  (click)="openNew()"
+  icon="pi pi-plus"
   class="add-fab"
-  (click)="openPopup(editDialog, -1)"
->
-  <mat-icon>add</mat-icon>
-</button>
-<table
+  [rounded]="true"
+></p-button>
+<p-table
   *ngIf="data"
-  mat-table
-  [dataSource]="data['categories']"
-  class="mat-elevation-z8"
+  [value]="data['categories']"
+  sortField="exp_returns"
+  sortOrder="-1"
+  styleClass="p-datatable-sm p-datatable-striped text-sm"
 >
-  <ng-container matColumnDef="category">
-    <th mat-header-cell *matHeaderCellDef>Category</th>
-    <td mat-cell *matCellDef="let element">{{ element.category }}</td>
-  </ng-container>
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="pr-0" pSortableColumn="category">
+        Category
+        <p-sortIcon field="category"></p-sortIcon>
+      </th>
+      <th pSortableColumn="exp_returns">
+        Expected Returns <p-sortIcon field="exp_returns"></p-sortIcon>
+      </th>
+      <th class="pr-0">Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>
+        {{ item.category }}
+      </td>
+      <td>{{ item.exp_returns }}%</td>
+      <td>
+        <p-buttonGroup>
+          <p-button
+            icon="pi pi-file-edit"
+            [rounded]="true"
+            [text]="true"
+            size="small"
+            (click)="editItem(item)"
+          ></p-button>
+          <p-button
+            icon="pi pi-trash"
+            [rounded]="true"
+            severity="danger"
+            [text]="true"
+            size="small"
+            (click)="deleteItem(item)"
+          ></p-button>
+        </p-buttonGroup>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
 
-  <ng-container matColumnDef="exp_returns">
-    <th mat-header-cell *matHeaderCellDef>Expected Returns(%)</th>
-    <td mat-cell *matCellDef="let element">{{ element.exp_returns }}</td>
-  </ng-container>
+<p-dialog
+  [(visible)]="itemDialog"
+  [header]="
+    currentItem?.id
+      ? 'Edit Category' 
+      : 'Add Category' 
+  "
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <div class="pt-4"></div>
 
-  <ng-container matColumnDef="action">
-    <th mat-header-cell *matHeaderCellDef>Actions</th>
-    <td mat-cell *matCellDef="let element; let i = index">
-      <button
-        mat-icon-button
-        color="primary"
-        (click)="openPopup(editDialog, i)"
+    <div class="p-float-label field">
+      <input
+        type="text"
+        pInputText
+        id="category"
+        [(ngModel)]="currentItem.category"
+        required
+      />
+      <label for="category">Category</label>
+      <small class="p-error" *ngIf="submitted && !currentItem.category"
+        >Category is required.</small
       >
-        <mat-icon>mode</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        color="warn"
-        (click)="deletePopup(deleteDialog, i)"
+      <small class="p-error" *ngIf="submitted && !isAvailable(currentItem)"
+        >Category already defined.</small
       >
-        <mat-icon>delete</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+    </div>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
+    <div class="pt-4"></div>
 
-<!-- Dialog template -->
-<ng-template #editDialog let-data>
-  <h2 matDialogTitle>{{ data.name ? "Edit" : "Add" }} Category:</h2>
-  <mat-dialog-content>
-    <p>
-      <mat-form-field appearance="outline">
-        <mat-label>Category</mat-label>
-        <input matInput [(ngModel)]="data.category" required />
-        <mat-hint
-          class="mat-error"
-          *ngIf="!isAvailable(data.category, data.index)"
-          >Category name already defined</mat-hint
-        >
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="outline">
-        <mat-label>Expected Returns(%)</mat-label>
-        <input type="number" matInput [(ngModel)]="data.exp_returns" required />
-      </mat-form-field>
-    </p>
-  </mat-dialog-content>
-  <div mat-dialog-actions>
-    <button mat-button mat-dialog-close>Cancel</button>
+    <div class="p-float-label field">
+      <p-inputNumber
+        id="exp_returns"
+        [(ngModel)]="currentItem.exp_returns"
+        required
+        autofocus
+      />
+      <label for="exp_returns">Expected Returns(%)</label>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
     <button
-      mat-button
-      [mat-dialog-close]="data"
-      [disabled]="
-        !data.category ||
-        !data.exp_returns ||
-        !isAvailable(data.category, data.index)
-      "
-      cdkFocusInitial
-    >
-      Ok
-    </button>
-  </div>
-</ng-template>
-
-<!-- Dialog template -->
-<ng-template #deleteDialog let-data>
-  <h2 matDialogTitle>Delete Category?</h2>
-  <mat-dialog-content>
-    <p>
-      <mat-form-field appearance="outline">
-        <mat-label>Category</mat-label>
-        <input matInput [(ngModel)]="data.category" disabled required />
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="outline">
-        <mat-label>Expected Returns(%)</mat-label>
-        <input matInput [(ngModel)]="data.exp_returns" disabled required />
-      </mat-form-field>
-    </p>
-  </mat-dialog-content>
-  <div mat-dialog-actions>
-    <button mat-button mat-dialog-close>Cancel</button>
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
     <button
-      mat-button
-      [mat-dialog-close]="data"
-      [disabled]="!data.category || !data.exp_returns"
-      cdkFocusInitial
-    >
-      Delete
-    </button>
-  </div>
-</ng-template>
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveItem()"
+    ></button>
+  </ng-template>
+</p-dialog>
 
-<div class="nav-buttons footer-nav">
-  <!-- /*
-     Pages:             Nav Buttons
-      1. Dashboard   : Manage Allocation
-      2. Manage      : Dashboard Allocation
-      3. Category*   : Dashboard Allocation Expectations
-      4. Allocation  : Dashboard Expectations Category
-      5. Expectation : Dashboard Allocation Category
-    */ -->
-  <button
-    mat-stroked-button
-    color="primary"
-    class="button-border"
-    (click)="navigate('view')"
-  >
-    Dashboard
-  </button>
-  <button
-    mat-stroked-button
-    color="primary"
-    class="button-border"
-    (click)="navigate('allocation')"
-  >
-    Allocation
-  </button>
-  <button
-    mat-stroked-button
-    color="primary"
-    class="button-border"
-    (click)="navigate('expectations')"
-  >
-    Expectations
-  </button>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="nav-buttons mt-4 pb-4">
+  <p-button
+    *ngFor="let item of navItems"
+    [routerLink]="item.routerLink"
+    [label]="item.label"
+    [icon]="'pi ' + item.icon"
+    [outlined]="true"
+    styleClass="p-button-xs"
+    size="small"
+  ></p-button>
 </div>
+
