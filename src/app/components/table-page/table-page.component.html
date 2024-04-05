@@ -50,9 +50,7 @@
           </ng-template>
         </p-columnFilter>
       </th>
-      <th pSortableColumn="value">
-        Amount 
-      </th>
+      <th pSortableColumn="value">Amount</th>
       <th class="pr-0">Actions</th>
     </tr>
   </ng-template>
@@ -66,7 +64,7 @@
           [rounded]="false"
         ></p-tag>
       </td>
-      <td>{{ item.value }}k</td>
+      <td>{{ item.value | currencyUnit }}</td>
       <td class="px-0">
         <p-buttonGroup>
           <p-button

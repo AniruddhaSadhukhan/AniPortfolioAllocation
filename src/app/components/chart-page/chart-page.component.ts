@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NavItem } from "src/app/models/nav-item";
+import { getCurrencyUnit } from "src/app/utils/currency-unit.pipe";
 import { getNavItems } from "src/app/utils/nav-items";
 import { AuthService } from "../../services/auth.service";
 import { PortfolioService } from "../../services/portfolio.service";
@@ -39,7 +40,7 @@ export class ChartPageComponent implements OnInit {
       }
     );
   }
-  calculatePercentage = (data, categories) => {
+  calculatePercentage = (data, groups) => {
     let total = { Debt: 0, Equity: 0, Others: 0, all: 0 };
 
     data["percent"] = {
@@ -48,38 +49,39 @@ export class ChartPageComponent implements OnInit {
       Others: 0,
     };
 
-    categories.forEach((category) => {
-      data[category].forEach((a) => (total[category] += a.value));
-      total["all"] += total[category];
+    groups.forEach((group) => {
+      data[group].forEach((a) => (total[group] += a.value));
+      total["all"] += total[group];
     });
     // console.log(total);
-    categories.forEach((category) => {
-      data[category].forEach((a) => {
-        a["percent"] = Math.round((a.value / total[category]) * 100);
+    groups.forEach((group) => {
+      data[group].forEach((a) => {
+        a["percent"] = Math.round((a.value / total[group]) * 100);
       });
-      data["percent"][category] = Math.round(
-        (total[category] / total["all"]) * 100
+      data["percent"][group] = Math.round(
+        (total[group] / total["all"]) * 100
       );
     });
   };
 
   refresh(): void {
-    let categories = ["Debt", "Equity"];
-    if (!this.omitOthers) categories.push("Others");
+    let groups = ["Debt", "Equity"];
+    if (!this.omitOthers) groups.push("Others");
 
-    this.calculatePercentage(this.data, categories);
+    this.calculatePercentage(this.data, groups);
     // console.log(this.data);
     // create data
     var chartData = [
       {
         name: this.userName.split(" ")[0] || "Total",
-        children: categories.map((a) => ({
+        children: groups.map((a) => ({
           name: a,
           children: this.data[a],
           percent: this.data.percent[a],
         })),
       },
     ];
+    console.log(chartData);
 
     anychart.graphics.useAbsoluteReferences(false);
     // create a chart and set the data
@@ -95,28 +97,25 @@ export class ChartPageComponent implements OnInit {
     // configure labels
     this.chart
       .labels()
-      .format(
-        "<span><b>{%name}</b></span><br>{%value}k<br><i>({%percent}%)</i>"
-      );
+      .format(function () {
+        return `<span><b>${this.name}</b></span><br>${getCurrencyUnit(this.value)}<br><i>(${this.getData("percent")}%)</i>`;
+      });
 
     //Tooltip
     this.chart
       .tooltip()
       .useHtml(true)
-      .format("<span><b>{%name}</b></span><br>({%value}K)");
+      .format(function () {
+        return `<span><b>${this.name}</b></span><br>${getCurrencyUnit(this.value)}`;
+      });
 
     this.chart
       .level(0)
       .labels()
-      .format("<span><b>{%name}</b></span><br>{%value}k");
+      .format(function () {
+        return `<span><b>${this.name}</b></span><br>${getCurrencyUnit(this.value)}`;
+      });
 
-    // configure labels of leaves
-    this.chart
-      .leaves()
-      .labels()
-      .format(
-        "<span><b>{%name}</b></span><br>{%value}k<br><i>({%percent}%)</i>"
-      );
 
     // configure the chart stroke
     this.chart.normal().stroke("#fff", 0.8);

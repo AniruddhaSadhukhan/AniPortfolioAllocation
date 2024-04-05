@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { round } from "lodash-es";
 import { NavItem } from "src/app/models/nav-item";
+import { getCurrencyUnit } from "src/app/utils/currency-unit.pipe";
 import { getNavItems } from "src/app/utils/nav-items";
 import { PortfolioService } from "../../services/portfolio.service";
 
@@ -63,31 +64,41 @@ export class AllocationComponent implements OnInit {
     this.chart.labels().useHtml(true);
 
     // configure labels of categories
-    this.chart
-      .labels()
-      .format(
-        "<span><b>{%name}</b></span><br>({%value}K - {%percent}%)<br><i>@{%return}%</i>"
-      );
+    this.chart.labels().format(function () {
+      return `<span><b>${
+        this.name
+      }</b></span><br>(${getCurrencyUnit(this.value)} - ${this.getData("percent")}%)<br><i>@${this.getData("return")}%</i>`;
+    });
 
     //Tooltip
     this.chart
       .tooltip()
       .useHtml(true)
-      .format("<span><b>{%name}</b></span><br>({%value}K)");
+      .format(function () {
+        return `<span><b>${
+          this.name
+        }</b></span><br>(${getCurrencyUnit(this.value)})`;
+      });
 
     // configure labels of center
     this.chart
       .level(0)
       .labels()
-      .format(
-        "<span><b>{%name}</b></span><br>({%value}K)<br><b><i>@{%return}%</i></b>"
-      );
+      .format(function () {
+        return `<span><b>${
+          this.name
+        }</b></span><br>(${getCurrencyUnit(this.value)})<br><b><i>@${this.getData("return")}%</i></b>`;
+      });
 
-    // // configure labels of leaves
+    // configure labels of leaves
     this.chart
       .leaves()
       .labels()
-      .format("<span><b>{%name}</b></span><br>({%value}K)");
+      .format(function () {
+        return `<span><b>${
+          this.name
+        }</b></span><br>(${getCurrencyUnit(this.value)})`;
+      });
 
     // configure the chart stroke
     this.chart.normal().stroke("#fff", 0.8);

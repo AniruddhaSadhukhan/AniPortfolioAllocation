@@ -31,24 +31,24 @@
       <td pFrozenColumn>
         {{ item.category }}
       </td>
-      <td>{{ item.value }} K</td>
+      <td>{{ item.value | currencyUnit }}</td>
       <td>{{ round(item.weightage, 2) }} %</td>
       <td>{{ item.exp_returns }}%</td>
       <td>{{ round(item.wt_exp_ret, 2) }} %</td>
       <td pFrozenColumn alignFrozen="right">
-        {{ round(item.exp_returns_abs) }} K
+        {{ item.exp_returns_abs | currencyUnit }}
       </td>
     </tr>
   </ng-template>
   <ng-template pTemplate="footer">
     <tr>
       <td pFrozenColumn>Total</td>
-      <td>{{ total.value }} K</td>
+      <td>{{ total.value | currencyUnit }}</td>
       <td>{{ round(total.weightage, 2) }} %</td>
       <td></td>
       <td>{{ round(total.wt_exp_ret, 2) }} %</td>
       <td pFrozenColumn alignFrozen="right">
-        {{ round(total.exp_returns_abs) }} K
+        {{ total.exp_returns_abs | currencyUnit }}
       </td>
     </tr>
   </ng-template>

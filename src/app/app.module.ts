@@ -38,6 +38,7 @@ import { CategoryComponent } from "./components/category/category.component";
 import { ChartPageComponent } from "./components/chart-page/chart-page.component";
 import { ExpectationsComponent } from "./components/expectations/expectations.component";
 import { TablePageComponent } from "./components/table-page/table-page.component";
+import { CurrencyUnitPipe } from "./utils/currency-unit.pipe";
 
 const config = {
   apiKey: "AIzaSyAGW6SyDNAjGg16LSoqVqyYhvxWawCjtss",
@@ -82,6 +83,7 @@ const PrimeModules = [
     CategoryComponent,
     ExpectationsComponent,
     AllocationComponent,
+    CurrencyUnitPipe,
   ],
   imports: [
     BrowserModule,
