@@ -1,57 +1,43 @@
 /// <reference path="../../node_modules/anychart/dist/index.d.ts"/>
 
-import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-import { ChartPageComponent } from "./chart-page/chart-page.component";
-import { TablePageComponent } from "./table-page/table-page.component";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { AngularFireStorageModule } from "@angular/fire/compat/storage";
-import { AngularFireAuthModule } from "@angular/fire/compat/auth";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatTableModule } from "@angular/material/table";
-import { MatIconModule } from "@angular/material/icon";
-import { MatButtonModule } from "@angular/material/button";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { MatMenuModule } from "@angular/material/menu";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { MatDialogModule } from "@angular/material/dialog";
-import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { MatChipsModule } from "@angular/material/chips";
-import { MatSelectModule } from "@angular/material/select";
-import { CategoryComponent } from "./category/category.component";
-import { ExpectationsComponent } from "./expectations/expectations.component";
-import { AllocationComponent } from "./allocation/allocation.component";
-import { ToolbarModule } from 'primeng/toolbar';
-import { AvatarModule } from 'primeng/avatar';
-import { ConfirmationService, MessageService, SharedModule } from 'primeng/api';
-import { SidebarModule } from 'primeng/sidebar';
-import { ButtonModule } from 'primeng/button';
-import { ButtonGroupModule } from 'primeng/buttongroup';
-import { TooltipModule } from 'primeng/tooltip';
-import { MenuModule } from 'primeng/menu';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { TableModule } from 'primeng/table';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { TagModule } from 'primeng/tag';
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { InputTextModule } from 'primeng/inputtext';
+import { ConfirmationService, MessageService, SharedModule } from "primeng/api";
+import { AvatarModule } from "primeng/avatar";
+import { ButtonModule } from "primeng/button";
+import { ButtonGroupModule } from "primeng/buttongroup";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { DialogModule } from "primeng/dialog";
+import { DropdownModule } from "primeng/dropdown";
+import { FloatLabelModule } from "primeng/floatlabel";
 import { InputNumberModule } from "primeng/inputnumber";
-import { FloatLabelModule } from 'primeng/floatlabel'
-import { MessagesModule } from 'primeng/messages';
-import { ToastModule } from 'primeng/toast';
+import { InputSwitchModule } from "primeng/inputswitch";
+import { InputTextModule } from "primeng/inputtext";
+import { MenuModule } from "primeng/menu";
+import { MessagesModule } from "primeng/messages";
+import { MultiSelectModule } from "primeng/multiselect";
+import { ProgressSpinnerModule } from "primeng/progressspinner";
+import { SelectButtonModule } from "primeng/selectbutton";
+import { SidebarModule } from "primeng/sidebar";
+import { TableModule } from "primeng/table";
+import { TagModule } from "primeng/tag";
+import { ToastModule } from "primeng/toast";
+import { ToolbarModule } from "primeng/toolbar";
+import { TooltipModule } from "primeng/tooltip";
+import { AllocationComponent } from "./allocation/allocation.component";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { CategoryComponent } from "./category/category.component";
+import { ChartPageComponent } from "./chart-page/chart-page.component";
+import { ExpectationsComponent } from "./expectations/expectations.component";
+import { TablePageComponent } from "./table-page/table-page.component";
 
 const config = {
   apiKey: "AIzaSyAGW6SyDNAjGg16LSoqVqyYhvxWawCjtss",
@@ -85,24 +71,7 @@ const PrimeModules = [
   InputNumberModule,
   FloatLabelModule,
   MessagesModule,
-  ToastModule
-]
-
-const AngularMaterial = [
-  MatToolbarModule,
-  MatInputModule,
-  MatFormFieldModule,
-  MatProgressSpinnerModule,
-  MatTableModule,
-  MatTooltipModule,
-  MatIconModule,
-  MatSlideToggleModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatDialogModule,
-  MatMenuModule,
-  MatSelectModule,
-  MatChipsModule,
+  ToastModule,
 ];
 
 @NgModule({
@@ -124,7 +93,6 @@ const AngularMaterial = [
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ...AngularMaterial,
     ...PrimeModules,
   ],
   providers: [ConfirmationService, MessageService],

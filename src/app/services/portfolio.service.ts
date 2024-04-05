@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
-import { flatten, groupBy, reduce } from "lodash";
+import { flatten, groupBy, reduce } from "lodash-es";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
 

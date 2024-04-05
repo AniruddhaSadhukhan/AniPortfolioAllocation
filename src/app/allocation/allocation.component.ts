@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { round } from "lodash";
+import { round } from "lodash-es";
 import { PortfolioService } from "../services/portfolio.service";
 
 @Component({

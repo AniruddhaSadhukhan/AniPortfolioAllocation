@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { flatten, groupBy, reduce, round } from "lodash";
+import { round } from "lodash-es";
 import { PortfolioService } from "../services/portfolio.service";
 
 @Component({
@@ -19,7 +19,6 @@ export class ExpectationsComponent implements OnInit {
   categories = [];
   total: any = {};
   round = round;
-
 
   // TODO : export the whole list and import it here and filter
   navItems = [
