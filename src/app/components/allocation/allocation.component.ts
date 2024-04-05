@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { round } from "lodash-es";
-import { PortfolioService } from "../services/portfolio.service";
+import { NavItem } from "src/app/models/nav-item";
+import { getNavItems } from "src/app/utils/nav-items";
+import { PortfolioService } from "../../services/portfolio.service";
 
 @Component({
   selector: "app-allocation",
@@ -14,22 +16,7 @@ export class AllocationComponent implements OnInit {
   chart: anychart.charts.Sunburst;
   constructor(private service: PortfolioService, private router: Router) {}
 
-  // TODO : export the whole list and import it here and filter
-  navItems = [
-    { label: "Dashboard", icon: "pi-slack", routerLink: ["/view"] },
-    // { label: "Manage", icon: "pi-book", routerLink: ["/edit"] },
-    // {
-    //   label: "Allocation",
-    //   icon: "pi-chart-pie",
-    //   routerLink: ["/allocation"],
-    // },
-    {
-      label: "Expectation",
-      icon: "pi-sliders-v",
-      routerLink: ["/expectations"],
-    },
-    { label: "Category", icon: "pi-tags", routerLink: ["/category"] },
-  ];
+  navItems: NavItem[] = getNavItems("Dashboard", "Expectation", "Category");
 
   ngOnInit() {
     this.service.getExpectations().subscribe(

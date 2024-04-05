@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeicons/primeicons.css";
 
-
 .anychart-credits {
   display: none;
 }
@@ -28,11 +27,8 @@ body {
   }
 }
 
-
-
-
 body {
-  --glow-image: url(https://www.primefaces.org/cdn/primeng/images/layout/pattern.png),
+  --glow-image: url(assets/glow-image.png),
     radial-gradient(
       50% 50% at center -25px,
       var(--primary-color) 0%,

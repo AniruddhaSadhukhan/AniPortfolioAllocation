@@ -31,13 +31,13 @@ import { TagModule } from "primeng/tag";
 import { ToastModule } from "primeng/toast";
 import { ToolbarModule } from "primeng/toolbar";
 import { TooltipModule } from "primeng/tooltip";
-import { AllocationComponent } from "./allocation/allocation.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { CategoryComponent } from "./category/category.component";
-import { ChartPageComponent } from "./chart-page/chart-page.component";
-import { ExpectationsComponent } from "./expectations/expectations.component";
-import { TablePageComponent } from "./table-page/table-page.component";
+import { AllocationComponent } from "./components/allocation/allocation.component";
+import { CategoryComponent } from "./components/category/category.component";
+import { ChartPageComponent } from "./components/chart-page/chart-page.component";
+import { ExpectationsComponent } from "./components/expectations/expectations.component";
+import { TablePageComponent } from "./components/table-page/table-page.component";
 
 const config = {
   apiKey: "AIzaSyAGW6SyDNAjGg16LSoqVqyYhvxWawCjtss",

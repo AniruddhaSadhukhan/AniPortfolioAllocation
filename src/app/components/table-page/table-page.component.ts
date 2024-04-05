@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ConfirmationService, MessageService } from "primeng/api";
-import { PortfolioService } from "../services/portfolio.service";
+import { NavItem } from "src/app/models/nav-item";
+import { getNavItems } from "src/app/utils/nav-items";
+import { PortfolioService } from "../../services/portfolio.service";
 
 @Component({
   selector: "app-table-page",
@@ -18,22 +20,7 @@ export class TablePageComponent implements OnInit {
   itemDialog: boolean = false;
   submitted: boolean = false;
 
-  // TODO : export the whole list and import it here and filter
-  navItems = [
-    { label: "Dashboard", icon: "pi-slack", routerLink: ["/view"] },
-    // { label: "Manage", icon: "pi-book", routerLink: ["/edit"] },
-    {
-      label: "Allocation",
-      icon: "pi-chart-pie",
-      routerLink: ["/allocation"],
-    },
-    // {
-    //   label: "Expectation",
-    //   icon: "pi-sliders-v",
-    //   routerLink: ["/expectations"],
-    // },
-    // { label: "Category", icon: "pi-tags", routerLink: ["/category"] },
-  ];
+  navItems: NavItem[] = getNavItems("Dashboard", "Allocation");
 
   openNew() {
     this.currentItem = {};

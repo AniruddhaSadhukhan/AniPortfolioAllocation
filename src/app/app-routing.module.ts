@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { ChartPageComponent } from "./chart-page/chart-page.component";
-import { TablePageComponent } from "./table-page/table-page.component";
+import { RouterModule, Routes } from "@angular/router";
+import { AllocationComponent } from "./components/allocation/allocation.component";
+import { CategoryComponent } from "./components/category/category.component";
+import { ChartPageComponent } from "./components/chart-page/chart-page.component";
+import { ExpectationsComponent } from "./components/expectations/expectations.component";
+import { TablePageComponent } from "./components/table-page/table-page.component";
 import { AuthGuard } from "./services/auth.guard";
-import { AllocationComponent } from "./allocation/allocation.component";
-import { CategoryComponent } from "./category/category.component";
-import { ExpectationsComponent } from "./expectations/expectations.component";
 
 const routes: Routes = [
   { path: "view", component: ChartPageComponent, canActivate: [AuthGuard] },

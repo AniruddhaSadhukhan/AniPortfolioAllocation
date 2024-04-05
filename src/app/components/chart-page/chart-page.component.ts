@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { AuthService } from "../services/auth.service";
-import { PortfolioService } from "../services/portfolio.service";
+import { NavItem } from "src/app/models/nav-item";
+import { getNavItems } from "src/app/utils/nav-items";
+import { AuthService } from "../../services/auth.service";
+import { PortfolioService } from "../../services/portfolio.service";
 @Component({
   selector: "app-chart-page",
   templateUrl: "./chart-page.component.html",
@@ -11,22 +13,7 @@ export class ChartPageComponent implements OnInit {
   userName;
   omitOthers = true;
 
-  // TODO : export the whole list and import it here and filter
-  navItems = [
-    // { label: "Dashboard", icon: "pi-slack", routerLink: ["/view"] },
-    { label: "Manage", icon: "pi-book", routerLink: ["/edit"] },
-    {
-      label: "Allocation",
-      icon: "pi-chart-pie",
-      routerLink: ["/allocation"],
-    },
-    // {
-    //   label: "Expectation",
-    //   icon: "pi-sliders-v",
-    //   routerLink: ["/expectations"],
-    // },
-    // { label: "Category", icon: "pi-tags", routerLink: ["/category"] },
-  ];
+  navItems: NavItem[] = getNavItems("Manage", "Allocation");
 
   chart: anychart.charts.Sunburst;
   changed() {
