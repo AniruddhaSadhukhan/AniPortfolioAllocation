@@ -1,0 +1,67 @@
+<div class="card flex mt-1 pb-2 justify-content-center">
+  <p-selectButton
+    [options]="['Projected Expectations']"
+    ngModel="Projected Expectations"
+  ></p-selectButton>
+</div>
+<p-table
+  *ngIf="categories.length"
+  [value]="categories"
+  scrollable="true"
+  sortField="exp_returns_abs"
+  sortOrder="-1"
+  showInitialSortBadge="false"
+  [tableStyle]="{ 'min-width': '33rem' }"
+  styleClass="p-datatable-sm p-datatable-striped text-sm"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th pFrozenColumn pSortableColumn="category">Category</th>
+      <th pSortableColumn="value">Value</th>
+      <th pSortableColumn="weightage">Weightage</th>
+      <th pSortableColumn="exp_returns">Exp.<br />Returns<br />(in %)</th>
+      <th pSortableColumn="wt_exp_ret">Wt.<br />Exp.<br />Return</th>
+      <th pFrozenColumn alignFrozen="right" pSortableColumn="exp_returns_abs">
+        Exp.<br />Returns
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td pFrozenColumn>
+        {{ item.category }}
+      </td>
+      <td>{{ item.value | currencyUnit }}</td>
+      <td>{{ round(item.weightage, 2) }} %</td>
+      <td>{{ item.exp_returns }}%</td>
+      <td>{{ round(item.wt_exp_ret, 2) }} %</td>
+      <td pFrozenColumn alignFrozen="right">
+        {{ item.exp_returns_abs | currencyUnit }}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <tr>
+      <td pFrozenColumn>Total</td>
+      <td>{{ total.value | currencyUnit }}</td>
+      <td>{{ round(total.weightage, 2) }} %</td>
+      <td></td>
+      <td>{{ round(total.wt_exp_ret, 2) }} %</td>
+      <td pFrozenColumn alignFrozen="right">
+        {{ total.exp_returns_abs | currencyUnit }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<div class="nav-buttons mt-4 pb-4">
+  <p-button
+    *ngFor="let item of navItems"
+    [routerLink]="item.routerLink"
+    [label]="item.label"
+    [icon]="'pi ' + item.icon"
+    [outlined]="true"
+    styleClass="p-button-xs"
+    size="small"
+  ></p-button>
+</div>

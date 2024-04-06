@@ -1,0 +1,25 @@
+<div class="flex justify-content-end w-full">
+  <div id="slider">
+    <span class="">Hide Others</span>
+    <p-inputSwitch [(ngModel)]="omitOthers" (onChange)="changed()"
+      >Hide Others</p-inputSwitch
+    >
+  </div>
+</div>
+<div
+  id="chart-container"
+  class="w-full flex justify-content-center flex-column"
+>
+  <div class="text-center text-400">Portfolio</div>
+  <div id="container" class="mx-auto"></div>
+</div>
+<div class="nav-buttons">
+  <p-button
+    *ngFor="let item of navItems"
+    [routerLink]="item.routerLink"
+    [label]="item.label"
+    [icon]="'pi ' + item.icon"
+    [outlined]="true"
+    size="small"
+  ></p-button>
+</div>

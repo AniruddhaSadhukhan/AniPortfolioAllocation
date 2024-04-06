@@ -1,0 +1,136 @@
+<div class="card flex mt-1 pb-2 justify-content-center">
+  <p-selectButton
+    [options]="['Categories']"
+    ngModel="Categories"
+  ></p-selectButton>
+</div>
+<p-button
+  (click)="openNew()"
+  icon="pi pi-plus"
+  class="add-fab"
+  [rounded]="true"
+></p-button>
+<p-table
+  *ngIf="data"
+  [value]="data['categories']"
+  sortField="exp_returns"
+  sortOrder="-1"
+  styleClass="p-datatable-sm p-datatable-striped text-sm"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="pr-0" pSortableColumn="category">
+        Category
+      </th>
+      <th pSortableColumn="exp_returns">
+        Expected<br />Returns 
+      </th>
+      <th class="pr-0">Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>
+        {{ item.category }}
+      </td>
+      <td>{{ item.exp_returns }}%</td>
+      <td>
+        <p-buttonGroup>
+          <p-button
+            icon="pi pi-file-edit"
+            [rounded]="true"
+            [text]="true"
+            size="small"
+            (click)="editItem(item)"
+          ></p-button>
+          <p-button
+            icon="pi pi-trash"
+            [rounded]="true"
+            severity="danger"
+            [text]="true"
+            size="small"
+            (click)="deleteItem(item)"
+          ></p-button>
+        </p-buttonGroup>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [(visible)]="itemDialog"
+  [header]="
+    currentItem?.id
+      ? 'Edit Category' 
+      : 'Add Category' 
+  "
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <div class="pt-4"></div>
+
+    <div class="p-float-label field">
+      <input
+        type="text"
+        pInputText
+        id="category"
+        [(ngModel)]="currentItem.category"
+        required
+      />
+      <label for="category">Category</label>
+      <small class="p-error" *ngIf="submitted && !currentItem.category"
+        >Category is required.</small
+      >
+      <small class="p-error" *ngIf="submitted && !isAvailable(currentItem)"
+        >Category already defined.</small
+      >
+    </div>
+
+    <div class="pt-4"></div>
+
+    <div class="p-float-label field">
+      <p-inputNumber
+        id="exp_returns"
+        [(ngModel)]="currentItem.exp_returns"
+        required
+        autofocus
+      />
+      <label for="exp_returns">Expected Returns(%)</label>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveItem()"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog></p-confirmDialog>
+
+<div class="nav-buttons mt-4 pb-4">
+  <p-button
+    *ngFor="let item of navItems"
+    [routerLink]="item.routerLink"
+    [label]="item.label"
+    [icon]="'pi ' + item.icon"
+    [outlined]="true"
+    styleClass="p-button-xs"
+    size="small"
+  ></p-button>
+</div>
+

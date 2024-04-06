@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { flatten, groupBy, reduce, round } from "lodash";
-import { PortfolioService } from "../services/portfolio.service";
+import { round } from "lodash-es";
+import { NavItem } from "src/app/models/nav-item";
+import { getNavItems } from "src/app/utils/nav-items";
+import { PortfolioService } from "../../services/portfolio.service";
 
 @Component({
   selector: "app-expectations",
@@ -19,6 +21,8 @@ export class ExpectationsComponent implements OnInit {
   categories = [];
   total: any = {};
   round = round;
+
+  navItems: NavItem[] = getNavItems("Dashboard", "Allocation");
 
   constructor(private service: PortfolioService, private router: Router) {}
 
