@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { groupBy, map } from "lodash-es";
 import { NavItem } from "src/app/models/nav-item";
+import { PortfolioNode } from "src/app/models/portfolio-node";
 import { getCurrencyUnit } from "src/app/utils/currency-unit.pipe";
 import { getNavItems } from "src/app/utils/nav-items";
 import { AuthService } from "../../services/auth.service";
@@ -40,48 +42,87 @@ export class ChartPageComponent implements OnInit {
       }
     );
   }
-  calculatePercentage = (data, groups) => {
-    let total = { Debt: 0, Equity: 0, Others: 0, all: 0 };
 
-    data["percent"] = {
-      Debt: 0,
-      Equity: 0,
-      Others: 0,
-    };
+  /**
+   * Calculate the total value of a node and its descendants.
+   *
+   * @param node The node to calculate the value of.
+   * @return The total value of the node and its descendants.
+   */
+  calculateValue(node: PortfolioNode): number {
+    // If the node has no children, return its own value.
+    if (!node.children) {
+      return node.value;
+    }
 
-    groups.forEach((group) => {
-      data[group].forEach((a) => (total[group] += a.value));
-      total["all"] += total[group];
+    // Initialize the node's value to 0.
+    node.value = 0;
+
+    // Calculate the value of each child node and add it to the node's value.
+    node.children.forEach((child) => {
+      node.value += this.calculateValue(child);
     });
-    // console.log(total);
-    groups.forEach((group) => {
-      data[group].forEach((a) => {
-        a["percent"] = Math.round((a.value / total[group]) * 100);
-      });
-      data["percent"][group] = Math.round(
-        (total[group] / total["all"]) * 100
-      );
+
+    // Return the total value of the node and its descendants.
+    return node.value;
+  }
+
+  /**
+   * Calculate the percentage of a node's value relative to its parent node.
+   * And calculate the percentage of each child node recursively.
+   *
+   * @param node The node to calculate the percentage for.
+   * @param parentValue The value of the node's parent. Default is 0.
+   */
+  calculatePercent(node: PortfolioNode, parentValue = 0) {
+    // Calculate the percentage of the node's value relative to its parent
+    if (parentValue)
+      node.percent = Math.round((node.value / parentValue) * 100);
+
+    // If the node has no children, return immediately.
+    if (!node.children) {
+      return;
+    }
+
+    // Calculate the percentage of each child node recursively.
+    node.children.forEach((child) => {
+      this.calculatePercent(child, node.value);
     });
-  };
+  }
+
+  generateTree(data, groups: string[]): PortfolioNode[] {
+    // Portfolio > Group > Category > Item
+    let tree = [
+      {
+        name: this.userName.split(" ")[0] || "Total",
+        children: groups.map((groupName) => {
+          return {
+            name: groupName,
+            children: map(
+              groupBy(data[groupName], "category"),
+              (items, categoryName) => {
+                return {
+                  name: categoryName,
+                  children: items,
+                };
+              }
+            ),
+          };
+        }),
+      },
+    ];
+
+    this.calculateValue(tree[0]);
+    this.calculatePercent(tree[0]);
+
+    return tree;
+  }
 
   refresh(): void {
     let groups = ["Debt", "Equity"];
     if (!this.omitOthers) groups.push("Others");
 
-    this.calculatePercentage(this.data, groups);
-    // console.log(this.data);
-    // create data
-    var chartData = [
-      {
-        name: this.userName.split(" ")[0] || "Total",
-        children: groups.map((a) => ({
-          name: a,
-          children: this.data[a],
-          percent: this.data.percent[a],
-        })),
-      },
-    ];
-    console.log(chartData);
+    let chartData = this.generateTree(this.data, groups);
 
     anychart.graphics.useAbsoluteReferences(false);
     // create a chart and set the data
@@ -95,27 +136,30 @@ export class ChartPageComponent implements OnInit {
     // enable HTML for labels
     this.chart.labels().useHtml(true);
     // configure labels
-    this.chart
-      .labels()
-      .format(function () {
-        return `<span><b>${this.name}</b></span><br>${getCurrencyUnit(this.value)}<br><i>(${this.getData("percent")}%)</i>`;
-      });
+    this.chart.labels().format(function () {
+      return `<span><b>${
+        this.name
+      }</b></span><br>${getCurrencyUnit(this.value)}<br><i>(${this.getData("percent")}%)</i>`;
+    });
 
     //Tooltip
     this.chart
       .tooltip()
       .useHtml(true)
       .format(function () {
-        return `<span><b>${this.name}</b></span><br>${getCurrencyUnit(this.value)}`;
+        return `<span><b>${
+          this.name
+        }</b></span><br>${getCurrencyUnit(this.value)}`;
       });
 
     this.chart
       .level(0)
       .labels()
       .format(function () {
-        return `<span><b>${this.name}</b></span><br>${getCurrencyUnit(this.value)}`;
+        return `<span><b>${
+          this.name
+        }</b></span><br>${getCurrencyUnit(this.value)}`;
       });
-
 
     // configure the chart stroke
     this.chart.normal().stroke("#fff", 0.8);
