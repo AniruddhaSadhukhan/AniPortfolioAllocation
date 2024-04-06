@@ -128,7 +128,6 @@ export class ChartPageComponent implements OnInit {
     // create a chart and set the data
     this.chart = anychart.sunburst(chartData, "as-tree");
 
-    this.chart.title("Portfolio");
 
     // set the calculation mode
     this.chart.calculationMode("parent-independent");
@@ -173,7 +172,7 @@ export class ChartPageComponent implements OnInit {
 
     // set the position of labels
     this.chart.labels().position("circular");
-    this.chart.padding(0);
+    this.chart.padding(1);
     this.chart.background().enabled(false);
     // set the container id
     document.getElementById("container") &&

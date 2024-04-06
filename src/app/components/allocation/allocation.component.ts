@@ -55,8 +55,6 @@ export class AllocationComponent implements OnInit {
     // create a chart and set the data
     this.chart = anychart.sunburst(chartData, "as-tree");
 
-    this.chart.title("Categories & Expected Weighted Returns");
-
     // set the calculation mode
     this.chart.calculationMode("parent-independent");
 
@@ -117,9 +115,9 @@ export class AllocationComponent implements OnInit {
     this.chart.padding(0);
     this.chart.background().enabled(false);
     // set the container id
-    document.getElementById("allocation-container") &&
-      (document.getElementById("allocation-container").innerHTML = "");
-    this.chart.container("allocation-container");
+    document.getElementById("container") &&
+      (document.getElementById("container").innerHTML = "");
+    this.chart.container("container");
     // initiate drawing the chart
     this.chart.draw();
   }
