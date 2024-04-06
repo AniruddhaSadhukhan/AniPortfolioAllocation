@@ -128,7 +128,6 @@ export class ChartPageComponent implements OnInit {
     // create a chart and set the data
     this.chart = anychart.sunburst(chartData, "as-tree");
 
-
     // set the calculation mode
     this.chart.calculationMode("parent-independent");
 
@@ -163,11 +162,11 @@ export class ChartPageComponent implements OnInit {
     // configure the chart stroke
     this.chart.normal().stroke("#fff", 0.8);
 
-    // darken the leaf color
+    // darken color towards the leaf
     this.chart.fill(function () {
-      return this.isLeaf
-        ? anychart.color.darken(this.sourceColor, 0.05) + " 0.7"
-        : this.sourceColor;
+      return (
+        anychart.color.darken(this.sourceColor, 0.05 * (this.level + 1)) + ""
+      );
     });
 
     // set the position of labels

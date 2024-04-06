@@ -101,11 +101,11 @@ export class AllocationComponent implements OnInit {
     // configure the chart stroke
     this.chart.normal().stroke("#fff", 0.8);
 
-    // darken the leaf color
+    // darken color towards the leaf
     this.chart.fill(function () {
-      return this.isLeaf
-        ? anychart.color.darken(this.sourceColor, 0.05) + " 0.7"
-        : this.sourceColor;
+      return (
+        anychart.color.darken(this.sourceColor, 0.05 * (this.level + 1)) + ""
+      );
     });
 
     this.chart.level(2).thickness("30%");
