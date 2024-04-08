@@ -27,16 +27,16 @@ export class ExpectationsComponent implements OnInit {
   constructor(private service: PortfolioService, private router: Router) {}
 
   ngOnInit() {
-    this.service.getExpectations().subscribe(
-      (res) => {
+    this.service.getExpectations().subscribe({
+      next: (res) => {
         let exp: any = res;
         this.categories = exp.categories;
         this.total = exp.total;
       },
-      (err) => {
+      error: (err) => {
         console.log(err);
-      }
-    );
+      },
+    });
   }
 
   navigate = (route) => {

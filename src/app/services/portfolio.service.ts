@@ -1,64 +1,50 @@
 import { Injectable } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { Firestore, doc, docData, setDoc } from "@angular/fire/firestore";
 import { flatten, groupBy, reduce } from "lodash-es";
 import { Observable } from "rxjs";
+import { Allocation, CategoryCollection } from "../models/portfolio";
 import { AuthService } from "./auth.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class PortfolioService {
-  constructor(
-    private firestore: AngularFirestore,
-    public auth: AuthService,
-    private afAuth: AngularFireAuth
-  ) {}
+  constructor(private firestore: Firestore, public auth: AuthService) {}
 
-  setPortfolio(data) {
-    return this.firestore
-      .collection("users")
-      .doc(this.auth.uid)
-      .collection("portfolio")
-      .doc("allocation")
-      .set(data);
+  setPortfolio(data: Allocation) {
+    return setDoc(
+      doc(this.firestore, `users/${this.auth.uid}/portfolio/allocation`),
+      data
+    );
   }
 
-  getPortfolio() {
-    return this.firestore
-      .collection("users")
-      .doc(this.auth.uid)
-      .collection("portfolio")
-      .doc("allocation")
-      .valueChanges();
+  getPortfolio(): Observable<Allocation> {
+    return docData(
+      doc(this.firestore, `users/${this.auth.uid}/portfolio/allocation`)
+    ) as Observable<Allocation>;
   }
 
-  setCategory(data) {
-    return this.firestore
-      .collection("users")
-      .doc(this.auth.uid)
-      .collection("portfolio")
-      .doc("category")
-      .set(data);
+  setCategory(data: CategoryCollection) {
+    return setDoc(
+      doc(this.firestore, `users/${this.auth.uid}/portfolio/category`),
+      data
+    );
   }
 
-  getCategory() {
-    return this.firestore
-      .collection("users")
-      .doc(this.auth.uid)
-      .collection("portfolio")
-      .doc("category")
-      .valueChanges();
+  getCategory(): Observable<CategoryCollection> {
+    return docData(
+      doc(this.firestore, `users/${this.auth.uid}/portfolio/category`)
+    ) as Observable<CategoryCollection>;
   }
 
   getExpectations() {
     return new Observable<{ categories: any[]; total: any }>((observer) => {
-      this.getCategory().subscribe(
-        (res) => {
+      this.getCategory().subscribe({
+        next: (res) => {
           if (res && res.categories.length) {
             let categories = res.categories;
-            this.getPortfolio().subscribe(
-              (res) => {
+            this.getPortfolio().subscribe({
+              next: (res) => {
                 if (res) {
                   let portfolio = flatten(Object.values(res));
                   if (portfolio.length)
@@ -68,16 +54,16 @@ export class PortfolioService {
                   else observer.error("No portfolio recieved");
                 } else observer.error("No investments recieved");
               },
-              (err) => {
+              error: (err) => {
                 observer.error(err);
-              }
-            );
+              },
+            });
           } else observer.error("No categories recieved");
         },
-        (err) => {
+        error: (err) => {
           observer.error(err);
-        }
-      );
+        },
+      });
     });
   }
 
@@ -105,7 +91,7 @@ export class PortfolioService {
         100;
 
       categories[index]["exp_returns_abs"] =
-        categories[index]["exp_returns"] / 100 * categories[index]["value"];
+        (categories[index]["exp_returns"] / 100) * categories[index]["value"];
     });
     total.exp_returns_abs = reduce(
       categories,

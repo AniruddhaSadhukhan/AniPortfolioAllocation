@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { NavItem } from "src/app/models/nav-item";
+import { Allocation } from "src/app/models/portfolio";
 import { getNavItems } from "src/app/utils/nav-items";
 import { PortfolioService } from "../../services/portfolio.service";
 
@@ -10,7 +11,7 @@ import { PortfolioService } from "../../services/portfolio.service";
   styleUrls: ["./table-page.component.scss"],
 })
 export class TablePageComponent implements OnInit {
-  data = null;
+  data: Allocation = null;
   options = ["Debt", "Equity", "Others"];
   selectedOption = "Equity";
 
@@ -85,8 +86,8 @@ export class TablePageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.service.getPortfolio().subscribe(
-      (res) => {
+    this.service.getPortfolio().subscribe({
+      next: (res) => {
         if (res) {
           this.data = res;
           this.populateCategory();
@@ -98,15 +99,15 @@ export class TablePageComponent implements OnInit {
           });
         }
       },
-      (err) => {
+      error: (err) => {
         console.log(err);
-      }
-    );
+      },
+    });
   }
 
   populateCategory() {
-    this.service.getCategory().subscribe(
-      (res) => {
+    this.service.getCategory().subscribe({
+      next: (res) => {
         // console.log(res);
         if (res) {
           //Populate Category
@@ -117,13 +118,13 @@ export class TablePageComponent implements OnInit {
           }
         }
       },
-      (err) => {
+      error: (err) => {
         console.log(err);
-      }
-    );
+      },
+    });
   }
 
-  updatePortfolio = (data) => {
+  updatePortfolio = (data: Allocation) => {
     this.service
       .setPortfolio(data)
       .then(() => {

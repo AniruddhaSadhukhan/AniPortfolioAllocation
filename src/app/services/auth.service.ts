@@ -1,30 +1,40 @@
 import { Injectable } from "@angular/core";
-import { GoogleAuthProvider } from "@angular/fire/auth";
-import { AngularFireAuth } from "@angular/fire/compat/auth";
 import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from "@angular/fire/compat/firestore";
+  Auth,
+  GoogleAuthProvider,
+  authState,
+  signInWithPopup,
+  signOut,
+} from "@angular/fire/auth";
 import { Router } from "@angular/router";
 
+import {
+  DocumentReference,
+  Firestore,
+  doc,
+  docData,
+  setDoc,
+} from "@angular/fire/firestore";
 import { Observable, of } from "rxjs";
 import { switchMap } from "rxjs/operators";
-import { User } from "./user.model";
+import { User } from "../models/user.model";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
   user$: Observable<any>;
   uid = null;
   constructor(
-    private afAuth: AngularFireAuth,
-    private afs: AngularFirestore,
+    private fireAuth: Auth,
+    private firestore: Firestore,
     private router: Router
   ) {
-    this.user$ = this.afAuth.authState.pipe(
+    this.user$ = authState(this.fireAuth).pipe(
       switchMap((user) => {
         if (user) {
           this.uid = user.uid;
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+          return docData(
+            doc(this.firestore, `users/${user.uid}`)
+          ) as Observable<User>;
         } else {
           return of(null);
         }
@@ -34,20 +44,18 @@ export class AuthService {
 
   async googleSignin() {
     const provider = new GoogleAuthProvider();
-    const credential = await this.afAuth.signInWithPopup(provider);
+    const credential = await signInWithPopup(this.fireAuth, provider);
     return this.updateUserData(credential.user);
   }
 
   async signOut() {
-    await this.afAuth.signOut();
+    await signOut(this.fireAuth);
     return this.router.navigate(["/"]);
   }
 
   private updateUserData(user) {
     // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
-      `users/${user.uid}`
-    );
+    const userRef: DocumentReference = doc(this.firestore, `users/${user.uid}`);
 
     const data = {
       uid: user.uid,
@@ -55,6 +63,6 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL,
     };
-    return userRef.set(data, { merge: true });
+    return setDoc(userRef, data, { merge: true });
   }
 }

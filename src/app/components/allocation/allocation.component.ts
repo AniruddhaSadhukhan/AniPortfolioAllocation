@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { round } from "lodash-es";
+import { Subscription } from "rxjs";
 import { NavItem } from "src/app/models/nav-item";
 import { getCurrencyUnit } from "src/app/utils/currency-unit.pipe";
 import { getNavItems } from "src/app/utils/nav-items";
@@ -15,22 +16,27 @@ export class AllocationComponent implements OnInit {
   categories = [];
   total: any = {};
   chart: anychart.charts.Sunburst;
+  subscription: Subscription;
   constructor(private service: PortfolioService, private router: Router) {}
 
   navItems: NavItem[] = getNavItems("Dashboard", "Expectation", "Category");
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   ngOnInit() {
-    this.service.getExpectations().subscribe(
-      (res) => {
+    this.subscription = this.service.getExpectations().subscribe({
+      next: (res) => {
         let exp: any = res;
         this.categories = exp.categories;
         this.total = exp.total;
         this.refresh();
       },
-      (err) => {
+      error: (err) => {
         console.log(err);
-      }
-    );
+      },
+    });
   }
 
   refresh(): void {

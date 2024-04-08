@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { groupBy, map } from "lodash-es";
+import { Subscription } from "rxjs";
 import { NavItem } from "src/app/models/nav-item";
-import { PortfolioNode } from "src/app/models/portfolio-node";
+import { Allocation, PortfolioNode } from "src/app/models/portfolio";
 import { getCurrencyUnit } from "src/app/utils/currency-unit.pipe";
 import { getNavItems } from "src/app/utils/nav-items";
 import { AuthService } from "../../services/auth.service";
@@ -12,9 +13,10 @@ import { PortfolioService } from "../../services/portfolio.service";
   styleUrls: ["./chart-page.component.scss"],
 })
 export class ChartPageComponent implements OnInit {
-  data;
-  userName;
+  data: Allocation;
+  userName: string;
   omitOthers = true;
+  subscription: Subscription;
 
   navItems: NavItem[] = getNavItems("Manage", "Allocation");
 
@@ -25,9 +27,13 @@ export class ChartPageComponent implements OnInit {
 
   constructor(private service: PortfolioService, public auth: AuthService) {}
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   ngOnInit() {
-    this.service.getPortfolio().subscribe(
-      (res) => {
+    this.subscription = this.service.getPortfolio().subscribe({
+      next: (res) => {
         // console.log(res);
         if (res) {
           this.data = res;
@@ -37,10 +43,10 @@ export class ChartPageComponent implements OnInit {
           });
         }
       },
-      (err) => {
+      error: (err) => {
         console.log(err);
-      }
-    );
+      },
+    });
   }
 
   /**

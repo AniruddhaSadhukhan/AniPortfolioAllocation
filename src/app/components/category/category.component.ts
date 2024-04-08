@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { NavItem } from "src/app/models/nav-item";
+import { CategoryCollection } from "src/app/models/portfolio";
 import { getNavItems } from "src/app/utils/nav-items";
 import { PortfolioService } from "../../services/portfolio.service";
 
@@ -10,7 +11,7 @@ import { PortfolioService } from "../../services/portfolio.service";
   styleUrls: ["./category.component.scss"],
 })
 export class CategoryComponent implements OnInit {
-  data = null;
+  data: CategoryCollection = null;
 
   currentItem: any = {};
   itemDialog: boolean = false;
@@ -81,18 +82,18 @@ export class CategoryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.service.getCategory().subscribe(
-      (res) => {
+    this.service.getCategory().subscribe({
+      next: (res) => {
         if (res) {
           this.data = res;
         } else {
           this.updateCategory({ categories: [] });
         }
       },
-      (err) => {
+      error: (err) => {
         console.log(err);
-      }
-    );
+      },
+    });
   }
 
   isAvailable = (category) => {
@@ -103,7 +104,7 @@ export class CategoryComponent implements OnInit {
     );
   };
 
-  updateCategory = (data) => {
+  updateCategory = (data: CategoryCollection) => {
     this.service
       .setCategory(data)
       .then(() => {

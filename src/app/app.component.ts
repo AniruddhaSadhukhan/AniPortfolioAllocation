@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthService } from "./services/auth.service";
+import { NavItem } from "./models/nav-item";
+import { getNavItems } from "./utils/nav-items";
 
 @Component({
   selector: "app-root",
@@ -12,24 +14,8 @@ import { AuthService } from "./services/auth.service";
   ],
 })
 export class AppComponent implements OnInit {
-  chartView = false;
-  title = "AniPortfolioAllocation";
   sidebarVisible = false;
-  navItems = [
-    { label: "Dashboard", icon: "pi-slack", routerLink: ["/view"] },
-    { label: "Manage", icon: "pi-book", routerLink: ["/edit"] },
-    {
-      label: "Allocation",
-      icon: "pi-chart-pie",
-      routerLink: ["/allocation"],
-    },
-    {
-      label: "Expectation",
-      icon: "pi-sliders-v",
-      routerLink: ["/expectations"],
-    },
-    { label: "Category", icon: "pi-tags", routerLink: ["/category"] },
-  ];
+  navItems : NavItem[] = getNavItems("Dashboard", "Manage", "Allocation", "Expectation", "Category");
 
   user: any = null;
   loading = true;
@@ -39,7 +25,7 @@ export class AppComponent implements OnInit {
       // console.log(res);
       this.user = res;
       this.loading = false;
-      if (res) this.router.navigate([window.location.pathname]);
+      if (res) this.router.navigate(["/view"]);
     });
   }
 }

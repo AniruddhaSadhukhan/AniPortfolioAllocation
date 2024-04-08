@@ -3,10 +3,9 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 
-import { AngularFireModule } from "@angular/fire/compat";
-import { AngularFireAuthModule } from "@angular/fire/compat/auth";
-import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
-import { AngularFireStorageModule } from "@angular/fire/compat/storage";
+import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
+import { getAuth, provideAuth } from "@angular/fire/auth";
+import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ConfirmationService, MessageService, SharedModule } from "primeng/api";
@@ -88,10 +87,9 @@ const PrimeModules = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(config),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
-    AngularFireStorageModule,
+    provideFirebaseApp(() => initializeApp(config)),
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
