@@ -2,7 +2,6 @@
 
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { getAuth, provideAuth } from "@angular/fire/auth";
 import { getFirestore, provideFirestore } from "@angular/fire/firestore";
@@ -87,15 +86,18 @@ const PrimeModules = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    provideFirebaseApp(() => initializeApp(config)),
-    provideFirestore(() => getFirestore()),
-    provideAuth(() => getAuth()),
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ...PrimeModules,
   ],
-  providers: [ConfirmationService, MessageService],
+  providers: [
+    ConfirmationService,
+    MessageService,
+    provideFirebaseApp(() => initializeApp(config)),
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
