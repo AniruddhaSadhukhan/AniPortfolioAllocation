@@ -1,8 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Firestore, doc, docData, setDoc } from "@angular/fire/firestore";
 import { flatten, groupBy, reduce } from "lodash-es";
-import { Observable } from "rxjs";
-import { Allocation, CategoryCollection } from "../models/portfolio";
+import { Observable, firstValueFrom } from "rxjs";
+import {
+  Allocation,
+  CategoryCollection,
+  Change,
+  ChangesCollection,
+} from "../models/portfolio";
 import { AuthService } from "./auth.service";
 
 @Injectable({
@@ -15,7 +20,7 @@ export class PortfolioService {
     return setDoc(
       doc(this.firestore, `users/${this.auth.uid}/portfolio/allocation`),
       data
-    );
+    ).then(() => this.updatePortfolioChange(data));
   }
 
   getPortfolio(): Observable<Allocation> {
@@ -29,6 +34,60 @@ export class PortfolioService {
       doc(this.firestore, `users/${this.auth.uid}/portfolio/category`),
       data
     );
+  }
+
+  private getChanges(): Observable<ChangesCollection> {
+    return docData(
+      doc(this.firestore, `users/${this.auth.uid}/portfolio/changes`)
+    ) as Observable<ChangesCollection>;
+  }
+
+  private setChanges(data: ChangesCollection) {
+    return setDoc(
+      doc(this.firestore, `users/${this.auth.uid}/portfolio/changes`),
+      data
+    );
+  }
+
+  private async updatePortfolioChange(data: Allocation) {
+    let changesCollection = await firstValueFrom(this.getChanges());
+    if (!changesCollection) {
+      changesCollection = { changes: [] };
+    }
+    let timestamp = new Date();
+    let total_value = reduce(
+      flatten(Object.values(data)),
+      (sum, n) => sum + n.value,
+      0
+    );
+    changesCollection.changes = this.addChange(
+      { timestamp, total_value },
+      changesCollection.changes
+    );
+    return this.setChanges(changesCollection);
+  }
+
+  async getLastEditedTimestamp() {
+    let changesCollection = await firstValueFrom(this.getChanges());
+    if (changesCollection && changesCollection.changes.length) {
+      let firestoreTimestamp: any = changesCollection.changes[0].timestamp;
+      return firestoreTimestamp.toDate();
+    }
+    return null;
+  }
+
+  private addChange(newChange: Change, existingChanges: Change[]) {
+    // if the first chnge is of same date, then replace, else add at the beginning
+    if (
+      existingChanges.length &&
+      Object(existingChanges[0].timestamp).toDate().toDateString() ===
+        newChange.timestamp.toDateString()
+    ) {
+      existingChanges[0] = newChange;
+    } else {
+      existingChanges.unshift(newChange);
+    }
+    return existingChanges;
   }
 
   getCategory(): Observable<CategoryCollection> {
