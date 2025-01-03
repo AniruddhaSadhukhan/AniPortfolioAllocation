@@ -23,3 +23,8 @@
     size="small"
   ></p-button>
 </div>
+<div class="flex justify-content-end w-full" *ngIf="lastEditedTime">
+  <div >
+    <span id="timestamp">*as on {{lastEditedTime}}</span>
+  </div>
+</div>

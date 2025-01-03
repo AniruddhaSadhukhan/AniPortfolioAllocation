@@ -8,15 +8,21 @@ Built with Angular and Firebase.
 
 ## Local Development
 
+```
 npm install
 npm start
+```
 
 ## Deploy Preview
 
+```
 npm run build
 npm run preview
+```
 
 ## Build and Deploy in Prod
 
+```
 npm run build
 npm run deploy
+```

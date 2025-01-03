@@ -5,6 +5,7 @@ import { NavItem } from "src/app/models/nav-item";
 import { Allocation, PortfolioNode } from "src/app/models/portfolio";
 import { getCurrencyUnit } from "src/app/utils/currency-unit.pipe";
 import { getNavItems } from "src/app/utils/nav-items";
+import { format } from "timeago.js";
 import { AuthService } from "../../services/auth.service";
 import { PortfolioService } from "../../services/portfolio.service";
 @Component({
@@ -15,6 +16,7 @@ import { PortfolioService } from "../../services/portfolio.service";
 export class ChartPageComponent implements OnInit {
   data: Allocation;
   userName: string;
+  lastEditedTime: any;
   omitOthers = true;
   subscription: Subscription;
 
@@ -37,6 +39,9 @@ export class ChartPageComponent implements OnInit {
         // console.log(res);
         if (res) {
           this.data = res;
+          this.service.getLastEditedTimestamp().then((time: any) => {
+            if (time) this.lastEditedTime = format(time);
+          });
           this.auth.user$.subscribe((res) => {
             this.userName = res.displayName;
             this.refresh();

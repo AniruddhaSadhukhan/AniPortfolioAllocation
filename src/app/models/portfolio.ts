@@ -27,3 +27,12 @@ export interface Category {
 export interface CategoryCollection {
   categories: Category[];
 }
+
+export interface ChangesCollection {
+  changes: Change[];
+}
+
+export interface Change {
+  timestamp: Date;
+  total_value : number;
+}
