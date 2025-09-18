@@ -1,19 +1,18 @@
 import { Injectable, inject } from "@angular/core";
-import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 
+import { map, take, tap } from "rxjs/operators";
 import { AuthService } from "./auth.service";
-import { tap, map, take } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
 })
-export class AuthGuard  {
+export class AuthGuard {
   private auth = inject(AuthService);
   private router = inject(Router);
 
-
-  canActivate(next, state): Observable<boolean> {
+  canActivate(): Observable<boolean> {
     return this.auth.user$.pipe(
       take(1),
       map((user) => !!user), // <-- map to boolean
