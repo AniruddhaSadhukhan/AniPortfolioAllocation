@@ -8,8 +8,8 @@ describe('AllocationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AllocationComponent ]
-    })
+    imports: [AllocationComponent]
+})
     .compileComponents();
   }));
 

@@ -1,15 +1,27 @@
 import { Component, OnInit, inject } from "@angular/core";
-import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmationService, MessageService, PrimeTemplate } from "primeng/api";
 import { NavItem } from "src/app/models/nav-item";
 import { CategoryCollection } from "src/app/models/portfolio";
 import { getNavItems } from "src/app/utils/nav-items";
 import { PortfolioService } from "../../services/portfolio.service";
+import { SelectButton } from "primeng/selectbutton";
+import { FormsModule } from "@angular/forms";
+import { Button, ButtonDirective } from "primeng/button";
+import { TableModule } from "primeng/table";
+import { ButtonGroup } from "primeng/buttongroup";
+import { Dialog } from "primeng/dialog";
+import { Fluid } from "primeng/fluid";
+import { FloatLabel } from "primeng/floatlabel";
+import { InputText } from "primeng/inputtext";
+import { InputNumber } from "primeng/inputnumber";
+import { ConfirmDialog } from "primeng/confirmdialog";
+import { RouterLink } from "@angular/router";
 
 @Component({
     selector: "app-category",
     templateUrl: "./category.component.html",
     styleUrls: ["./category.component.scss"],
-    standalone: false
+    imports: [SelectButton, FormsModule, Button, TableModule, PrimeTemplate, ButtonGroup, Dialog, Fluid, FloatLabel, InputText, InputNumber, ButtonDirective, ConfirmDialog, RouterLink]
 })
 export class CategoryComponent implements OnInit {
   private service = inject(PortfolioService);

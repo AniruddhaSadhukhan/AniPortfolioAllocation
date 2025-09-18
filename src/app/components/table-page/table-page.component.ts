@@ -1,15 +1,31 @@
 import { Component, OnInit, inject } from "@angular/core";
-import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmationService, MessageService, PrimeTemplate } from "primeng/api";
 import { NavItem } from "src/app/models/nav-item";
 import { Allocation } from "src/app/models/portfolio";
 import { getNavItems } from "src/app/utils/nav-items";
 import { PortfolioService } from "../../services/portfolio.service";
+import { SelectButton } from "primeng/selectbutton";
+import { FormsModule } from "@angular/forms";
+import { Button, ButtonDirective } from "primeng/button";
+import { TableModule } from "primeng/table";
+import { MultiSelect } from "primeng/multiselect";
+import { Tag } from "primeng/tag";
+import { ButtonGroup } from "primeng/buttongroup";
+import { Dialog } from "primeng/dialog";
+import { Fluid } from "primeng/fluid";
+import { FloatLabel } from "primeng/floatlabel";
+import { InputText } from "primeng/inputtext";
+import { Select } from "primeng/select";
+import { InputNumber } from "primeng/inputnumber";
+import { ConfirmDialog } from "primeng/confirmdialog";
+import { RouterLink } from "@angular/router";
+import { CurrencyUnitPipe } from "../../utils/currency-unit.pipe";
 
 @Component({
     selector: "app-table-page",
     templateUrl: "./table-page.component.html",
     styleUrls: ["./table-page.component.scss"],
-    standalone: false
+    imports: [SelectButton, FormsModule, Button, TableModule, PrimeTemplate, MultiSelect, Tag, ButtonGroup, Dialog, Fluid, FloatLabel, InputText, Select, InputNumber, ButtonDirective, ConfirmDialog, RouterLink, CurrencyUnitPipe]
 })
 export class TablePageComponent implements OnInit {
   private service = inject(PortfolioService);

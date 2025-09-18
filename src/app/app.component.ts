@@ -1,8 +1,15 @@
 import { Component, OnInit, inject } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, RouterLinkActive, RouterLink, RouterOutlet } from "@angular/router";
 import { AuthService } from "./services/auth.service";
 import { NavItem } from "./models/nav-item";
 import { getNavItems } from "./utils/nav-items";
+import { Toolbar } from "primeng/toolbar";
+import { Avatar } from "primeng/avatar";
+import { Tooltip } from "primeng/tooltip";
+import { Drawer } from "primeng/drawer";
+import { Button } from "primeng/button";
+import { ProgressSpinner } from "primeng/progressspinner";
+import { Toast } from "primeng/toast";
 
 @Component({
     selector: "app-root",
@@ -12,7 +19,7 @@ import { getNavItems } from "./utils/nav-items";
         "../../node_modules/anychart/dist/css/anychart-ui.min.css",
         "../../node_modules/anychart/dist/fonts/css/anychart-font.min.css",
     ],
-    standalone: false
+    imports: [Toolbar, Avatar, Tooltip, Drawer, Button, RouterLinkActive, RouterLink, ProgressSpinner, Toast, RouterOutlet]
 })
 export class AppComponent implements OnInit {
   auth = inject(AuthService);

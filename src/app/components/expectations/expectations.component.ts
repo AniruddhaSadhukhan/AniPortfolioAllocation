@@ -1,15 +1,21 @@
 import { Component, OnInit, inject } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { round } from "lodash-es";
 import { NavItem } from "src/app/models/nav-item";
 import { getNavItems } from "src/app/utils/nav-items";
 import { PortfolioService } from "../../services/portfolio.service";
+import { SelectButton } from "primeng/selectbutton";
+import { FormsModule } from "@angular/forms";
+import { TableModule } from "primeng/table";
+import { PrimeTemplate } from "primeng/api";
+import { Button } from "primeng/button";
+import { CurrencyUnitPipe } from "../../utils/currency-unit.pipe";
 
 @Component({
     selector: "app-expectations",
     templateUrl: "./expectations.component.html",
     styleUrls: ["./expectations.component.scss"],
-    standalone: false
+    imports: [SelectButton, FormsModule, TableModule, PrimeTemplate, Button, RouterLink, CurrencyUnitPipe]
 })
 export class ExpectationsComponent implements OnInit {
   private service = inject(PortfolioService);

@@ -1,17 +1,18 @@
 import { Component, OnInit, OnDestroy, inject } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { round } from "lodash-es";
 import { Subscription } from "rxjs";
 import { NavItem } from "src/app/models/nav-item";
 import { getCurrencyUnit } from "src/app/utils/currency-unit.pipe";
 import { getNavItems } from "src/app/utils/nav-items";
 import { PortfolioService } from "../../services/portfolio.service";
+import { Button } from "primeng/button";
 
 @Component({
     selector: "app-allocation",
     templateUrl: "./allocation.component.html",
     styleUrls: ["./allocation.component.scss"],
-    standalone: false
+    imports: [Button, RouterLink]
 })
 export class AllocationComponent implements OnInit, OnDestroy {
   private service = inject(PortfolioService);

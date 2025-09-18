@@ -8,11 +8,20 @@ import { getNavItems } from "src/app/utils/nav-items";
 import { format } from "timeago.js";
 import { AuthService } from "../../services/auth.service";
 import { PortfolioService } from "../../services/portfolio.service";
+import { ToggleSwitch } from "primeng/toggleswitch";
+import { FormsModule } from "@angular/forms";
+import { Button } from "primeng/button";
+import { RouterLink } from "@angular/router";
 @Component({
-  selector: "app-chart-page",
-  templateUrl: "./chart-page.component.html",
-  styleUrls: ["./chart-page.component.scss"],
-  standalone: false,
+    selector: "app-chart-page",
+    templateUrl: "./chart-page.component.html",
+    styleUrls: ["./chart-page.component.scss"],
+    imports: [
+        ToggleSwitch,
+        FormsModule,
+        Button,
+        RouterLink,
+    ],
 })
 export class ChartPageComponent implements OnInit, OnDestroy {
   private service = inject(PortfolioService);
