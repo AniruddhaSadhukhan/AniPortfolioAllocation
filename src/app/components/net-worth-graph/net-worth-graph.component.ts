@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { ButtonModule } from "primeng/button";
@@ -11,7 +11,7 @@ import { getNavItems } from "../../utils/nav-items";
 
 @Component({
     selector: "app-net-worth-graph",
-    imports: [CommonModule, RouterModule, ButtonModule],
+    imports: [RouterModule, ButtonModule],
     templateUrl: "./net-worth-graph.component.html",
     styleUrl: "./net-worth-graph.component.scss"
 })

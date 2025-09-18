@@ -12,7 +12,7 @@
     </span>
   </div>
   <div class="p-toolbar-group-end">
-    <ng-container *ngIf="user">
+    @if (user) {
       <p-avatar
         [image]="user.photoURL"
         styleClass="mr-2"
@@ -21,57 +21,65 @@
         [pTooltip]="user.displayName"
         (click)="sidebarVisible = true"
       ></p-avatar>
-    </ng-container>
+    }
   </div>
 </p-toolbar>
 <p-drawer
   styleClass="sidebar"
   [(visible)]="sidebarVisible"
   (click)="sidebarVisible = false"
->
-  <div class="text-center" *ngIf="user">
-    <p-avatar [image]="user.photoURL" size="xlarge" shape="circle"></p-avatar>
-    <div class="font-bold text-2xl">{{ user.displayName }}</div>
-    <div class="font-italic">{{ user.email }}</div>
-    <p-button
-      label="Logout"
-      icon="pi pi-sign-out"
-      severity="danger"
-      styleClass="my-3"
-      [outlined]="true"
-      [rounded]="true"
-      size="small"
-      (click)="auth.signOut()"
-    ></p-button>
-  </div>
+  >
+  @if (user) {
+    <div class="text-center">
+      <p-avatar [image]="user.photoURL" size="xlarge" shape="circle"></p-avatar>
+      <div class="font-bold text-2xl">{{ user.displayName }}</div>
+      <div class="font-italic">{{ user.email }}</div>
+      <p-button
+        label="Logout"
+        icon="pi pi-sign-out"
+        severity="danger"
+        styleClass="my-3"
+        [outlined]="true"
+        [rounded]="true"
+        size="small"
+        (click)="auth.signOut()"
+      ></p-button>
+    </div>
+  }
   <nav>
     <ul class="">
-      <li *ngFor="let item of navItems" class="text-xl font-medium">
-        <a [routerLink]="item.routerLink" routerLinkActive="nav-active">
-          <div>
-            <i [class]="'pi ' + item.icon"></i>
-          </div>
-          {{ item.label }}</a
-        >
-      </li>
-    </ul>
-  </nav>
-</p-drawer>
+      @for (item of navItems; track item) {
+        <li class="text-xl font-medium">
+          <a [routerLink]="item.routerLink" routerLinkActive="nav-active">
+            <div>
+              <i [class]="'pi ' + item.icon"></i>
+            </div>
+            {{ item.label }}</a
+            >
+          </li>
+        }
+      </ul>
+    </nav>
+  </p-drawer>
 
-<div class="spinner" *ngIf="loading">
-  <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
-</div>
+  @if (loading) {
+    <div class="spinner">
+      <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+    </div>
+  }
 
-<div class="login-button" *ngIf="!loading && !user">
-  <p-button
-    label="Login"
-    icon="pi pi-google"
-    [outlined]="true"
-    [rounded]="true"
-    (click)="auth.googleSignin()"
-  ></p-button>
-</div>
+  @if (!loading && !user) {
+    <div class="login-button">
+      <p-button
+        label="Login"
+        icon="pi pi-google"
+        [outlined]="true"
+        [rounded]="true"
+        (click)="auth.googleSignin()"
+      ></p-button>
+    </div>
+  }
 
-<p-toast [breakpoints]="{ '920px': { width: '75%' } }"></p-toast>
+  <p-toast [breakpoints]="{ '920px': { width: '75%' } }"></p-toast>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>

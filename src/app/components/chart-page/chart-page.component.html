@@ -3,28 +3,31 @@
     <span class="">Hide Others</span>
     <p-toggleswitch [(ngModel)]="omitOthers" (onChange)="changed()"
       >Hide Others</p-toggleswitch
+      >
+    </div>
+  </div>
+  <div
+    id="chart-container"
+    class="w-full flex justify-content-center flex-column"
     >
+    <div class="text-center text-400">Portfolio</div>
+    <div id="portfolio-chart" class="mx-auto"></div>
   </div>
-</div>
-<div
-  id="chart-container"
-  class="w-full flex justify-content-center flex-column"
->
-  <div class="text-center text-400">Portfolio</div>
-  <div id="portfolio-chart" class="mx-auto"></div>
-</div>
-<div class="nav-buttons">
-  <p-button
-    *ngFor="let item of navItems"
-    [routerLink]="item.routerLink"
-    [label]="item.label"
-    [icon]="'pi ' + item.icon"
-    [outlined]="true"
-    size="small"
-  ></p-button>
-</div>
-<div class="flex justify-content-end w-full" *ngIf="lastEditedTime">
-  <div>
-    <span id="timestamp">*as on {{ lastEditedTime }}</span>
+  <div class="nav-buttons">
+    @for (item of navItems; track item) {
+      <p-button
+        [routerLink]="item.routerLink"
+        [label]="item.label"
+        [icon]="'pi ' + item.icon"
+        [outlined]="true"
+        size="small"
+      ></p-button>
+    }
   </div>
-</div>
+  @if (lastEditedTime) {
+    <div class="flex justify-content-end w-full">
+      <div>
+        <span id="timestamp">*as on {{ lastEditedTime }}</span>
+      </div>
+    </div>
+  }

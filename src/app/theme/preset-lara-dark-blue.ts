@@ -22,7 +22,7 @@ const LaraDarkBlue = definePreset(Lara, {
       light: {
         primary: {
           color: "{blue.500}",
-          inverseColor: "{surface.0}",
+          contrastColor: "{surface.0}",
           hoverColor: "{blue.600}",
           activeColor: "{blue.700}",
         },
@@ -30,7 +30,7 @@ const LaraDarkBlue = definePreset(Lara, {
       dark: {
         primary: {
           color: "{blue.400}",
-          inverseColor: "{surface.900}",
+          contrastColor: "{surface.900}",
           hoverColor: "{blue.300}",
           activeColor: "{blue.200}",
         },

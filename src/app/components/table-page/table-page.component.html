@@ -10,85 +10,87 @@
   class="add-fab"
   [rounded]="true"
 ></p-button>
-<p-table
-  *ngIf="data"
-  [value]="data[selectedOption]"
-  sortField="value"
-  sortOrder="-1"
-  styleClass="p-datatable-sm p-datatable-striped text-sm"
->
-  <ng-template pTemplate="header">
-    <tr>
-      <th class="pr-0" pSortableColumn="category">
-        Name
-        <p-columnFilter
-          field="category"
-          matchMode="in"
-          display="menu"
-          [showMatchModes]="false"
-          [showOperator]="false"
-          [showAddButton]="false"
-        >
-          <ng-template pTemplate="header">
-            <div class="px-3 pt-3 pb-0">
-              <span class="font-bold">Category Picker</span>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-            <p-multiSelect
-              [ngModel]="value"
-              [options]="categories"
-              placeholder="Any"
-              (onChange)="filter($event.value)"
+@if (data) {
+  <p-table
+    [value]="data[selectedOption]"
+    sortField="value"
+    sortOrder="-1"
+    styleClass="p-datatable-sm p-datatable-striped text-sm"
+    >
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="pr-0" pSortableColumn="category">
+          Name
+          <p-columnFilter
+            field="category"
+            matchMode="in"
+            display="menu"
+            [showMatchModes]="false"
+            [showOperator]="false"
+            [showAddButton]="false"
             >
-              <ng-template let-option pTemplate="item">
-                <div class="inline-block vertical-align-middle">
-                  <p-tag [value]="option" [rounded]="true"></p-tag>
-                </div>
-              </ng-template>
-            </p-multiSelect>
-          </ng-template>
-        </p-columnFilter>
-      </th>
-      <th pSortableColumn="value">Amount</th>
-      <th class="pr-0">Actions</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-item>
-    <tr>
-      <td class="pr-0 w-6">
-        {{ item.name }}
-        <p-tag
-          *ngIf="item.category"
-          [value]="item.category"
-          [rounded]="false"
-        ></p-tag>
-      </td>
-      <td>{{ item.value | currencyUnit }}</td>
-      <td class="px-0">
-        <p-buttonGroup>
-          <p-button
-            icon="pi pi-file-edit"
-            [rounded]="true"
-            [text]="true"
-            size="small"
-            styleClass="pr-0 pl-0"
-            (click)="editItem(item)"
-          ></p-button>
-          <p-button
-            icon="pi pi-trash"
-            [rounded]="true"
-            severity="danger"
-            [text]="true"
-            styleClass="pl-0 pr-0"
-            size="small"
-            (click)="deleteItem(item)"
-          ></p-button>
-        </p-buttonGroup>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+            <ng-template pTemplate="header">
+              <div class="px-3 pt-3 pb-0">
+                <span class="font-bold">Category Picker</span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect
+                [ngModel]="value"
+                [options]="categories"
+                placeholder="Any"
+                (onChange)="filter($event.value)"
+                >
+                <ng-template let-option pTemplate="item">
+                  <div class="inline-block vertical-align-middle">
+                    <p-tag [value]="option" [rounded]="true"></p-tag>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th pSortableColumn="value">Amount</th>
+        <th class="pr-0">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td class="pr-0 w-6">
+          {{ item.name }}
+          @if (item.category) {
+            <p-tag
+              [value]="item.category"
+              [rounded]="false"
+            ></p-tag>
+          }
+        </td>
+        <td>{{ item.value | currencyUnit }}</td>
+        <td class="px-0">
+          <p-buttonGroup>
+            <p-button
+              icon="pi pi-file-edit"
+              [rounded]="true"
+              [text]="true"
+              size="small"
+              styleClass="pr-0 pl-0"
+              (click)="editItem(item)"
+            ></p-button>
+            <p-button
+              icon="pi pi-trash"
+              [rounded]="true"
+              severity="danger"
+              [text]="true"
+              styleClass="pl-0 pr-0"
+              size="small"
+              (click)="deleteItem(item)"
+            ></p-button>
+          </p-buttonGroup>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+}
 
 <p-dialog
   [(visible)]="itemDialog"
@@ -98,7 +100,7 @@
       : 'Add ' + selectedOption + ' Entry&nbsp;&nbsp;&nbsp;&nbsp;'
   "
   [modal]="true"
->
+  >
   <ng-template pTemplate="content">
     <p-fluid>
       <div class="pt-4"></div>
@@ -110,69 +112,72 @@
           id="name"
           [(ngModel)]="currentItem.name"
           required
-        />
+          />
         <label for="name">Name</label>
-        <small class="p-error" *ngIf="submitted && !currentItem.name"
-          >Name is required.</small
-        >
-      </p-floatlabel>
+        @if (submitted && !currentItem.name) {
+          <small class="p-error"
+            >Name is required.</small
+            >
+          }
+        </p-floatlabel>
 
-      <div class="pt-4"></div>
+        <div class="pt-4"></div>
 
-      <p-floatlabel variant="on" class="field">
-        <p-select
-          inputId="category"
-          scrollHeight="120px"
-          [(ngModel)]="currentItem.category"
-          [options]="categories"
-        >
-        </p-select>
-        <label for="category">Category</label>
-      </p-floatlabel>
+        <p-floatlabel variant="on" class="field">
+          <p-select
+            inputId="category"
+            scrollHeight="120px"
+            [(ngModel)]="currentItem.category"
+            [options]="categories"
+            >
+          </p-select>
+          <label for="category">Category</label>
+        </p-floatlabel>
 
-      <div class="pt-4"></div>
+        <div class="pt-4"></div>
 
-      <p-floatlabel variant="on" class="field">
-        <p-inputNumber
-          id="value"
-          [(ngModel)]="currentItem.value"
-          required
-          autofocus
-        />
-        <label for="value">Amount (in K)</label>
-      </p-floatlabel>
-    </p-fluid>
-  </ng-template>
+        <p-floatlabel variant="on" class="field">
+          <p-inputNumber
+            id="value"
+            [(ngModel)]="currentItem.value"
+            required
+            autofocus
+            />
+          <label for="value">Amount (in K)</label>
+        </p-floatlabel>
+      </p-fluid>
+    </ng-template>
 
-  <ng-template pTemplate="footer">
-    <button
-      pButton
-      pRipple
-      label="Cancel"
-      icon="pi pi-times"
-      class="p-button-text"
-      (click)="hideDialog()"
-    ></button>
-    <button
-      pButton
-      pRipple
-      label="Save"
-      icon="pi pi-check"
-      class="p-button-text"
-      (click)="saveItem()"
-    ></button>
-  </ng-template>
-</p-dialog>
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="saveItem()"
+      ></button>
+    </ng-template>
+  </p-dialog>
 
-<p-confirmDialog></p-confirmDialog>
+  <p-confirmDialog></p-confirmDialog>
 
-<div class="nav-buttons mt-4 pb-4">
-  <p-button
-    *ngFor="let item of navItems"
-    [routerLink]="item.routerLink"
-    [label]="item.label"
-    [icon]="'pi ' + item.icon"
-    [outlined]="true"
-    size="small"
-  ></p-button>
-</div>
+  <div class="nav-buttons mt-4 pb-4">
+    @for (item of navItems; track item) {
+      <p-button
+        [routerLink]="item.routerLink"
+        [label]="item.label"
+        [icon]="'pi ' + item.icon"
+        [outlined]="true"
+        size="small"
+      ></p-button>
+    }
+  </div>

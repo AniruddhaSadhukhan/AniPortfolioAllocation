@@ -1,15 +1,18 @@
 <div class="w-full flex justify-content-center flex-column">
   <div class="text-center text-400 my-5">Net Worth Over Time</div>
   <div id="net-worth-container" class="chart"></div>
-  <div class="flex justify-content-center" *ngIf="loading">Loading...</div>
+  @if (loading) {
+    <div class="flex justify-content-center">Loading...</div>
+  }
 </div>
 <div class="nav-buttons mt-3">
-  <p-button
-    *ngFor="let item of navItems"
-    [routerLink]="item.routerLink"
-    [label]="item.label"
-    [icon]="'pi ' + item.icon"
-    [outlined]="true"
-    size="small"
-  ></p-button>
+  @for (item of navItems; track item) {
+    <p-button
+      [routerLink]="item.routerLink"
+      [label]="item.label"
+      [icon]="'pi ' + item.icon"
+      [outlined]="true"
+      size="small"
+    ></p-button>
+  }
 </div>
