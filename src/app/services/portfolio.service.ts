@@ -36,7 +36,7 @@ export class PortfolioService {
     );
   }
 
-  private getChanges(): Observable<ChangesCollection> {
+  getChanges(): Observable<ChangesCollection> {
     return docData(
       doc(this.firestore, `users/${this.auth.uid}/portfolio/changes`)
     ) as Observable<ChangesCollection>;

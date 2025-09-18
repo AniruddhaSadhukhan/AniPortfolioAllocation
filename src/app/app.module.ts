@@ -1,11 +1,11 @@
 /// <reference path="../../node_modules/anychart/dist/index.d.ts"/>
 
 import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { getAuth, provideAuth } from "@angular/fire/auth";
 import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ConfirmationService, MessageService, SharedModule } from "primeng/api";
 import { AvatarModule } from "primeng/avatar";
@@ -29,6 +29,7 @@ import { TagModule } from "primeng/tag";
 import { ToastModule } from "primeng/toast";
 import { ToolbarModule } from "primeng/toolbar";
 import { TooltipModule } from "primeng/tooltip";
+import { environment } from "../environments/environment";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AllocationComponent } from "./components/allocation/allocation.component";
@@ -36,6 +37,10 @@ import { CategoryComponent } from "./components/category/category.component";
 import { ChartPageComponent } from "./components/chart-page/chart-page.component";
 import { ExpectationsComponent } from "./components/expectations/expectations.component";
 import { TablePageComponent } from "./components/table-page/table-page.component";
+import { AuthService } from "./services/auth.service";
+import { MockAuthService } from "./services/mock-auth.service";
+import { MockPortfolioService } from "./services/mock-portfolio.service";
+import { PortfolioService } from "./services/portfolio.service";
 import { CurrencyUnitPipe } from "./utils/currency-unit.pipe";
 
 const config = {
@@ -94,9 +99,16 @@ const PrimeModules = [
   providers: [
     ConfirmationService,
     MessageService,
-    provideFirebaseApp(() => initializeApp(config)),
-    provideFirestore(() => getFirestore()),
-    provideAuth(() => getAuth()),
+    ...(environment.useMocks
+      ? [
+          { provide: AuthService, useExisting: MockAuthService },
+          { provide: PortfolioService, useExisting: MockPortfolioService },
+        ]
+      : [
+          provideFirebaseApp(() => initializeApp(config)),
+          provideFirestore(() => getFirestore()),
+          provideAuth(() => getAuth()),
+        ]),
   ],
   bootstrap: [AppComponent],
 })

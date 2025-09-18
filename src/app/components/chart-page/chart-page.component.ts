@@ -20,7 +20,7 @@ export class ChartPageComponent implements OnInit {
   omitOthers = true;
   subscription: Subscription;
 
-  navItems: NavItem[] = getNavItems("Manage", "Allocation");
+  navItems: NavItem[] = getNavItems("Manage", "Allocation", "NetWorth");
 
   chart: anychart.charts.Sunburst;
   changed() {

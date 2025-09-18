@@ -14,6 +14,11 @@ const navItemMap: Record<string, NavItem> = {
     routerLink: ["/expectations"],
   },
   Category: { label: "Category", icon: "pi-tags", routerLink: ["/category"] },
+  NetWorth: {
+    label: "Net Worth",
+    icon: "pi-chart-line",
+    routerLink: ["/net-worth"],
+  },
 };
 
 /**
@@ -23,5 +28,5 @@ const navItemMap: Record<string, NavItem> = {
  * @return {NavItem[]} An array of NavItems corresponding to the input pages.
  */
 export let getNavItems = (...pages): NavItem[] => {
-  return pages.map((page) => navItemMap[page]);
+  return pages.map((page) => navItemMap[page]).filter((x): x is NavItem => !!x);
 };
