@@ -30,7 +30,12 @@ export class ChartPageComponent implements OnInit {
   constructor(private service: PortfolioService, public auth: AuthService) {}
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscription && this.subscription.unsubscribe();
+    if (this.chart && this.chart.dispose) {
+      try {
+        this.chart.dispose();
+      } catch {}
+    }
   }
 
   ngOnInit() {
@@ -185,9 +190,7 @@ export class ChartPageComponent implements OnInit {
     this.chart.padding(1);
     this.chart.background().enabled(false);
     // set the container id
-    document.getElementById("container") &&
-      (document.getElementById("container").innerHTML = "");
-    this.chart.container("container");
+    this.chart.container("portfolio-chart");
 
     // initiate drawing the chart
     this.chart = this.chart.draw();

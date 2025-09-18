@@ -22,7 +22,12 @@ export class AllocationComponent implements OnInit {
   navItems: NavItem[] = getNavItems("Dashboard", "Expectation", "Category");
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscription && this.subscription.unsubscribe();
+    if (this.chart && this.chart.dispose) {
+      try {
+        this.chart.dispose();
+      } catch {}
+    }
   }
 
   ngOnInit() {
@@ -121,9 +126,7 @@ export class AllocationComponent implements OnInit {
     this.chart.padding(0);
     this.chart.background().enabled(false);
     // set the container id
-    document.getElementById("container") &&
-      (document.getElementById("container").innerHTML = "");
-    this.chart.container("container");
+    this.chart.container("allocation-chart");
     // initiate drawing the chart
     this.chart.draw();
   }
