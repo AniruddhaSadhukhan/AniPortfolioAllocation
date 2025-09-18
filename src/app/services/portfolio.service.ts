@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Firestore, doc, docData, setDoc } from "@angular/fire/firestore";
 import { flatten, groupBy, reduce } from "lodash-es";
 import { Observable, firstValueFrom } from "rxjs";
@@ -14,7 +14,9 @@ import { AuthService } from "./auth.service";
   providedIn: "root",
 })
 export class PortfolioService {
-  constructor(private firestore: Firestore, public auth: AuthService) {}
+  private firestore = inject(Firestore);
+  auth = inject(AuthService);
+
 
   setPortfolio(data: Allocation) {
     return setDoc(
@@ -54,8 +56,8 @@ export class PortfolioService {
     if (!changesCollection) {
       changesCollection = { changes: [] };
     }
-    let timestamp = new Date();
-    let total_value = reduce(
+    const timestamp = new Date();
+    const total_value = reduce(
       flatten(Object.values(data)),
       (sum, n) => sum + n.value,
       0
@@ -68,9 +70,9 @@ export class PortfolioService {
   }
 
   async getLastEditedTimestamp() {
-    let changesCollection = await firstValueFrom(this.getChanges());
+    const changesCollection = await firstValueFrom(this.getChanges());
     if (changesCollection && changesCollection.changes.length) {
-      let firestoreTimestamp: any = changesCollection.changes[0].timestamp;
+      const firestoreTimestamp: any = changesCollection.changes[0].timestamp;
       return firestoreTimestamp.toDate();
     }
     return null;
@@ -101,11 +103,11 @@ export class PortfolioService {
       this.getCategory().subscribe({
         next: (res) => {
           if (res && res.categories.length) {
-            let categories = res.categories;
+            const categories = res.categories;
             this.getPortfolio().subscribe({
               next: (res) => {
                 if (res) {
-                  let portfolio = flatten(Object.values(res));
+                  const portfolio = flatten(Object.values(res));
                   if (portfolio.length)
                     observer.next(
                       this.calculateExpectations(categories, portfolio)
@@ -127,8 +129,8 @@ export class PortfolioService {
   }
 
   calculateExpectations = (categories, portfolio) => {
-    let portfolioGroupedByCategory = groupBy(portfolio, "category");
-    let total: any = {};
+    const portfolioGroupedByCategory = groupBy(portfolio, "category");
+    const total: any = {};
     categories.forEach((elem, index) => {
       categories[index]["investments"] =
         portfolioGroupedByCategory[elem.category] || [];

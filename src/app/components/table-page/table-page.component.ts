@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { NavItem } from "src/app/models/nav-item";
 import { Allocation } from "src/app/models/portfolio";
@@ -12,6 +12,10 @@ import { PortfolioService } from "../../services/portfolio.service";
     standalone: false
 })
 export class TablePageComponent implements OnInit {
+  private service = inject(PortfolioService);
+  private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+
   data: Allocation = null;
   options = ["Debt", "Equity", "Others"];
   selectedOption = "Equity";
@@ -19,8 +23,8 @@ export class TablePageComponent implements OnInit {
   categories = [""];
 
   currentItem: any = {};
-  itemDialog: boolean = false;
-  submitted: boolean = false;
+  itemDialog = false;
+  submitted = false;
 
   navItems: NavItem[] = getNavItems("Dashboard", "Allocation");
 
@@ -79,12 +83,6 @@ export class TablePageComponent implements OnInit {
       this.currentItem = {};
     }
   }
-
-  constructor(
-    private service: PortfolioService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
-  ) {}
 
   ngOnInit() {
     this.service.getPortfolio().subscribe({

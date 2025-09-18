@@ -1,5 +1,5 @@
 
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, inject } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { ButtonModule } from "primeng/button";
 import { Subscription } from "rxjs";
@@ -16,13 +16,14 @@ import { getNavItems } from "../../utils/nav-items";
     styleUrl: "./net-worth-graph.component.scss"
 })
 export class NetWorthGraphComponent implements OnInit, OnDestroy {
+  private portfolio = inject(PortfolioService);
+  auth = inject(AuthService);
+
   subscription: Subscription;
   chart: anychart.charts.Cartesian | undefined;
   loading = true;
   navItems: NavItem[] = getNavItems("Dashboard", "Manage", "Allocation");
   netWorthData: { timestamp: Date; total_value: number }[] = [];
-
-  constructor(private portfolio: PortfolioService, public auth: AuthService) {}
 
   ngOnInit(): void {
     this.subscription = this.portfolio.getChanges().subscribe({

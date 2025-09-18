@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject } from "@angular/core";
 import { groupBy, map } from "lodash-es";
 import { Subscription } from "rxjs";
 import { NavItem } from "src/app/models/nav-item";
@@ -14,7 +14,10 @@ import { PortfolioService } from "../../services/portfolio.service";
   styleUrls: ["./chart-page.component.scss"],
   standalone: false,
 })
-export class ChartPageComponent implements OnInit {
+export class ChartPageComponent implements OnInit, OnDestroy {
+  private service = inject(PortfolioService);
+  auth = inject(AuthService);
+
   data: Allocation;
   userName: string;
   lastEditedTime: any;
@@ -27,8 +30,6 @@ export class ChartPageComponent implements OnInit {
   changed() {
     this.refresh();
   }
-
-  constructor(private service: PortfolioService, public auth: AuthService) {}
 
   ngOnDestroy() {
     this.subscription && this.subscription.unsubscribe();
@@ -109,7 +110,7 @@ export class ChartPageComponent implements OnInit {
 
   generateTree(data, groups: string[]): PortfolioNode[] {
     // Portfolio > Group > Category > Item
-    let tree = [
+    const tree = [
       {
         name: this.userName.split(" ")[0] || "Total",
         children: groups.map((groupName) => {
@@ -142,10 +143,10 @@ export class ChartPageComponent implements OnInit {
         this.chart.dispose();
       } catch {}
     }
-    let groups = ["Debt", "Equity"];
+    const groups = ["Debt", "Equity"];
     if (!this.omitOthers) groups.push("Others");
 
-    let chartData = this.generateTree(this.data, groups);
+    const chartData = this.generateTree(this.data, groups);
 
     anychart.graphics.useAbsoluteReferences(false);
     // create a chart and set the data

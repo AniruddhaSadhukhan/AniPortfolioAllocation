@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { round } from "lodash-es";
 import { NavItem } from "src/app/models/nav-item";
@@ -12,6 +12,9 @@ import { PortfolioService } from "../../services/portfolio.service";
     standalone: false
 })
 export class ExpectationsComponent implements OnInit {
+  private service = inject(PortfolioService);
+  private router = inject(Router);
+
   displayedColumns: string[] = [
     "category",
     "exp_returns",
@@ -25,12 +28,10 @@ export class ExpectationsComponent implements OnInit {
 
   navItems: NavItem[] = getNavItems("Dashboard", "Allocation");
 
-  constructor(private service: PortfolioService, private router: Router) {}
-
   ngOnInit() {
     this.service.getExpectations().subscribe({
       next: (res) => {
-        let exp: any = res;
+        const exp: any = res;
         this.categories = exp.categories;
         this.total = exp.total;
       },

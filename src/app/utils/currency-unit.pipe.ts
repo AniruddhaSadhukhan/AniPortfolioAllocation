@@ -6,12 +6,12 @@ import { round } from "lodash-es";
     standalone: false
 })
 export class CurrencyUnitPipe implements PipeTransform {
-  transform(value: number, precision: number = 2): string {
+  transform(value: number, precision = 2): string {
     return getCurrencyUnit(value, precision);
   }
 }
 
-export let getCurrencyUnit = (value: number, precision: number = 2): string => {
+export const getCurrencyUnit = (value: number, precision = 2): string => {
   if (value >= 100) {
     return "₹ " + round(value / 100, precision) + "L";
   } else {

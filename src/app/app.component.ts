@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthService } from "./services/auth.service";
 import { NavItem } from "./models/nav-item";
@@ -15,12 +15,14 @@ import { getNavItems } from "./utils/nav-items";
     standalone: false
 })
 export class AppComponent implements OnInit {
+  auth = inject(AuthService);
+  private router = inject(Router);
+
   sidebarVisible = false;
   navItems : NavItem[] = getNavItems("Dashboard", "Manage", "Allocation", "Expectation", "Category");
 
   user: any = null;
   loading = true;
-  constructor(public auth: AuthService, private router: Router) {}
   ngOnInit(): void {
     this.auth.user$.subscribe((res) => {
       // console.log(res);

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Observable, of } from "rxjs";
 import {
   Allocation,
@@ -9,7 +9,8 @@ import { MockAuthService } from "./mock-auth.service";
 
 @Injectable({ providedIn: "root" })
 export class MockPortfolioService {
-  constructor(private auth: MockAuthService) {}
+  private auth = inject(MockAuthService);
+
 
   private allocation: Allocation = {
     Debt: [
@@ -117,7 +118,7 @@ export class MockPortfolioService {
                       return acc;
                     }, {} as any);
                   const grouped = groupBy(portfolio, "category");
-                  let total: any = {};
+                  const total: any = {};
                   categories.forEach((elem: any, index: number) => {
                     categories[index].investments =
                       grouped[elem.category] || [];

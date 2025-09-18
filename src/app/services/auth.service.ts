@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import {
   Auth,
   GoogleAuthProvider,
@@ -21,13 +21,13 @@ import { User } from "../models/user.model";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
+  private fireAuth = inject(Auth);
+  private firestore = inject(Firestore);
+  private router = inject(Router);
+
   user$: Observable<any>;
   uid = null;
-  constructor(
-    private fireAuth: Auth,
-    private firestore: Firestore,
-    private router: Router
-  ) {
+  constructor() {
     this.user$ = authState(this.fireAuth).pipe(
       switchMap((user) => {
         if (user) {

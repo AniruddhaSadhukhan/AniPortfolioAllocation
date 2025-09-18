@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { NavItem } from "src/app/models/nav-item";
 import { CategoryCollection } from "src/app/models/portfolio";
@@ -12,11 +12,15 @@ import { PortfolioService } from "../../services/portfolio.service";
     standalone: false
 })
 export class CategoryComponent implements OnInit {
+  private service = inject(PortfolioService);
+  private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+
   data: CategoryCollection = null;
 
   currentItem: any = {};
-  itemDialog: boolean = false;
-  submitted: boolean = false;
+  itemDialog = false;
+  submitted = false;
 
   navItems: NavItem[] = getNavItems("Dashboard", "Allocation", "Expectation");
 
@@ -76,12 +80,6 @@ export class CategoryComponent implements OnInit {
     }
   }
 
-  constructor(
-    private service: PortfolioService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
-  ) {}
-
   ngOnInit() {
     this.service.getCategory().subscribe({
       next: (res) => {
@@ -98,7 +96,7 @@ export class CategoryComponent implements OnInit {
   }
 
   isAvailable = (category) => {
-    let id = category.id || "";
+    const id = category.id || "";
     // Check if any element in this.data.categories have same name as category.name ignoring same id
     return !this.data.categories.some(
       (elem) => elem.category === category.category && elem.id !== id

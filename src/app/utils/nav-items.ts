@@ -27,6 +27,6 @@ const navItemMap: Record<string, NavItem> = {
  * @param {...any} pages - The pages to retrieve NavItems for.
  * @return {NavItem[]} An array of NavItems corresponding to the input pages.
  */
-export let getNavItems = (...pages): NavItem[] => {
+export const getNavItems = (...pages): NavItem[] => {
   return pages.map((page) => navItemMap[page]).filter((x): x is NavItem => !!x);
 };

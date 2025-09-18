@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { round } from "lodash-es";
 import { Subscription } from "rxjs";
@@ -13,12 +13,14 @@ import { PortfolioService } from "../../services/portfolio.service";
     styleUrls: ["./allocation.component.scss"],
     standalone: false
 })
-export class AllocationComponent implements OnInit {
+export class AllocationComponent implements OnInit, OnDestroy {
+  private service = inject(PortfolioService);
+  private router = inject(Router);
+
   categories = [];
   total: any = {};
   chart: anychart.charts.Sunburst;
   subscription: Subscription;
-  constructor(private service: PortfolioService, private router: Router) {}
 
   navItems: NavItem[] = getNavItems("Dashboard", "Expectation", "Category");
 
@@ -34,7 +36,7 @@ export class AllocationComponent implements OnInit {
   ngOnInit() {
     this.subscription = this.service.getExpectations().subscribe({
       next: (res) => {
-        let exp: any = res;
+        const exp: any = res;
         this.categories = exp.categories;
         this.total = exp.total;
         this.refresh();
@@ -47,7 +49,7 @@ export class AllocationComponent implements OnInit {
 
   refresh(): void {
     // create data
-    var chartData = [
+    const chartData = [
       {
         name: "Total",
         return: round(this.total.wt_exp_ret, 2),
