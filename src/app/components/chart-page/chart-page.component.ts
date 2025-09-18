@@ -9,10 +9,10 @@ import { format } from "timeago.js";
 import { AuthService } from "../../services/auth.service";
 import { PortfolioService } from "../../services/portfolio.service";
 @Component({
-    selector: "app-chart-page",
-    templateUrl: "./chart-page.component.html",
-    styleUrls: ["./chart-page.component.scss"],
-    standalone: false
+  selector: "app-chart-page",
+  templateUrl: "./chart-page.component.html",
+  styleUrls: ["./chart-page.component.scss"],
+  standalone: false,
 })
 export class ChartPageComponent implements OnInit {
   data: Allocation;
@@ -136,6 +136,12 @@ export class ChartPageComponent implements OnInit {
   }
 
   refresh(): void {
+    // Dispose existing chart instance to prevent multiple overlapping charts
+    if (this.chart && this.chart.dispose) {
+      try {
+        this.chart.dispose();
+      } catch {}
+    }
     let groups = ["Debt", "Equity"];
     if (!this.omitOthers) groups.push("Others");
 
