@@ -11,22 +11,23 @@ import { ConfirmationService, MessageService, SharedModule } from "primeng/api";
 import { AvatarModule } from "primeng/avatar";
 import { ButtonModule } from "primeng/button";
 import { ButtonGroupModule } from "primeng/buttongroup";
+import { providePrimeNG } from "primeng/config";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { DialogModule } from "primeng/dialog";
-import { DropdownModule } from "primeng/dropdown";
+import { DrawerModule } from "primeng/drawer"; // was SidebarModule
 import { FloatLabelModule } from "primeng/floatlabel";
 import { InputNumberModule } from "primeng/inputnumber";
-import { InputSwitchModule } from "primeng/inputswitch";
 import { InputTextModule } from "primeng/inputtext";
 import { MenuModule } from "primeng/menu";
-import { MessagesModule } from "primeng/messages";
+import { MessageModule } from "primeng/message"; // replaces MessagesModule
 import { MultiSelectModule } from "primeng/multiselect";
 import { ProgressSpinnerModule } from "primeng/progressspinner";
+import { SelectModule } from "primeng/select"; // was DropdownModule
 import { SelectButtonModule } from "primeng/selectbutton";
-import { SidebarModule } from "primeng/sidebar";
 import { TableModule } from "primeng/table";
 import { TagModule } from "primeng/tag";
 import { ToastModule } from "primeng/toast";
+import { ToggleSwitchModule } from "primeng/toggleswitch"; // was InputSwitchModule
 import { ToolbarModule } from "primeng/toolbar";
 import { TooltipModule } from "primeng/tooltip";
 import { environment } from "../environments/environment";
@@ -41,6 +42,7 @@ import { AuthService } from "./services/auth.service";
 import { MockAuthService } from "./services/mock-auth.service";
 import { MockPortfolioService } from "./services/mock-portfolio.service";
 import { PortfolioService } from "./services/portfolio.service";
+import LaraDarkBlue from "./theme/preset-lara-dark-blue";
 import { CurrencyUnitPipe } from "./utils/currency-unit.pipe";
 
 const config = {
@@ -57,24 +59,24 @@ const PrimeModules = [
   SharedModule,
   ToolbarModule,
   AvatarModule,
-  SidebarModule,
+  DrawerModule,
   TooltipModule,
   ButtonModule,
   MenuModule,
   ProgressSpinnerModule,
-  InputSwitchModule,
+  ToggleSwitchModule,
   SelectButtonModule,
   TableModule,
   MultiSelectModule,
   TagModule,
   ButtonGroupModule,
   DialogModule,
-  DropdownModule,
+  SelectModule,
   ConfirmDialogModule,
   InputTextModule,
   InputNumberModule,
   FloatLabelModule,
-  MessagesModule,
+  MessageModule,
   ToastModule,
 ];
 
@@ -99,6 +101,18 @@ const PrimeModules = [
   providers: [
     ConfirmationService,
     MessageService,
+    providePrimeNG({
+      theme: {
+        preset: LaraDarkBlue,
+        options: {
+          darkModeSelector: ".app-dark",
+          cssLayer: {
+            name: "primeng",
+            order: "primeng, app-styles",
+          },
+        },
+      },
+    }),
     ...(environment.useMocks
       ? [
           { provide: AuthService, useExisting: MockAuthService },

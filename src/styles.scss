@@ -1,17 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeicons/primeicons.css";
 
+/*
+  Use cascade layers so our overrides remain effective after enabling
+  PrimeNG cssLayer. Order defined in providePrimeNG: "app-styles, primeng".
+  Anything in @layer app-styles beats primeng defaults without !important.
+*/
+@layer app-styles {
+  html,
+  body {
+    height: 100%;
+  }
+  body {
+    margin: 0;
+    /* PrimeNG v18 variables are prefixed with --p- (primary.color => --p-primary-color) */
+    --glow-image: url(assets/glow-image.png),
+      radial-gradient(
+        50% 50% at center -25px,
+        var(--p-primary-color) 0%,
+        #000000 100%
+      );
+    --glow-blend: hard-light, color-dodge;
+    background-image: var(--glow-image);
+    background-blend-mode: var(--glow-blend);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: auto 20rem;
+    background-color: var(--p-surface-900);
+  }
+  .toolbar {
+    position: sticky;
+    border-bottom: 1px solid var(--p-surface-border);
+    background-color: rgba(0, 0, 0, 0.3);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .sidebar {
+    background-color: rgba(0, 0, 0, 0.3);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+  }
+}
+
 .anychart-credits {
   display: none;
 }
 
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-}
+/* (legacy definitions moved into app-styles layer above) */
 
 .center-div {
   display: flex;
@@ -25,35 +60,7 @@ body {
   }
 }
 
-body {
-  --glow-image: url(assets/glow-image.png),
-    radial-gradient(
-      50% 50% at center -25px,
-      var(--primary-color) 0%,
-      #000000 100%
-    );
-  --glow-blend: hard-light, color-dodge;
-  background-image: var(--glow-image);
-  background-blend-mode: var(--glow-blend);
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: auto 20rem;
-  background-color: var(--surface-ground);
-}
-
-.toolbar {
-  position: sticky;
-  border-bottom: 1px solid var(--surface-border);
-  background-color: rgba(0, 0, 0, 0.3);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-}
-
-.sidebar {
-  background-color: rgba(0, 0, 0, 0.3);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-}
+/* removed duplicate body/toolbar/sidebar definitions */
 
 @layer primeng {
   .p-button.p-button-xs {

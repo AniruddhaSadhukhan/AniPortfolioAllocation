@@ -1,5 +1,5 @@
 <p-toolbar styleClass="toolbar py-2">
-  <div class="p-toolbar-group-start">
+  <div class="p-toolbar-group-start flex align-items-center">
     <p-avatar
       image="assets/logo.png"
       styleClass="mr-2"
@@ -24,7 +24,7 @@
     </ng-container>
   </div>
 </p-toolbar>
-<p-sidebar
+<p-drawer
   styleClass="sidebar"
   [(visible)]="sidebarVisible"
   (click)="sidebarVisible = false"
@@ -56,7 +56,7 @@
       </li>
     </ul>
   </nav>
-</p-sidebar>
+</p-drawer>
 
 <div class="spinner" *ngIf="loading">
   <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
