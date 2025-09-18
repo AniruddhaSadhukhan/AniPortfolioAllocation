@@ -6,9 +6,10 @@ import { getNavItems } from "src/app/utils/nav-items";
 import { PortfolioService } from "../../services/portfolio.service";
 
 @Component({
-  selector: "app-table-page",
-  templateUrl: "./table-page.component.html",
-  styleUrls: ["./table-page.component.scss"],
+    selector: "app-table-page",
+    templateUrl: "./table-page.component.html",
+    styleUrls: ["./table-page.component.scss"],
+    standalone: false
 })
 export class TablePageComponent implements OnInit {
   data: Allocation = null;

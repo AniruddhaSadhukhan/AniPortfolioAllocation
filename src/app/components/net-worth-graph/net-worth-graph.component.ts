@@ -10,11 +10,10 @@ import { getCurrencyUnit } from "../../utils/currency-unit.pipe";
 import { getNavItems } from "../../utils/nav-items";
 
 @Component({
-  selector: "app-net-worth-graph",
-  standalone: true,
-  imports: [CommonModule, RouterModule, ButtonModule],
-  templateUrl: "./net-worth-graph.component.html",
-  styleUrl: "./net-worth-graph.component.scss",
+    selector: "app-net-worth-graph",
+    imports: [CommonModule, RouterModule, ButtonModule],
+    templateUrl: "./net-worth-graph.component.html",
+    styleUrl: "./net-worth-graph.component.scss"
 })
 export class NetWorthGraphComponent implements OnInit, OnDestroy {
   subscription: Subscription;

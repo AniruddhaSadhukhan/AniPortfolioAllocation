@@ -6,9 +6,10 @@ import { getNavItems } from "src/app/utils/nav-items";
 import { PortfolioService } from "../../services/portfolio.service";
 
 @Component({
-  selector: "app-expectations",
-  templateUrl: "./expectations.component.html",
-  styleUrls: ["./expectations.component.scss"],
+    selector: "app-expectations",
+    templateUrl: "./expectations.component.html",
+    styleUrls: ["./expectations.component.scss"],
+    standalone: false
 })
 export class ExpectationsComponent implements OnInit {
   displayedColumns: string[] = [

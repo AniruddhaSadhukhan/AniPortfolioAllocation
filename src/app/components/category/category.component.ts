@@ -6,9 +6,10 @@ import { getNavItems } from "src/app/utils/nav-items";
 import { PortfolioService } from "../../services/portfolio.service";
 
 @Component({
-  selector: "app-category",
-  templateUrl: "./category.component.html",
-  styleUrls: ["./category.component.scss"],
+    selector: "app-category",
+    templateUrl: "./category.component.html",
+    styleUrls: ["./category.component.scss"],
+    standalone: false
 })
 export class CategoryComponent implements OnInit {
   data: CategoryCollection = null;

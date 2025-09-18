@@ -67,12 +67,18 @@
     font-size: 0.75rem;
     padding: 0.6rem 1rem;
   }
-  .p-datatable .p-sortable-column.p-frozen-column.p-highlight {
-    background: #424b57;
+  .p-datatable .p-datatable-sortable-column.p-datatable-frozen-column {
+    background: var(--p-datatable-header-cell-background);
   }
-  .p-datatable .p-sortable-column.p-frozen-column {
+  .p-datatable .p-datatable-sortable-column.p-datatable-frozen-column {
     &:hover {
-      background: #424b57;
+      background: var(--p-datatable-header-cell-background);
     }
+  }
+  .p-datatable .p-datatable-filter {
+    --p-button-icon-only-width: 2rem;
+  }
+  .add-fab{
+    --p-button-icon-only-width: 2.5rem;
   }
 }

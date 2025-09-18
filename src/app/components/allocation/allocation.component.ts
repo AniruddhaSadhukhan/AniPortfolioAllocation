@@ -8,9 +8,10 @@ import { getNavItems } from "src/app/utils/nav-items";
 import { PortfolioService } from "../../services/portfolio.service";
 
 @Component({
-  selector: "app-allocation",
-  templateUrl: "./allocation.component.html",
-  styleUrls: ["./allocation.component.scss"],
+    selector: "app-allocation",
+    templateUrl: "./allocation.component.html",
+    styleUrls: ["./allocation.component.scss"],
+    standalone: false
 })
 export class AllocationComponent implements OnInit {
   categories = [];

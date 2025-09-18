@@ -1,7 +1,10 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { round } from "lodash-es";
 
-@Pipe({ name: "currencyUnit" })
+@Pipe({
+    name: "currencyUnit",
+    standalone: false
+})
 export class CurrencyUnitPipe implements PipeTransform {
   transform(value: number, precision: number = 2): string {
     return getCurrencyUnit(value, precision);

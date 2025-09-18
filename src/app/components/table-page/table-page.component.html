@@ -1,4 +1,4 @@
-<div class="card flex mt-1 pb-2 justify-content-center">
+<div class="card flex mt-2 pb-2 justify-content-center">
   <p-selectButton
     [options]="options"
     [(ngModel)]="selectedOption"
@@ -94,53 +94,54 @@
   [(visible)]="itemDialog"
   [header]="
     currentItem?.id
-      ? 'Edit ' + selectedOption + ' Entry'
-      : 'Add ' + selectedOption + ' Entry'
+      ? 'Edit ' + selectedOption + ' Entry&nbsp;&nbsp;&nbsp;&nbsp;'
+      : 'Add ' + selectedOption + ' Entry&nbsp;&nbsp;&nbsp;&nbsp;'
   "
   [modal]="true"
-  styleClass="p-fluid"
 >
   <ng-template pTemplate="content">
-    <div class="pt-4"></div>
+    <p-fluid>
+      <div class="pt-4"></div>
 
-    <div class="p-float-label field">
-      <input
-        type="text"
-        pInputText
-        id="name"
-        [(ngModel)]="currentItem.name"
-        required
-      />
-      <label for="name">Name</label>
-      <small class="p-error" *ngIf="submitted && !currentItem.name"
-        >Name is required.</small
-      >
-    </div>
+      <p-floatlabel variant="on" class="field">
+        <input
+          type="text"
+          pInputText
+          id="name"
+          [(ngModel)]="currentItem.name"
+          required
+        />
+        <label for="name">Name</label>
+        <small class="p-error" *ngIf="submitted && !currentItem.name"
+          >Name is required.</small
+        >
+      </p-floatlabel>
 
-    <div class="pt-4"></div>
+      <div class="pt-4"></div>
 
-    <div class="p-float-label field">
-      <p-select
-        inputId="category"
-        scrollHeight="120px"
-        [(ngModel)]="currentItem.category"
-        [options]="categories"
-      >
-      </p-select>
-      <label for="category">Category</label>
-    </div>
+      <p-floatlabel variant="on" class="field">
+        <p-select
+          inputId="category"
+          scrollHeight="120px"
+          [(ngModel)]="currentItem.category"
+          [options]="categories"
+        >
+        </p-select>
+        <label for="category">Category</label>
+      </p-floatlabel>
 
-    <div class="pt-4"></div>
+      <div class="pt-4"></div>
 
-    <div class="p-float-label field">
-      <p-inputNumber
-        id="value"
-        [(ngModel)]="currentItem.value"
-        required
-        autofocus
-      />
-      <label for="value">Amount (in K)</label>
-    </div>
+      <p-floatlabel variant="on" class="field">
+        <p-inputNumber
+          id="value"
+          [(ngModel)]="currentItem.value"
+          required
+          autofocus
+        />
+        <label for="value">Amount (in K)</label>
+      </p-floatlabel>
+    </p-fluid>
   </ng-template>
 
   <ng-template pTemplate="footer">

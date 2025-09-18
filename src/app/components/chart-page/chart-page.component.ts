@@ -9,9 +9,10 @@ import { format } from "timeago.js";
 import { AuthService } from "../../services/auth.service";
 import { PortfolioService } from "../../services/portfolio.service";
 @Component({
-  selector: "app-chart-page",
-  templateUrl: "./chart-page.component.html",
-  styleUrls: ["./chart-page.component.scss"],
+    selector: "app-chart-page",
+    templateUrl: "./chart-page.component.html",
+    styleUrls: ["./chart-page.component.scss"],
+    standalone: false
 })
 export class ChartPageComponent implements OnInit {
   data: Allocation;

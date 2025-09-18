@@ -16,6 +16,7 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { DialogModule } from "primeng/dialog";
 import { DrawerModule } from "primeng/drawer"; // was SidebarModule
 import { FloatLabelModule } from "primeng/floatlabel";
+import { FluidModule } from "primeng/fluid";
 import { InputNumberModule } from "primeng/inputnumber";
 import { InputTextModule } from "primeng/inputtext";
 import { MenuModule } from "primeng/menu";
@@ -76,6 +77,7 @@ const PrimeModules = [
   InputTextModule,
   InputNumberModule,
   FloatLabelModule,
+  FluidModule,
   MessageModule,
   ToastModule,
 ];

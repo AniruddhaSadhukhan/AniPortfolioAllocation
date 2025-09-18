@@ -1,4 +1,4 @@
-<div class="card flex mt-1 pb-2 justify-content-center">
+<div class="card flex mt-2 pb-2 justify-content-center">
   <p-selectButton
     [options]="['Categories']"
     ngModel="Categories"
@@ -19,12 +19,8 @@
 >
   <ng-template pTemplate="header">
     <tr>
-      <th class="pr-0" pSortableColumn="category">
-        Category
-      </th>
-      <th pSortableColumn="exp_returns">
-        Expected<br />Returns 
-      </th>
+      <th class="pr-0" pSortableColumn="category">Category</th>
+      <th pSortableColumn="exp_returns">Expected<br />Returns</th>
       <th class="pr-0">Actions</th>
     </tr>
   </ng-template>
@@ -59,45 +55,42 @@
 
 <p-dialog
   [(visible)]="itemDialog"
-  [header]="
-    currentItem?.id
-      ? 'Edit Category' 
-      : 'Add Category' 
-  "
+  [header]="currentItem?.id ? 'Edit Category' : 'Add Category'"
   [modal]="true"
-  styleClass="p-fluid"
 >
   <ng-template pTemplate="content">
-    <div class="pt-4"></div>
+    <p-fluid>
+      <div class="pt-4"></div>
 
-    <div class="p-float-label field">
-      <input
-        type="text"
-        pInputText
-        id="category"
-        [(ngModel)]="currentItem.category"
-        required
-      />
-      <label for="category">Category</label>
-      <small class="p-error" *ngIf="submitted && !currentItem.category"
-        >Category is required.</small
-      >
-      <small class="p-error" *ngIf="submitted && !isAvailable(currentItem)"
-        >Category already defined.</small
-      >
-    </div>
+      <p-floatlabel variant="on" class="field">
+        <input
+          type="text"
+          pInputText
+          id="category"
+          [(ngModel)]="currentItem.category"
+          required
+        />
+        <label for="category">Category</label>
+        <small class="p-error" *ngIf="submitted && !currentItem.category"
+          >Category is required.</small
+        >
+        <small class="p-error" *ngIf="submitted && !isAvailable(currentItem)"
+          >Category already defined.</small
+        >
+      </p-floatlabel>
 
-    <div class="pt-4"></div>
+      <div class="pt-4"></div>
 
-    <div class="p-float-label field">
-      <p-inputNumber
-        id="exp_returns"
-        [(ngModel)]="currentItem.exp_returns"
-        required
-        autofocus
-      />
-      <label for="exp_returns">Expected Returns(%)</label>
-    </div>
+      <p-floatlabel variant="on" class="field">
+        <p-inputNumber
+          id="exp_returns"
+          [(ngModel)]="currentItem.exp_returns"
+          required
+          autofocus
+        />
+        <label for="exp_returns">Expected Returns(%)</label>
+      </p-floatlabel>
+    </p-fluid>
   </ng-template>
 
   <ng-template pTemplate="footer">
@@ -133,4 +126,3 @@
     size="small"
   ></p-button>
 </div>
-

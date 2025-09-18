@@ -5,13 +5,14 @@ import { NavItem } from "./models/nav-item";
 import { getNavItems } from "./utils/nav-items";
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: [
-    "./app.component.scss",
-    "../../node_modules/anychart/dist/css/anychart-ui.min.css",
-    "../../node_modules/anychart/dist/fonts/css/anychart-font.min.css",
-  ],
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: [
+        "./app.component.scss",
+        "../../node_modules/anychart/dist/css/anychart-ui.min.css",
+        "../../node_modules/anychart/dist/fonts/css/anychart-font.min.css",
+    ],
+    standalone: false
 })
 export class AppComponent implements OnInit {
   sidebarVisible = false;
