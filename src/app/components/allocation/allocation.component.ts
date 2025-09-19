@@ -49,6 +49,12 @@ export class AllocationComponent implements OnInit, OnDestroy {
   }
 
   refresh(): void {
+    // If chart already exists, dispose it
+    if (this.chart && this.chart.dispose) {
+      try {
+        this.chart.dispose();
+      } catch {}
+    }
     // create data
     const chartData = [
       {
