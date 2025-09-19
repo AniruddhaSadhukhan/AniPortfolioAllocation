@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
   private router = inject(Router);
 
   sidebarVisible = false;
-  navItems : NavItem[] = getNavItems("Dashboard", "Manage", "Allocation", "Expectation", "Category");
+  navItems : NavItem[] = getNavItems("Dashboard", "Manage", "Allocation", "Expectation", "Category", "NetWorth");
 
   user: any = null;
   loading = true;
