@@ -99,22 +99,18 @@
       </ng-template>
 
       <ng-template #footer>
-        <button
-          pButton
-          pRipple
+        <p-button
           label="Cancel"
           icon="pi pi-times"
-          class="p-button-text"
+          [text]="true"
           (click)="hideDialog()"
-        ></button>
-        <button
-          pButton
-          pRipple
+        ></p-button>
+        <p-button
           label="Save"
           icon="pi pi-check"
-          class="p-button-text"
+          [text]="true"
           (click)="saveItem()"
-        ></button>
+        ></p-button>
       </ng-template>
     </p-dialog>
 
