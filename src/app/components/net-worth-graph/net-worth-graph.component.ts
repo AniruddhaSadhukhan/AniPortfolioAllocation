@@ -1,5 +1,5 @@
 
-import { Component, OnDestroy, OnInit, inject } from "@angular/core";
+import { Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { ButtonModule } from "primeng/button";
 import { SelectButton } from "primeng/selectbutton";
@@ -15,6 +15,7 @@ import { getNavItems } from "../../utils/nav-items";
     selector: "app-net-worth-graph",
     imports: [RouterModule, ButtonModule, SelectButton, FormsModule],
     templateUrl: "./net-worth-graph.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: "./net-worth-graph.component.scss"
 })
 export class NetWorthGraphComponent implements OnInit, OnDestroy {

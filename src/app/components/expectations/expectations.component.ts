@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from "@angular/core";
+import { Component, OnInit, inject, ChangeDetectionStrategy } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { round } from "lodash-es";
 import { NavItem } from "src/app/models/nav-item";
@@ -15,6 +15,7 @@ import { CurrencyUnitPipe } from "../../utils/currency-unit.pipe";
   selector: "app-expectations",
   templateUrl: "./expectations.component.html",
   styleUrls: ["./expectations.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     SelectButton,
     FormsModule,

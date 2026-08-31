@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from "@angular/core";
+import { Component, OnInit, inject, ChangeDetectionStrategy } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { round } from "lodash-es";
 import { NavItem } from "src/app/models/nav-item";
@@ -35,6 +35,7 @@ interface SegmentRow {
   selector: "app-target-allocation",
   templateUrl: "./target-allocation.component.html",
   styleUrls: ["./target-allocation.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     SelectButton,
     FormsModule,

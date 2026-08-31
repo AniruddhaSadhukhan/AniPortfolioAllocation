@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from "@angular/core";
+import { Component, OnInit, inject, ChangeDetectionStrategy } from "@angular/core";
 import { ConfirmationService, MessageService, PrimeTemplate } from "primeng/api";
 import { NavItem } from "src/app/models/nav-item";
 import { CategoryCollection } from "src/app/models/portfolio";
@@ -21,6 +21,7 @@ import { RouterLink } from "@angular/router";
     selector: "app-category",
     templateUrl: "./category.component.html",
     styleUrls: ["./category.component.scss"],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [SelectButton, FormsModule, Button, TableModule, PrimeTemplate, ButtonGroup, Dialog, Fluid, FloatLabel, InputText, InputNumber, ButtonDirective, ConfirmDialog, RouterLink]
 })
 export class CategoryComponent implements OnInit {

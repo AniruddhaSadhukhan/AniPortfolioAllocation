@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from "@angular/core";
+import { Component, OnInit, inject, ChangeDetectionStrategy } from "@angular/core";
 import {
   ConfirmationService,
   MessageService,
@@ -29,6 +29,7 @@ import { CurrencyUnitPipe } from "../../utils/currency-unit.pipe";
   selector: "app-table-page",
   templateUrl: "./table-page.component.html",
   styleUrls: ["./table-page.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     SelectButton,
     FormsModule,
