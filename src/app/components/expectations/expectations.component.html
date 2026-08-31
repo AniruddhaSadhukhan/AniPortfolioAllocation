@@ -1,20 +1,20 @@
 <div class="card flex mt-2 pb-2 justify-content-center">
-  <p-selectButton
+  <p-selectbutton
     [options]="['Projected Expectations']"
     ngModel="Projected Expectations"
-  ></p-selectButton>
+  ></p-selectbutton>
 </div>
 @if (categories.length) {
   <p-table
     [value]="categories"
     scrollable="true"
     sortField="exp_returns_abs"
-    sortOrder="-1"
+    [sortOrder]="-1"
     showInitialSortBadge="false"
     [tableStyle]="{ 'min-width': '33rem' }"
     styleClass="p-datatable-sm p-datatable-striped text-sm"
     >
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <tr>
         <th pFrozenColumn pSortableColumn="category">Category</th>
         <th pSortableColumn="value">Value</th>
@@ -26,7 +26,7 @@
         </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-item>
+    <ng-template #body let-item>
       <tr>
         <td pFrozenColumn>
           {{ item.category }}
@@ -40,7 +40,7 @@
         </td>
       </tr>
     </ng-template>
-    <ng-template pTemplate="footer">
+    <ng-template #footer>
       <tr>
         <td pFrozenColumn>Total</td>
         <td>{{ total.value | currencyUnit }}</td>

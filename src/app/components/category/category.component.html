@@ -1,8 +1,8 @@
 <div class="card flex mt-2 pb-2 justify-content-center">
-  <p-selectButton
+  <p-selectbutton
     [options]="['Categories']"
     ngModel="Categories"
-  ></p-selectButton>
+  ></p-selectbutton>
 </div>
 <p-button
   (click)="openNew()"
@@ -14,24 +14,24 @@
   <p-table
     [value]="data['categories']"
     sortField="exp_returns"
-    sortOrder="-1"
+    [sortOrder]="-1"
     styleClass="p-datatable-sm p-datatable-striped text-sm"
     >
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <tr>
         <th class="pr-0" pSortableColumn="category">Category</th>
         <th pSortableColumn="exp_returns">Expected<br />Returns</th>
         <th class="pr-0">Actions</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-item>
+    <ng-template #body let-item>
       <tr>
         <td>
           {{ item.category }}
         </td>
         <td>{{ item.exp_returns }}%</td>
         <td>
-          <p-buttonGroup>
+          <p-buttongroup>
             <p-button
               icon="pi pi-file-edit"
               [rounded]="true"
@@ -47,7 +47,7 @@
               size="small"
               (click)="deleteItem(item)"
             ></p-button>
-          </p-buttonGroup>
+          </p-buttongroup>
         </td>
       </tr>
     </ng-template>
@@ -59,7 +59,7 @@
   [header]="currentItem?.id ? 'Edit Category' : 'Add Category'"
   [modal]="true"
   >
-  <ng-template pTemplate="content">
+  <ng-template #content>
     <p-fluid>
       <div class="pt-4"></div>
 
@@ -87,7 +87,7 @@
           <div class="pt-4"></div>
 
           <p-floatlabel variant="on" class="field">
-            <p-inputNumber
+            <p-inputnumber
               id="exp_returns"
               [(ngModel)]="currentItem.exp_returns"
               required
@@ -98,7 +98,7 @@
         </p-fluid>
       </ng-template>
 
-      <ng-template pTemplate="footer">
+      <ng-template #footer>
         <button
           pButton
           pRipple
@@ -118,7 +118,7 @@
       </ng-template>
     </p-dialog>
 
-    <p-confirmDialog></p-confirmDialog>
+    <p-confirmdialog></p-confirmdialog>
 
     <div class="nav-buttons mt-4 pb-4">
       @for (item of navItems; track item) {

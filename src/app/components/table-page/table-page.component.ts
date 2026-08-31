@@ -1,9 +1,10 @@
-import { Component, OnInit, inject, ChangeDetectionStrategy } from "@angular/core";
 import {
-  ConfirmationService,
-  MessageService,
-  PrimeTemplate,
-} from "primeng/api";
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { NavItem } from "src/app/models/nav-item";
 import { Allocation } from "src/app/models/portfolio";
 import { getNavItems } from "src/app/utils/nav-items";
@@ -35,7 +36,6 @@ import { CurrencyUnitPipe } from "../../utils/currency-unit.pipe";
     FormsModule,
     Button,
     TableModule,
-    PrimeTemplate,
     MultiSelect,
     Tag,
     ButtonGroup,

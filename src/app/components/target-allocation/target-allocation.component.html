@@ -1,8 +1,8 @@
 <div class="card flex mt-2 pb-2 justify-content-center">
-  <p-selectButton
+  <p-selectbutton
     [options]="['Target Allocation']"
     ngModel="Target Allocation"
-  ></p-selectButton>
+  ></p-selectbutton>
 </div>
 
 @if (allocation) {
@@ -14,7 +14,7 @@
     [tableStyle]="{ 'min-width': '40rem' }"
     styleClass="p-datatable-sm p-datatable-striped text-sm"
   >
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <tr>
         <th>Segment / Category</th>
         <th>Current<br />%</th>
@@ -24,7 +24,7 @@
         <th>Excess /<br />Deficit</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-row>
+    <ng-template #body let-row>
       <tr class="segment-row">
         <td><b>{{ row.segment }}</b></td>
         <td>{{ round(row.currentPercent, 2) }} %</td>
@@ -56,7 +56,7 @@
         </tr>
       }
     </ng-template>
-    <ng-template pTemplate="footer">
+    <ng-template #footer>
       <tr>
         <td><b>Total</b></td>
         <td>100 %</td>

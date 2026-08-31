@@ -42,8 +42,13 @@
   }
 }
 
-.anychart-credits {
-  display: none;
+a[href*="anychart.com/?utm_source=trial"],
+a[title*="AnyChart"] {
+  display: none !important;
+}
+
+div#p-license-host{
+  display: none !important;
 }
 
 /* (legacy definitions moved into app-styles layer above) */
