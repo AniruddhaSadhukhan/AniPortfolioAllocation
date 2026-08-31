@@ -1,38 +1,28 @@
 import { Injectable, inject } from "@angular/core";
-import {
-  Auth,
-  GoogleAuthProvider,
-  authState,
-  signInWithPopup,
-  signOut,
-} from "@angular/fire/auth";
 import { Router } from "@angular/router";
 
-import {
-  DocumentReference,
-  Firestore,
-  doc,
-  docData,
-  setDoc,
-} from "@angular/fire/firestore";
+import type { DocumentReference } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { Observable, of } from "rxjs";
 import { switchMap } from "rxjs/operators";
 import { User } from "../models/user.model";
+import { FIREBASE_AUTH, FIREBASE_FIRESTORE, authState$, docData$ } from "./firebase.providers";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
-  private fireAuth = inject(Auth);
-  private firestore = inject(Firestore);
+  private fireAuth = inject(FIREBASE_AUTH);
+  private firestore = inject(FIREBASE_FIRESTORE);
   private router = inject(Router);
 
   user$: Observable<any>;
   uid = null;
   constructor() {
-    this.user$ = authState(this.fireAuth).pipe(
+    this.user$ = authState$(this.fireAuth).pipe(
       switchMap((user) => {
         if (user) {
           this.uid = user.uid;
-          return docData(
+          return docData$(
             doc(this.firestore, `users/${user.uid}`)
           ) as Observable<User>;
         } else {

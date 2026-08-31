@@ -1,5 +1,5 @@
 import { Injectable, inject } from "@angular/core";
-import { Firestore, doc, docData, setDoc } from "@angular/fire/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { flatten, groupBy, reduce } from "lodash-es";
 import { Observable, firstValueFrom } from "rxjs";
 import {
@@ -10,12 +10,13 @@ import {
   TargetAllocation,
 } from "../models/portfolio";
 import { AuthService } from "./auth.service";
+import { FIREBASE_FIRESTORE, docData$ } from "./firebase.providers";
 
 @Injectable({
   providedIn: "root",
 })
 export class PortfolioService {
-  private firestore = inject(Firestore);
+  private firestore = inject(FIREBASE_FIRESTORE);
   auth = inject(AuthService);
 
   setPortfolio(data: Allocation) {
@@ -26,7 +27,7 @@ export class PortfolioService {
   }
 
   getPortfolio(): Observable<Allocation> {
-    return docData(
+    return docData$(
       doc(this.firestore, `users/${this.auth.uid}/portfolio/allocation`),
     ) as Observable<Allocation>;
   }
@@ -39,7 +40,7 @@ export class PortfolioService {
   }
 
   getChanges(): Observable<ChangesCollection> {
-    return docData(
+    return docData$(
       doc(this.firestore, `users/${this.auth.uid}/portfolio/changes`),
     ) as Observable<ChangesCollection>;
   }
@@ -93,7 +94,7 @@ export class PortfolioService {
   }
 
   getCategory(): Observable<CategoryCollection> {
-    return docData(
+    return docData$(
       doc(this.firestore, `users/${this.auth.uid}/portfolio/category`),
     ) as Observable<CategoryCollection>;
   }
@@ -106,7 +107,7 @@ export class PortfolioService {
   }
 
   getTarget(): Observable<TargetAllocation> {
-    return docData(
+    return docData$(
       doc(this.firestore, `users/${this.auth.uid}/portfolio/target`),
     ) as Observable<TargetAllocation>;
   }
