@@ -12,10 +12,18 @@ import { Button } from "primeng/button";
 import { CurrencyUnitPipe } from "../../utils/currency-unit.pipe";
 
 @Component({
-    selector: "app-expectations",
-    templateUrl: "./expectations.component.html",
-    styleUrls: ["./expectations.component.scss"],
-    imports: [SelectButton, FormsModule, TableModule, PrimeTemplate, Button, RouterLink, CurrencyUnitPipe]
+  selector: "app-expectations",
+  templateUrl: "./expectations.component.html",
+  styleUrls: ["./expectations.component.scss"],
+  imports: [
+    SelectButton,
+    FormsModule,
+    TableModule,
+    PrimeTemplate,
+    Button,
+    RouterLink,
+    CurrencyUnitPipe,
+  ],
 })
 export class ExpectationsComponent implements OnInit {
   private service = inject(PortfolioService);
@@ -32,7 +40,7 @@ export class ExpectationsComponent implements OnInit {
   total: any = {};
   round = round;
 
-  navItems: NavItem[] = getNavItems("Dashboard", "Allocation");
+  navItems: NavItem[] = getNavItems("Dashboard", "Allocation", "Target");
 
   ngOnInit() {
     this.service.getExpectations().subscribe({

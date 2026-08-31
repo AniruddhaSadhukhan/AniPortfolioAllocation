@@ -13,15 +13,10 @@ import { FormsModule } from "@angular/forms";
 import { Button } from "primeng/button";
 import { RouterLink } from "@angular/router";
 @Component({
-    selector: "app-chart-page",
-    templateUrl: "./chart-page.component.html",
-    styleUrls: ["./chart-page.component.scss"],
-    imports: [
-        ToggleSwitch,
-        FormsModule,
-        Button,
-        RouterLink,
-    ],
+  selector: "app-chart-page",
+  templateUrl: "./chart-page.component.html",
+  styleUrls: ["./chart-page.component.scss"],
+  imports: [ToggleSwitch, FormsModule, Button, RouterLink],
 })
 export class ChartPageComponent implements OnInit, OnDestroy {
   private service = inject(PortfolioService);
@@ -30,7 +25,7 @@ export class ChartPageComponent implements OnInit, OnDestroy {
   data: Allocation;
   userName: string;
   lastEditedTime: any;
-  omitOthers = true;
+  omitRetirement = true;
   subscription: Subscription;
 
   navItems: NavItem[] = getNavItems("Manage", "Allocation", "NetWorth");
@@ -132,7 +127,7 @@ export class ChartPageComponent implements OnInit, OnDestroy {
                   name: categoryName,
                   children: items,
                 };
-              }
+              },
             ),
           };
         }),
@@ -152,8 +147,8 @@ export class ChartPageComponent implements OnInit, OnDestroy {
         this.chart.dispose();
       } catch {}
     }
-    const groups = ["Debt", "Equity"];
-    if (!this.omitOthers) groups.push("Others");
+    const groups = ["Debt", "Equity", "Others"];
+    if (!this.omitRetirement) groups.push("Retirement");
 
     const chartData = this.generateTree(this.data, groups);
 

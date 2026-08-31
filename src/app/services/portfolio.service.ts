@@ -7,6 +7,7 @@ import {
   CategoryCollection,
   Change,
   ChangesCollection,
+  TargetAllocation,
 } from "../models/portfolio";
 import { AuthService } from "./auth.service";
 
@@ -17,37 +18,36 @@ export class PortfolioService {
   private firestore = inject(Firestore);
   auth = inject(AuthService);
 
-
   setPortfolio(data: Allocation) {
     return setDoc(
       doc(this.firestore, `users/${this.auth.uid}/portfolio/allocation`),
-      data
+      data,
     ).then(() => this.updatePortfolioChange(data));
   }
 
   getPortfolio(): Observable<Allocation> {
     return docData(
-      doc(this.firestore, `users/${this.auth.uid}/portfolio/allocation`)
+      doc(this.firestore, `users/${this.auth.uid}/portfolio/allocation`),
     ) as Observable<Allocation>;
   }
 
   setCategory(data: CategoryCollection) {
     return setDoc(
       doc(this.firestore, `users/${this.auth.uid}/portfolio/category`),
-      data
+      data,
     );
   }
 
   getChanges(): Observable<ChangesCollection> {
     return docData(
-      doc(this.firestore, `users/${this.auth.uid}/portfolio/changes`)
+      doc(this.firestore, `users/${this.auth.uid}/portfolio/changes`),
     ) as Observable<ChangesCollection>;
   }
 
   private setChanges(data: ChangesCollection) {
     return setDoc(
       doc(this.firestore, `users/${this.auth.uid}/portfolio/changes`),
-      data
+      data,
     );
   }
 
@@ -60,11 +60,11 @@ export class PortfolioService {
     const total_value = reduce(
       flatten(Object.values(data)),
       (sum, n) => sum + n.value,
-      0
+      0,
     );
     changesCollection.changes = this.addChange(
       { timestamp, total_value },
-      changesCollection.changes
+      changesCollection.changes,
     );
     return this.setChanges(changesCollection);
   }
@@ -94,8 +94,21 @@ export class PortfolioService {
 
   getCategory(): Observable<CategoryCollection> {
     return docData(
-      doc(this.firestore, `users/${this.auth.uid}/portfolio/category`)
+      doc(this.firestore, `users/${this.auth.uid}/portfolio/category`),
     ) as Observable<CategoryCollection>;
+  }
+
+  setTarget(data: TargetAllocation) {
+    return setDoc(
+      doc(this.firestore, `users/${this.auth.uid}/portfolio/target`),
+      data,
+    );
+  }
+
+  getTarget(): Observable<TargetAllocation> {
+    return docData(
+      doc(this.firestore, `users/${this.auth.uid}/portfolio/target`),
+    ) as Observable<TargetAllocation>;
   }
 
   getExpectations() {
@@ -110,7 +123,7 @@ export class PortfolioService {
                   const portfolio = flatten(Object.values(res));
                   if (portfolio.length)
                     observer.next(
-                      this.calculateExpectations(categories, portfolio)
+                      this.calculateExpectations(categories, portfolio),
                     );
                   else observer.error("No portfolio recieved");
                 } else observer.error("No investments recieved");
@@ -137,7 +150,7 @@ export class PortfolioService {
       categories[index]["value"] = reduce(
         portfolioGroupedByCategory[elem.category] || [],
         (sum, n) => sum + n.value,
-        0
+        0,
       );
     });
 
@@ -157,7 +170,7 @@ export class PortfolioService {
     total.exp_returns_abs = reduce(
       categories,
       (sum, n) => sum + n.exp_returns_abs,
-      0
+      0,
     );
     total.wt_exp_ret = reduce(categories, (sum, n) => sum + n.wt_exp_ret, 0);
     return { categories, total };

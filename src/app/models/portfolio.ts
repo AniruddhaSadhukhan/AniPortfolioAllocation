@@ -16,6 +16,7 @@ export interface Allocation {
   Debt: Item[];
   Equity: Item[];
   Others: Item[];
+  Retirement: Item[];
 }
 
 export interface Category {
@@ -34,5 +35,12 @@ export interface ChangesCollection {
 
 export interface Change {
   timestamp: Date;
-  total_value : number;
+  total_value: number;
+}
+
+export type TargetSegment = "Debt" | "Equity" | "Others";
+
+export interface TargetAllocation {
+  segments: Partial<Record<TargetSegment, number>>;
+  categories?: Partial<Record<TargetSegment, Record<string, number>>>;
 }
