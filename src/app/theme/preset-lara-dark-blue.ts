@@ -1,5 +1,5 @@
-import { definePreset } from "@primeng/themes";
-import Lara from "@primeng/themes/lara";
+import { definePreset } from "@primeuix/themes";
+import Lara from "@primeuix/themes/lara";
 
 // Emulate former Lara Dark Blue look by biasing primary to blue palette.
 // You can fine tune further (surface, focusRing, etc.) later.

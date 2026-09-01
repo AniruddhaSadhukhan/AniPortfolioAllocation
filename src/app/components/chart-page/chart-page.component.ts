@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject, ChangeDetectionStrategy } from "@angular/core";
 import { groupBy, map } from "lodash-es";
 import { Subscription } from "rxjs";
 import { NavItem } from "src/app/models/nav-item";
@@ -16,6 +16,7 @@ import { RouterLink } from "@angular/router";
   selector: "app-chart-page",
   templateUrl: "./chart-page.component.html",
   styleUrls: ["./chart-page.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ToggleSwitch, FormsModule, Button, RouterLink],
 })
 export class ChartPageComponent implements OnInit, OnDestroy {

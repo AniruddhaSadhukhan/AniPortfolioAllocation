@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject, ChangeDetectionStrategy } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { round } from "lodash-es";
 import { Subscription } from "rxjs";
@@ -12,6 +12,7 @@ import { Button } from "primeng/button";
   selector: "app-allocation",
   templateUrl: "./allocation.component.html",
   styleUrls: ["./allocation.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [Button, RouterLink],
 })
 export class AllocationComponent implements OnInit, OnDestroy {

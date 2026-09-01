@@ -1,10 +1,7 @@
-import { enableProdMode, importProvidersFrom } from "@angular/core";
+import { enableProdMode, importProvidersFrom, provideZoneChangeDetection } from "@angular/core";
 
 import { environment } from "./environments/environment";
 
-import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
-import { getAuth, provideAuth } from "@angular/fire/auth";
-import { getFirestore, provideFirestore } from "@angular/fire/firestore";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
 import { provideAnimations } from "@angular/platform-browser/animations";
@@ -41,6 +38,12 @@ import { AuthService } from "./app/services/auth.service";
 import { MockAuthService } from "./app/services/mock-auth.service";
 import { MockPortfolioService } from "./app/services/mock-portfolio.service";
 import { PortfolioService } from "./app/services/portfolio.service";
+import {
+  FIREBASE_AUTH,
+  FIREBASE_FIRESTORE,
+  firebaseAuthFactory,
+  firebaseFirestoreFactory,
+} from "./app/services/firebase.providers";
 import LaraDarkBlue from "./app/theme/preset-lara-dark-blue";
 
 const config = {
@@ -84,6 +87,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideZoneChangeDetection(),
     importProvidersFrom(
       BrowserModule,
       AppRoutingModule,
@@ -111,9 +115,8 @@ bootstrapApplication(AppComponent, {
           { provide: PortfolioService, useExisting: MockPortfolioService },
         ]
       : [
-          provideFirebaseApp(() => initializeApp(config)),
-          provideFirestore(() => getFirestore()),
-          provideAuth(() => getAuth()),
+          { provide: FIREBASE_AUTH, useFactory: () => firebaseAuthFactory(config) },
+          { provide: FIREBASE_FIRESTORE, useFactory: () => firebaseFirestoreFactory(config) },
         ]),
     provideAnimations(),
   ],

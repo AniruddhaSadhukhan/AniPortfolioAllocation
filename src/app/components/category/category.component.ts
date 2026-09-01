@@ -1,5 +1,10 @@
-import { Component, OnInit, inject } from "@angular/core";
-import { ConfirmationService, MessageService, PrimeTemplate } from "primeng/api";
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { NavItem } from "src/app/models/nav-item";
 import { CategoryCollection } from "src/app/models/portfolio";
 import { getNavItems } from "src/app/utils/nav-items";
@@ -18,10 +23,25 @@ import { ConfirmDialog } from "primeng/confirmdialog";
 import { RouterLink } from "@angular/router";
 
 @Component({
-    selector: "app-category",
-    templateUrl: "./category.component.html",
-    styleUrls: ["./category.component.scss"],
-    imports: [SelectButton, FormsModule, Button, TableModule, PrimeTemplate, ButtonGroup, Dialog, Fluid, FloatLabel, InputText, InputNumber, ButtonDirective, ConfirmDialog, RouterLink]
+  selector: "app-category",
+  templateUrl: "./category.component.html",
+  styleUrls: ["./category.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [
+    SelectButton,
+    FormsModule,
+    Button,
+    TableModule,
+    ButtonGroup,
+    Dialog,
+    Fluid,
+    FloatLabel,
+    InputText,
+    InputNumber,
+    ButtonDirective,
+    ConfirmDialog,
+    RouterLink,
+  ],
 })
 export class CategoryComponent implements OnInit {
   private service = inject(PortfolioService);
@@ -55,7 +75,7 @@ export class CategoryComponent implements OnInit {
       acceptButtonStyleClass: "p-button-danger",
       accept: () => {
         this.data["categories"] = this.data["categories"].filter(
-          (item) => item.id !== selectedItem.id
+          (item) => item.id !== selectedItem.id,
         );
         this.updateCategory(this.data);
       },
@@ -77,7 +97,7 @@ export class CategoryComponent implements OnInit {
       if (this.currentItem.id) {
         // Edit existing item
         this.data["categories"] = this.data["categories"].map((item) =>
-          item.id === this.currentItem.id ? this.currentItem : item
+          item.id === this.currentItem.id ? this.currentItem : item,
         );
       } else {
         // Add new item
@@ -111,7 +131,7 @@ export class CategoryComponent implements OnInit {
     const id = category.id || "";
     // Check if any element in this.data.categories have same name as category.name ignoring same id
     return !this.data.categories.some(
-      (elem) => elem.category === category.category && elem.id !== id
+      (elem) => elem.category === category.category && elem.id !== id,
     );
   };
 

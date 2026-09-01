@@ -1,13 +1,13 @@
 <div class="w-full flex justify-content-center flex-column">
   <div class="text-center text-400 my-5">Net Worth Over Time</div>
   <div class="flex justify-content-center mb-3">
-    <p-selectButton
+    <p-selectbutton
       [options]="timeRangeOptions"
       [(ngModel)]="selectedTimeRange"
       optionLabel="label"
       optionValue="value"
       (onChange)="onTimeRangeChange()"
-    ></p-selectButton>
+    ></p-selectbutton>
   </div>
   <div id="net-worth-container" class="chart"></div>
   @if (loading) {

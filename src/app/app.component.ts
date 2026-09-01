@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from "@angular/core";
+import { Component, OnInit, inject, ChangeDetectionStrategy } from "@angular/core";
 import {
   Router,
   RouterLinkActive,
@@ -24,6 +24,7 @@ import { Toast } from "primeng/toast";
     "../../node_modules/anychart/dist/css/anychart-ui.min.css",
     "../../node_modules/anychart/dist/fonts/css/anychart-font.min.css",
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     Toolbar,
     Avatar,

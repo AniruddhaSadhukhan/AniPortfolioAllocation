@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from "@angular/core";
+import { Component, OnInit, inject, ChangeDetectionStrategy } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { MessageService } from "primeng/api";
 import { round } from "lodash-es";
@@ -21,6 +21,7 @@ import { MultiSelect } from "primeng/multiselect";
   selector: "app-set-target",
   templateUrl: "./set-target.component.html",
   styleUrls: ["./set-target.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     SelectButton,
     FormsModule,

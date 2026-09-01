@@ -1,4 +1,9 @@
-import { Component, OnInit, inject } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { round } from "lodash-es";
 import { NavItem } from "src/app/models/nav-item";
@@ -7,7 +12,6 @@ import { PortfolioService } from "../../services/portfolio.service";
 import { SelectButton } from "primeng/selectbutton";
 import { FormsModule } from "@angular/forms";
 import { TableModule } from "primeng/table";
-import { PrimeTemplate } from "primeng/api";
 import { Button } from "primeng/button";
 import { CurrencyUnitPipe } from "../../utils/currency-unit.pipe";
 
@@ -15,11 +19,11 @@ import { CurrencyUnitPipe } from "../../utils/currency-unit.pipe";
   selector: "app-expectations",
   templateUrl: "./expectations.component.html",
   styleUrls: ["./expectations.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     SelectButton,
     FormsModule,
     TableModule,
-    PrimeTemplate,
     Button,
     RouterLink,
     CurrencyUnitPipe,
