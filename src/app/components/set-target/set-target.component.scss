@@ -1,0 +1,58 @@
+.editor {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.section-title {
+  margin: 0.5rem 0;
+  font-weight: 600;
+}
+
+.segment-grid,
+.cat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.segment-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  label {
+    font-size: 0.8rem;
+    opacity: 0.85;
+  }
+}
+
+.sum-indicator {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+
+  .hint {
+    opacity: 0.7;
+    margin-left: 0.25rem;
+  }
+
+  &.sum-error {
+    color: var(--p-orange-400, #f59e0b);
+  }
+}
+
+.segment-block {
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--p-content-border-color, rgba(255, 255, 255, 0.1));
+}
+
+.segment-block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+
+  .segment-name {
+    font-weight: 600;
+  }
+}

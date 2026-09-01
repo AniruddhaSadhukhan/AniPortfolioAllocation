@@ -2,6 +2,8 @@
 import { Component, OnDestroy, OnInit, inject } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { ButtonModule } from "primeng/button";
+import { SelectButton } from "primeng/selectbutton";
+import { FormsModule } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { NavItem } from "../../models/nav-item";
 import { AuthService } from "../../services/auth.service";
@@ -11,7 +13,7 @@ import { getNavItems } from "../../utils/nav-items";
 
 @Component({
     selector: "app-net-worth-graph",
-    imports: [RouterModule, ButtonModule],
+    imports: [RouterModule, ButtonModule, SelectButton, FormsModule],
     templateUrl: "./net-worth-graph.component.html",
     styleUrl: "./net-worth-graph.component.scss"
 })
@@ -24,6 +26,26 @@ export class NetWorthGraphComponent implements OnInit, OnDestroy {
   loading = true;
   navItems: NavItem[] = getNavItems("Dashboard", "Manage", "Allocation");
   netWorthData: { timestamp: Date; total_value: number }[] = [];
+
+  timeRangeOptions = [
+    { label: "All", value: "all" },
+    { label: "1Y", value: "1y" },
+    { label: "6M", value: "6m" },
+    { label: "3M", value: "3m" },
+  ];
+  selectedTimeRange = "all";
+
+  onTimeRangeChange() {
+    this.renderChart();
+  }
+
+  private getFilteredData(): { timestamp: Date; total_value: number }[] {
+    if (this.selectedTimeRange === "all") return this.netWorthData;
+    const now = new Date();
+    const daysMap: Record<string, number> = { "1y": 365, "6m": 180, "3m": 90 };
+    const cutoff = new Date(now.getTime() - daysMap[this.selectedTimeRange] * 24 * 60 * 60 * 1000);
+    return this.netWorthData.filter((d) => d.timestamp >= cutoff);
+  }
 
   ngOnInit(): void {
     this.subscription = this.portfolio.getChanges().subscribe({
@@ -48,7 +70,7 @@ export class NetWorthGraphComponent implements OnInit, OnDestroy {
 
   private renderChart() {
     anychart.graphics.useAbsoluteReferences(false);
-    const data = this.netWorthData.map((d) => ({
+    const data = this.getFilteredData().map((d) => ({
       x: d.timestamp,
       value: d.total_value,
     }));

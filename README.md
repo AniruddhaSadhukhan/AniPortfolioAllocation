@@ -36,6 +36,7 @@ Ani Portfolio Allocation helps you understand how your investments are distribut
 | Core Value              | Description                                                            |
 | ----------------------- | ---------------------------------------------------------------------- |
 | Allocation Transparency | See how capital is split across asset categories.                      |
+| Target Rebalancing      | Set target segment/category weights and see value excess or deficit.   |
 | Expectations Engine     | Weighted expected return calculation with per‑category assumptions.    |
 | Change Tracking         | Synthetic or real historical snapshots displayed as a net worth curve. |
 | Mock-Friendly           | Develop fully offline without Firebase by flipping one flag.           |
@@ -45,6 +46,7 @@ Ani Portfolio Allocation helps you understand how your investments are distribut
 ## 🚀 Features
 
 - 📊 Interactive allocation charts (category drill-downs)
+- 🎯 Target allocation with current‑vs‑target comparison and value excess/deficit
 - 🗂️ Category management with editable expected returns
 - 📈 Net worth trend visualization with generated or real change history
 - 🔁 Weighted expected annual return & absolute return projection
@@ -265,6 +267,8 @@ npm run deploy
 | Action                     | How                                                                                 |
 | -------------------------- | ----------------------------------------------------------------------------------- |
 | Add / Edit Allocation Item | Use Manage / Allocation view (mock data stored in-memory)                           |
+| Set Target Allocation      | Open Set Target page; enter segment (and optional category) % and save              |
+| Compare vs Target          | Open Target page to see current‑vs‑target % and value excess/deficit                |
 | Change Expected Returns    | Edit category expected % in Categories view                                         |
 | View Weighted Return       | Open Expectations page (shows per‑category + total)                                 |
 | Inspect Net Worth Trend    | Net Worth Graph page (generated series in mock mode)                                |

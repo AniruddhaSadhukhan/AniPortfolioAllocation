@@ -5,7 +5,9 @@ import { CategoryComponent } from "./components/category/category.component";
 import { ChartPageComponent } from "./components/chart-page/chart-page.component";
 import { ExpectationsComponent } from "./components/expectations/expectations.component";
 import { NetWorthGraphComponent } from "./components/net-worth-graph/net-worth-graph.component";
+import { SetTargetComponent } from "./components/set-target/set-target.component";
 import { TablePageComponent } from "./components/table-page/table-page.component";
+import { TargetAllocationComponent } from "./components/target-allocation/target-allocation.component";
 import { AuthGuard } from "./services/auth.guard";
 
 const routes: Routes = [
@@ -25,6 +27,16 @@ const routes: Routes = [
   {
     path: "allocation",
     component: AllocationComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "target-allocation",
+    component: TargetAllocationComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "set-target",
+    component: SetTargetComponent,
     canActivate: [AuthGuard],
   },
 ];

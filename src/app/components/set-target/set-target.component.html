@@ -1,0 +1,104 @@
+<div class="card flex mt-2 pb-2 justify-content-center">
+  <p-selectButton
+    [options]="['Set Target']"
+    ngModel="Set Target"
+  ></p-selectButton>
+</div>
+
+@if (allocation) {
+  <div class="editor px-2">
+    <h4 class="section-title">Segment Targets (excl. Retirement)</h4>
+    <div class="segment-grid">
+      @for (seg of segments; track seg) {
+        <div class="segment-input">
+          <label [for]="'seg-' + seg">{{ seg }}</label>
+          <p-inputNumber
+            [inputId]="'seg-' + seg"
+            [(ngModel)]="targetSegments[seg]"
+            suffix=" %"
+            [min]="0"
+            [max]="100"
+            [showButtons]="false"
+            placeholder="0"
+          ></p-inputNumber>
+        </div>
+      }
+    </div>
+    <div
+      class="sum-indicator"
+      [class.sum-error]="round(segmentTargetTotal, 2) !== 100"
+    >
+      Total: {{ round(segmentTargetTotal, 2) }} %
+      @if (round(segmentTargetTotal, 2) !== 100) {
+        <span class="hint">(should be 100%)</span>
+      }
+    </div>
+
+    <h4 class="section-title mt-4">Category Targets (optional)</h4>
+    @for (seg of segments; track seg) {
+      <div class="segment-block">
+        <div class="segment-block-head">
+          <span class="segment-name">{{ seg }}</span>
+          <p-multiSelect
+            [options]="availableCategories(seg)"
+            [(ngModel)]="selectedCategories[seg]"
+            (onChange)="onCategorySelectChange(seg)"
+            placeholder="Add categories"
+            [showToggleAll]="false"
+            [filter]="false"
+            styleClass="cat-select"
+            [style]="{ 'min-width': '14rem' }"
+          ></p-multiSelect>
+        </div>
+        @if (selectedCategories[seg].length) {
+          <div class="cat-grid">
+            @for (cat of selectedCategories[seg]; track cat) {
+              <div class="segment-input">
+                <label [for]="seg + '-' + cat">{{ cat }}</label>
+                <p-inputNumber
+                  [inputId]="seg + '-' + cat"
+                  [(ngModel)]="targetCategories[seg][cat]"
+                  suffix=" %"
+                  [min]="0"
+                  [max]="100"
+                  [showButtons]="false"
+                  placeholder="0"
+                ></p-inputNumber>
+              </div>
+            }
+          </div>
+          <div
+            class="sum-indicator"
+            [class.sum-error]="round(categoryTargetTotal(seg), 2) !== 100"
+          >
+            Total: {{ round(categoryTargetTotal(seg), 2) }} %
+            @if (round(categoryTargetTotal(seg), 2) !== 100) {
+              <span class="hint">(should be 100%)</span>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    <div class="flex justify-content-center mt-3">
+      <p-button
+        label="Save Target"
+        icon="pi pi-save"
+        (click)="save()"
+      ></p-button>
+    </div>
+  </div>
+}
+
+<div class="nav-buttons mt-4 pb-4">
+  @for (item of navItems; track item) {
+    <p-button
+      [routerLink]="item.routerLink"
+      [label]="item.label"
+      [icon]="'pi ' + item.icon"
+      [outlined]="true"
+      styleClass="p-button-xs"
+      size="small"
+    ></p-button>
+  }
+</div>

@@ -1,5 +1,9 @@
 import { Component, OnInit, inject } from "@angular/core";
-import { ConfirmationService, MessageService, PrimeTemplate } from "primeng/api";
+import {
+  ConfirmationService,
+  MessageService,
+  PrimeTemplate,
+} from "primeng/api";
 import { NavItem } from "src/app/models/nav-item";
 import { Allocation } from "src/app/models/portfolio";
 import { getNavItems } from "src/app/utils/nav-items";
@@ -22,10 +26,29 @@ import { RouterLink } from "@angular/router";
 import { CurrencyUnitPipe } from "../../utils/currency-unit.pipe";
 
 @Component({
-    selector: "app-table-page",
-    templateUrl: "./table-page.component.html",
-    styleUrls: ["./table-page.component.scss"],
-    imports: [SelectButton, FormsModule, Button, TableModule, PrimeTemplate, MultiSelect, Tag, ButtonGroup, Dialog, Fluid, FloatLabel, InputText, Select, InputNumber, ButtonDirective, ConfirmDialog, RouterLink, CurrencyUnitPipe]
+  selector: "app-table-page",
+  templateUrl: "./table-page.component.html",
+  styleUrls: ["./table-page.component.scss"],
+  imports: [
+    SelectButton,
+    FormsModule,
+    Button,
+    TableModule,
+    PrimeTemplate,
+    MultiSelect,
+    Tag,
+    ButtonGroup,
+    Dialog,
+    Fluid,
+    FloatLabel,
+    InputText,
+    Select,
+    InputNumber,
+    ButtonDirective,
+    ConfirmDialog,
+    RouterLink,
+    CurrencyUnitPipe,
+  ],
 })
 export class TablePageComponent implements OnInit {
   private service = inject(PortfolioService);
@@ -33,7 +56,7 @@ export class TablePageComponent implements OnInit {
   private confirmationService = inject(ConfirmationService);
 
   data: Allocation = null;
-  options = ["Debt", "Equity", "Others"];
+  options = ["Debt", "Equity", "Others", "Retirement"];
   selectedOption = "Equity";
 
   categories = [""];
@@ -42,7 +65,7 @@ export class TablePageComponent implements OnInit {
   itemDialog = false;
   submitted = false;
 
-  navItems: NavItem[] = getNavItems("Dashboard", "Allocation");
+  navItems: NavItem[] = getNavItems("Dashboard", "Allocation", "Target");
 
   openNew() {
     this.currentItem = {};
@@ -63,7 +86,7 @@ export class TablePageComponent implements OnInit {
       acceptButtonStyleClass: "p-button-danger",
       accept: () => {
         this.data[this.selectedOption] = this.data[this.selectedOption].filter(
-          (item) => item.id !== selectedItem.id
+          (item) => item.id !== selectedItem.id,
         );
         this.updatePortfolio(this.data);
       },
@@ -85,7 +108,7 @@ export class TablePageComponent implements OnInit {
       if (this.currentItem.id) {
         // Edit existing item
         this.data[this.selectedOption] = this.data[this.selectedOption].map(
-          (item) => (item.id === this.currentItem.id ? this.currentItem : item)
+          (item) => (item.id === this.currentItem.id ? this.currentItem : item),
         );
       } else {
         // Add new item
@@ -105,12 +128,15 @@ export class TablePageComponent implements OnInit {
       next: (res) => {
         if (res) {
           this.data = res;
+          // Backfill new categories absent in older Firestore documents
+          if (!this.data.Retirement) this.data.Retirement = [];
           this.populateCategory();
         } else {
           this.updatePortfolio({
             Debt: [],
             Equity: [],
             Others: [],
+            Retirement: [],
           });
         }
       },

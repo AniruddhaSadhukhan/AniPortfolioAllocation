@@ -9,10 +9,10 @@ import { PortfolioService } from "../../services/portfolio.service";
 import { Button } from "primeng/button";
 
 @Component({
-    selector: "app-allocation",
-    templateUrl: "./allocation.component.html",
-    styleUrls: ["./allocation.component.scss"],
-    imports: [Button, RouterLink]
+  selector: "app-allocation",
+  templateUrl: "./allocation.component.html",
+  styleUrls: ["./allocation.component.scss"],
+  imports: [Button, RouterLink],
 })
 export class AllocationComponent implements OnInit, OnDestroy {
   private service = inject(PortfolioService);

@@ -14,6 +14,16 @@ const navItemMap: Record<string, NavItem> = {
     routerLink: ["/expectations"],
   },
   Category: { label: "Category", icon: "pi-tags", routerLink: ["/category"] },
+  Target: {
+    label: "Target",
+    icon: "pi-bullseye",
+    routerLink: ["/target-allocation"],
+  },
+  SetTarget: {
+    label: "Set Target",
+    icon: "pi-sliders-h",
+    routerLink: ["/set-target"],
+  },
   NetWorth: {
     label: "Net Worth",
     icon: "pi-chart-line",

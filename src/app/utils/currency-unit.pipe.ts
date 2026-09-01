@@ -9,9 +9,12 @@ export class CurrencyUnitPipe implements PipeTransform {
 }
 
 export const getCurrencyUnit = (value: number, precision = 2): string => {
-  if (value >= 100) {
-    return "₹ " + round(value / 100, precision) + "L";
-  } else {
-    return "₹ " + round(value, precision) + "K";
+  const sign = value < 0 ? "-" : "";
+  const absValue = Math.abs(value);
+
+  if (absValue >= 100) {
+    return `${sign}₹ ${round(absValue / 100, precision)}L`;
   }
+
+  return `${sign}₹ ${round(absValue, precision)}K`;
 };
